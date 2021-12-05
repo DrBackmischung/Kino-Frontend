@@ -10,6 +10,7 @@ Ticket: https://dhbw-ma-wwi2020seb.atlassian.net/browse/KINO-XX
 
 ### Check:
 
+* [ ] PR geht an DEV und nicht MAIN?
 * [ ] Funktionieren die Tests?
 * [ ] Code Coverage eingehalten?
 * [ ] Dokumentation?
