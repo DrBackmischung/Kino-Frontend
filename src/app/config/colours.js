@@ -6,5 +6,5 @@ export default {
     secondaryLightColour: "#bc477b",
     secondaryDarkColour: "#560027",
     primaryTextColour: "#ffffff",
-    secondaryTextColour: "#ffffff",
+    secondaryTextColour: "#ffffff"
 };
