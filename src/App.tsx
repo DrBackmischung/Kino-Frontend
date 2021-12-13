@@ -1,3 +1,6 @@
+import React from "react";
+
+import Homepage from './app/pages/homepage';
 import './App.css';
 import Header from './components/layouts/Header';
 import NavBar from './components/layouts/NavBar';
@@ -7,8 +10,10 @@ function App() {
     <div className='App'>
       <Header/>
       <NavBar/>
+      <Homepage />
     </div>
   );
 }
 
 export default App;
+
