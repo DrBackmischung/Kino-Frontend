@@ -2,8 +2,8 @@ import React from "react";
 
 import Homepage from './app/pages/homepage';
 import './App.css';
-import Header from './components/layouts/Header';
-import NavBar from './components/layouts/NavBar';
+import Header from './app/components/layouts/Header';
+import NavBar from './app/components/layouts/NavBar';
 
 function App() {
   return (
