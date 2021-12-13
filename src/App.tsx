@@ -1,13 +1,19 @@
 import React from "react";
 
 import Homepage from './app/pages/homepage';
+import './App.css';
+import Header from './components/layouts/Header';
+import NavBar from './components/layouts/NavBar';
 
-
-
-export default function App() {
-    return (
-        <div>
-            <Homepage />
-        </div>
-    );
+function App() {
+  return (
+    <div className='App'>
+      <Header/>
+      <NavBar/>
+      <Homepage />
+    </div>
+  );
 }
+
+export default App;
+
