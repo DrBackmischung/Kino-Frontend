@@ -22,9 +22,6 @@ jobs:
 
       - name: npm install
         run: npm install
-        
-      - name: yarn
-        run: yarn
 
       - name: npm build
         run: npm build
