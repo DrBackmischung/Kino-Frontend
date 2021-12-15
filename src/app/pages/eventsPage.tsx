@@ -3,7 +3,7 @@ import {createTheme} from "@mui/material/styles";
 import Container from "@mui/material/Container";
 const theme = createTheme();
 
-function pricesOverviewPage(){
+function eventsPage(){
     return(
         <Container  sx={{bgcolor: 'background.paper',
             pt: 8,
@@ -12,8 +12,8 @@ function pricesOverviewPage(){
             marginTop: theme.spacing(12)
         }}
                     maxWidth="md">
-            <div>prices</div>
+            <div>events</div>
         </Container>
     )
 }
-export default pricesOverviewPage;
+export default eventsPage;
