@@ -100,9 +100,10 @@ function MenuBar() {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/programPage" element={<Homepage/>} />
-        <Route path="/eventsPage" element={<Homepage />} />
-        <Route path="/pricesOverviewPage" element={<Homepage />} />
-        <Route path="/newsPage" element={<Homepage />} />
+        <Route path="/eventsPage" element={<Homepage/>} />
+        <Route path="/pricesOverviewPage" element={<Homepage/>} />
+        <Route path="/newsPage" element={<Homepage/>} />
+        <Route path="/DetailsPage" element={<DetailsPage/>} />
       </Routes>
     </BrowserRouter>
   );
