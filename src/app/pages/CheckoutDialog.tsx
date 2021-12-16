@@ -18,7 +18,7 @@ import React, { useEffect, useState } from "react";
 import colours from "../config/colours";
 
 function CheckoutDialog(props: any) {
-  const { open, handleClose, selectedMovie } = props;
+  const { open, handleClose, selectedMovie, finishTransaction } = props;
   const [paymentMethod, setPaymentMethod] = useState("creditCard");
   const [movie, setMovie] = useState(selectedMovie);
 
@@ -44,8 +44,12 @@ function CheckoutDialog(props: any) {
         <DialogContentText id="scroll-dialog-description">
           <Grid container spacing={2}>
             <Grid item xs={5}>
-              <h2>Shrek</h2>
-              <p>12:00 Kino 3 2D OV</p>
+              <h2>{selectedMovie?.movie?.titel}</h2>
+              <p>
+                {selectedMovie?.startTime} Kino{" "}
+                {selectedMovie?.cinemaRoom?.story} Sprache:{" "}
+                {selectedMovie?.movie?.language}
+              </p>
               <Button style={{ marginBottom: "1rem" }} variant="outlined">
                 Verpflegung hinzufügen
               </Button>
@@ -173,7 +177,7 @@ function CheckoutDialog(props: any) {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Abbruch</Button>
-        <Button>Bezahlen</Button>
+        <Button onClick={finishTransaction}>Bezahlen</Button>
       </DialogActions>
     </Dialog>
   );
