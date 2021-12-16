@@ -7,38 +7,28 @@ import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import Movies from "./data";
+import {useQuery} from "react-query";
+import {useState} from "react";
 
 
 
 function MovieCard(){
 
-    /* // react hook for state handler
-    const [data , setData]=useState([])
 
-    // fetch Function
-    const getData=()=> {
-        fetch("../../../public/data.json", {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            }
-        )
-            .then(
-                function (res) {
-                    console.log(res)
-                    return res.json()
-                }).then(function (data) {
-            // store Data in State Data Variable
-            setData(data)
-        });
+    const apiUrl =
+        "https://wi2020seb-cinema-api-dev.azurewebsites.net/movie/getAll";
+
+
+    const { isLoading, error, data } = useQuery("Movies", () =>
+        fetch(apiUrl).then((res) => res.json())
+    );
+    console.log(isLoading, error, data);
+
+    const [filter, setFilter] = useState("");
+
+    const handleSearchChange = (e: any) => {
+        setFilter(e.target.value);
     }
-    useEffect(()=>{
-        getData()
-    },[]) */
-
-
 
     return(
         <Container sx={{
@@ -48,8 +38,9 @@ function MovieCard(){
             position: "relative"
         }} maxWidth="md">
             <Grid container spacing={4}>
-                {Movies.map((movie, key) => (
-                    <Grid item key={key} xs={12} sm={6} md={4}>
+                {data?.map((movie: any) => (
+
+                    <Grid item key={movie.id} xs={12} sm={6} md={4}>
                         <Card
                             sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                             <CardMedia
@@ -57,18 +48,19 @@ function MovieCard(){
                                 sx={{
                                      pt: '6%',
                                 }}
-                                image={movie.Images[0]}
+                                image={movie.pictureLink}
                                 alt="poster"/>
                             <CardContent sx={{ flexGrow: 1 }}>
                                 <Typography gutterBottom variant="h5" component="h2">
-                                    {movie.Title}
+                                    {movie.titel}
                                 </Typography>
                                 <Typography>
-                                    {movie.Runtime}  FSK {movie.FSK}
+                                    {movie.duration} Min      FSK {movie.fsk}
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <Button size="small">Tickets</Button>
+                                <Button size="small"
+                                        href="../pages/DetailsPage">Tickets</Button>
                             </CardActions>
                         </Card>
                     </Grid>
