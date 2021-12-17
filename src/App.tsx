@@ -1,17 +1,17 @@
-import React from "react";
-
-import Navbar from "./app/components/navbar"
+import React, { useState } from "react";
+import "./App.css";
 import { QueryClient, QueryClientProvider } from "react-query";
+import TestPage from "./app/pages/TestPage";
+import MenuBar from "./app/components/layouts/MenuBar";
 
 const queryClient = new QueryClient();
 
-
-export default function App() {
-    return (
-        <QueryClientProvider client={queryClient}>
-            <div>
-                <Navbar/>
-             </div>
-        </QueryClientProvider>
-    );
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <MenuBar />
+    </QueryClientProvider>
+  );
 }
+
+export default App;

@@ -1,10 +1,16 @@
 export default {
-    primaryColour: "#757575",
-    primaryLightColour: "#a4a4a4",
-    primaryDarkColour: "#494949",
-    secondaryColour: "#880e4f",
-    secondaryLightColour: "#bc477b",
-    secondaryDarkColour: "#560027",
-    primaryTextColour: "#ffffff",
-    secondaryTextColour: "#ffffff"
+  palette: {
+    primary: {
+      light: "#a4a4a4",
+      main: "#757575",
+      dark: "#494949",
+      text: "#ffffff",
+    },
+    secondary: {
+      light: "#bc477b",
+      main: "#880e4f",
+      dark: "#560027",
+      text: "#ffffff",
+    },
+  },
 };
