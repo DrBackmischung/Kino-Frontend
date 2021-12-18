@@ -8,9 +8,9 @@ import { Box, Container, Menu, MenuItem } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { useState } from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import Homepage from "../../pages/Homepage";
+import ProgrammPage from "../../pages/ProgramPage";
+import ComingSoon from "../../pages/ComingSoon";
 import DetailsPage from "../../pages/DetailsPage";
-import TestPage from "../../pages/TestPage";
 
 function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -25,7 +25,7 @@ function MenuBar() {
   const [pages, setPages] = useState([
     { name: "Programm", link: "/programPage" },
     { name: "Events", link: "/eventsPage" },
-    { name: "PreisÃ¼bersicht", link: "/pricesOverviewPage" },
+    { name: "Preisübersicht", link: "/pricesOverviewPage" },
     { name: "News", link: "/newsPage" },
   ]);
 
@@ -99,11 +99,11 @@ function MenuBar() {
         </Container>
       </AppBar>
       <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/programPage" element={<TestPage />} />
-        <Route path="/eventsPage" element={<Homepage />} />
-        <Route path="/pricesOverviewPage" element={<Homepage />} />
-        <Route path="/newsPage" element={<Homepage />} />
+        <Route path="/" element={<ComingSoon />} />
+        <Route path="/programPage" element={<ProgrammPage />} />
+        <Route path="/eventsPage" element={<ComingSoon />} />
+        <Route path="/pricesOverviewPage" element={<ComingSoon />} />
+        <Route path="/newsPage" element={<ComingSoon />} />
         <Route path="/DetailsPage" element={<DetailsPage />} />
       </Routes>
     </BrowserRouter>

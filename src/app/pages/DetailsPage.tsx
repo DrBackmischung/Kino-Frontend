@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MovieDetails from "../components/MovieDetails";
 import ShowPicker from "../components/ShowPicker";
 import {
@@ -11,23 +11,37 @@ import {
 import { createTheme } from "@mui/material/styles";
 import { useQuery } from "react-query";
 import palette from "../config/colours";
-import SeatBookingDialog from "./SeatBookingDialog";
+import SeatBookingDialog from "../components/SeatBookingDialog";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import IconButton from "@mui/material/IconButton";
+import { useLocation } from "react-router-dom";
+import { LineAxisOutlined } from "@mui/icons-material";
+import ManageCheckout from "../components/ManageCheckout";
 
 function DetailsPage(props: any) {
-  const { movieId } = props;
-
-  const [open, setOpen] = useState<boolean>(false);
-
+  const [movieId, setMovieId] = useState();
+  const [openSeatBooking, setOpenSeatBooking] = useState<boolean>(false);
+  const [selectedShow, setSelectedShow] = useState();
+  const { state } = useLocation();
   let navigate = useNavigate();
-
   const apiUrlAll = `https://wi2020seb-cinema-api-dev.azurewebsites.net/movie/${movieId}`;
-
-  const { isLoading, error, data } = useQuery("movie", () =>
-    fetch(apiUrlAll).then((res) => res.json())
+  const { isLoading, error, data, refetch } = useQuery(
+    "movie",
+    () => fetch(apiUrlAll).then((res) => res.json()),
+    {
+      refetchOnWindowFocus: false,
+      enabled: false,
+    }
   );
+  useEffect(() => {
+    setMovieId(state.movieId);
+  }, [state?.movieId]);
+  useEffect(() => {
+    if (movieId) {
+      refetch();
+    }
+  }, [movieId]);
 
   if (isLoading) {
     return (
@@ -39,10 +53,6 @@ function DetailsPage(props: any) {
   }
 
   const theme = createTheme(palette);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const goBack = () => {
     navigate(-1);
@@ -68,7 +78,7 @@ function DetailsPage(props: any) {
                 sx={{
                   pt: "6%",
                 }}
-                src={data.pictureLink}
+                src={data?.pictureLink}
                 alt="poster"
               />
             </div>
@@ -80,12 +90,16 @@ function DetailsPage(props: any) {
               }}
             >
               <MovieDetails selectedMovie={data} />
-              <ShowPicker setOpen={setOpen} movieId={movieId} />
+              <ShowPicker
+                setOpenSeatBooking={setOpenSeatBooking}
+                movieId={movieId}
+                setSelectedShow={setSelectedShow}
+              />
             </Grid>
             <br />
           </Grid>
         </Container>
-        <SeatBookingDialog open={open} handleClose={handleClose} />
+        <ManageCheckout show={selectedShow} open={openSeatBooking} />
       </Container>
     </ThemeProvider>
   );

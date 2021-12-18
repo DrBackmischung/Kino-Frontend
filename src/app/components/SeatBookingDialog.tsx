@@ -23,17 +23,24 @@ function SeatBookingDialog(props: any) {
     proceedToCheckout,
     selectedSeats,
     setSelectedSeats,
+    priceQuery,
   } = props;
   const [seatsToRender, setSeatsToRender] = useState([]);
-  const cinemaRoom = selectedShow.cinemaRoom.cinemaRoomSeatingPlan;
-  const apiUrlSeats = `https://wi2020seb-cinema-api-dev.azurewebsites.net/show/${selectedShow.id}/seats`;
-  const apiUrlPrice = `https://wi2020seb-cinema-api-dev.azurewebsites.net/price/getAll`;
-  const seatsQuery = useQuery("seatsData", () =>
-    fetch(apiUrlSeats).then((res) => res.json())
+  const cinemaRoom = selectedShow?.cinemaRoom?.cinemaRoomSeatingPlan;
+  const apiUrlSeats = `https://wi2020seb-cinema-api-dev.azurewebsites.net/show/${selectedShow?.id}/seats`;
+  const seatsQuery = useQuery(
+    "seatsData",
+    () => fetch(apiUrlSeats).then((res) => res.json()),
+    {
+      refetchOnWindowFocus: false,
+      enabled: false,
+    }
   );
-  const priceQuery: any = useQuery("priceData", () =>
-    fetch(apiUrlPrice).then((res) => res.json())
-  );
+  useEffect(() => {
+    if (selectedShow?.id !== undefined) {
+      seatsQuery.refetch();
+    }
+  }, [selectedShow?.id]);
 
   const preparedSeatsForRender: any = (seats: any, numberOfRows: any) => {
     if (seatsQuery?.data === undefined) return;
@@ -53,7 +60,7 @@ function SeatBookingDialog(props: any) {
 
   useEffect(() => {
     setSeatsToRender(
-      preparedSeatsForRender(seatsQuery.data, cinemaRoom.reihen)
+      preparedSeatsForRender(seatsQuery.data, cinemaRoom?.reihen)
     );
   }, [seatsQuery?.data]);
 

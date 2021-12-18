@@ -27,19 +27,16 @@ function CheckoutDialog(props: any) {
     selectedShow,
     selectedSeats,
     user,
+    priceQuery,
   } = props;
   const [paymentMethod, setPaymentMethod] = useState("creditCard");
-  const apiUrlPrice = `https://wi2020seb-cinema-api-dev.azurewebsites.net/price/getAll`;
-  const priceQuery: any = useQuery("priceData", () =>
-    fetch(apiUrlPrice).then((res) => res.json())
-  );
 
   const handleRadioChange = (e: any) => {
     setPaymentMethod(e.target.value);
   };
 
   const blockSeat = () => {
-    var ticketsToDownload: any = [];
+    var ticketsToDownload: any = "";
     const apiUrlBlockSeat = `https://wi2020seb-cinema-api-dev.azurewebsites.net/ticket/add`;
     selectedSeats?.map((item: any) => {
       const requestOptions = {
@@ -58,11 +55,20 @@ function CheckoutDialog(props: any) {
           return;
         }
         return response.json().then((data) => {
-          console.log(data);
-          ticketsToDownload.push(data);
+          console.log(data, data.toString());
+          ticketsToDownload = ticketsToDownload + " " + data.toString();
         });
       });
     });
+    console.log(ticketsToDownload);
+    finishTransaction();
+    var dataStr =
+      "data:text/json;charset=utf-8," +
+      encodeURIComponent(JSON.stringify(ticketsToDownload));
+    var dlAnchorElem: any = document.getElementById("downloadAnchorElem");
+    dlAnchorElem.setAttribute("href", dataStr);
+    dlAnchorElem.setAttribute("download", "scene.json");
+    dlAnchorElem.click();
   };
 
   return (

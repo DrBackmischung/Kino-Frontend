@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import CheckoutDialog from "./CheckoutDialog";
+import CheckoutDialog from "../components/CheckoutDialog";
 import Button from "@mui/material/Button";
-import SeatBookingDialog from "./SeatBookingDialog";
+import SeatBookingDialog from "../components/SeatBookingDialog";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
