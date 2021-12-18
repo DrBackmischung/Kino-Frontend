@@ -10,6 +10,7 @@ import { useState } from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import Homepage from "../../pages/Homepage";
 import DetailsPage from "../../pages/DetailsPage";
+import TestPage from "../../pages/TestPage";
 
 function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -99,11 +100,11 @@ function MenuBar() {
       </AppBar>
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/programPage" element={<Homepage/>} />
-        <Route path="/eventsPage" element={<Homepage/>} />
-        <Route path="/pricesOverviewPage" element={<Homepage/>} />
-        <Route path="/newsPage" element={<Homepage/>} />
-        <Route path="/DetailsPage" element={<DetailsPage/>} />
+        <Route path="/programPage" element={<TestPage />} />
+        <Route path="/eventsPage" element={<Homepage />} />
+        <Route path="/pricesOverviewPage" element={<Homepage />} />
+        <Route path="/newsPage" element={<Homepage />} />
+        <Route path="/DetailsPage" element={<DetailsPage />} />
       </Routes>
     </BrowserRouter>
   );

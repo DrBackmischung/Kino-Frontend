@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import CheckoutDialog from "./CheckoutDialog";
 import Button from "@mui/material/Button";
 import SeatBookingDialog from "./SeatBookingDialog";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import Container from "@mui/material/Container";
 import { useQuery } from "react-query";
 
 const testMovie = [
@@ -134,11 +137,22 @@ const testMovie = [
     },
   },
 ];
+const user = {
+  id: "e3e13a2a-f792-4d50-88fc-6bc05514868c",
+  userName: null,
+  name: "Mueller",
+  firstName: "Tomke",
+  email: "jost-tomke-mueller@t-online.de",
+  password: null,
+  role: null,
+};
 
+const theme = createTheme();
 function TestPage() {
   const [openCheckout, setOpenCheckout] = useState(false);
   const [openSeatBooking, setOpenSeatBooking] = useState(false);
   const [selectedShow, setSelectedShow] = useState(testMovie[0]);
+  const [selectedSeats, setSelectedSeats] = useState([]);
 
   const handleClickOpenCheckout = () => {
     setOpenCheckout(true);
@@ -157,20 +171,40 @@ function TestPage() {
     setOpenSeatBooking(false);
   };
   return (
-    <>
-      <Button onClick={handleClickOpenBooking}>Dialog öffnen!</Button>
-      <CheckoutDialog
-        open={openCheckout}
-        handleClose={handleCloseCheckout}
-        finishTransaction={handleCloseCheckout}
-      />
-      <SeatBookingDialog
-        open={openSeatBooking}
-        handleClose={handleCloseBooking}
-        selectedShow={selectedShow}
-        proceedToCheckout={handleClickOpenCheckout}
-      />
-    </>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <main>
+        <Container
+          sx={{
+            bgcolor: "background.paper",
+            pt: 8,
+            pb: 6,
+            position: "relative",
+            marginTop: theme.spacing(12),
+          }}
+          maxWidth="md"
+        >
+          <Button onClick={handleClickOpenBooking}>Dialog öffnen!</Button>
+          <CheckoutDialog
+            open={openCheckout}
+            handleClose={handleCloseCheckout}
+            finishTransaction={handleCloseCheckout}
+            user={user}
+            selectedShow={selectedShow}
+            selectedSeats={selectedSeats}
+          />
+          <SeatBookingDialog
+            open={openSeatBooking}
+            handleClose={handleCloseBooking}
+            selectedShow={selectedShow}
+            proceedToCheckout={handleClickOpenCheckout}
+            userId={user.id}
+            selectedSeats={selectedSeats}
+            setSelectedSeats={setSelectedSeats}
+          />
+        </Container>
+      </main>
+    </ThemeProvider>
   );
 }
 

@@ -16,13 +16,23 @@ import { AnyMxRecord, AnyRecord } from "dns";
 import { ConstructionOutlined } from "@mui/icons-material";
 
 function SeatBookingDialog(props: any) {
-  const { open, handleClose, selectedShow, proceedToCheckout } = props;
+  const {
+    open,
+    handleClose,
+    selectedShow,
+    proceedToCheckout,
+    selectedSeats,
+    setSelectedSeats,
+  } = props;
   const [seatsToRender, setSeatsToRender] = useState([]);
-  const [selectedSeats, setSelectedSeats] = useState([]);
   const cinemaRoom = selectedShow.cinemaRoom.cinemaRoomSeatingPlan;
   const apiUrlSeats = `https://wi2020seb-cinema-api-dev.azurewebsites.net/show/${selectedShow.id}/seats`;
+  const apiUrlPrice = `https://wi2020seb-cinema-api-dev.azurewebsites.net/price/getAll`;
   const seatsQuery = useQuery("seatsData", () =>
     fetch(apiUrlSeats).then((res) => res.json())
+  );
+  const priceQuery: any = useQuery("priceData", () =>
+    fetch(apiUrlPrice).then((res) => res.json())
   );
 
   const preparedSeatsForRender: any = (seats: any, numberOfRows: any) => {
@@ -47,30 +57,14 @@ function SeatBookingDialog(props: any) {
     );
   }, [seatsQuery?.data]);
 
-  const handleSeatChecked = (e: any) => {
-    console.log(e);
-    setSelectedSeats((prevValues: any) => prevValues?.concat(e));
-  };
-
-  const requestOptions = {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      userID: "e3e13a2a-f792-4d50-88fc-6bc05514868c",
-      seatID: "b86c9f4c-b339-4414-8e50-968b73a73b4e",
-      priceID: "b37f1de2-44cd-45ec-bbb9-0db1175f0343",
-      showID: "118e31db-145a-403d-834c-a683de7ddce2",
-    }),
-  };
-
-  const blockSeat = () => {
-    const apiUrl = `https://wi2020seb-cinema-api-dev.azurewebsites.net/ticket/add`;
-    fetch(apiUrl, requestOptions).then((response) => {
-      if (!response.ok) {
-        console.log(response.statusText);
-      }
-      console.log(response.json());
-    });
+  const handleSeatChecked = (e: any, seatId: any) => {
+    if (e.target.checked) {
+      setSelectedSeats((prevValues: any) => prevValues?.concat(seatId));
+    } else {
+      setSelectedSeats((prevValues: any) =>
+        prevValues.filter((item: any) => item !== seatId)
+      );
+    }
   };
 
   return (
@@ -92,7 +86,8 @@ function SeatBookingDialog(props: any) {
             {selectedShow?.movie?.language}
           </p>
           <strong>
-            {selectedSeats?.length} Sitze {selectedSeats?.length * 5}€
+            {selectedSeats?.length} Sitze{" "}
+            {selectedSeats?.length * priceQuery?.data?.[0]?.price}€
           </strong>
           <div
             style={{
@@ -130,13 +125,12 @@ function SeatBookingDialog(props: any) {
                     disabled={seat.blocked}
                     key={`${seat.id}`}
                     style={{
-                      height: "20px",
-                      width: "20px",
-                      margin: ".03rem",
+                      height: "19.62px",
+                      width: "19.62px",
                     }}
                     icon={<Person />}
                     checkedIcon={<Person />}
-                    onChange={() => handleSeatChecked(seat.id)}
+                    onChange={(e) => handleSeatChecked(e, seat.id)}
                   />
                 ))}
               </div>
@@ -146,7 +140,7 @@ function SeatBookingDialog(props: any) {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Abbruch</Button>
-        <Button onClick={blockSeat}>Reservieren</Button>
+        <Button onClick={proceedToCheckout}>Reservieren</Button>
       </DialogActions>
     </Dialog>
   );
