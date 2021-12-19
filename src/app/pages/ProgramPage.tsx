@@ -6,7 +6,7 @@ import MovieCard from "../components/MovieCard";
 
 const theme = createTheme();
 
-function Homepage() {
+function ProgrammPage() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -18,4 +18,4 @@ function Homepage() {
   );
 }
 
-export default Homepage;
+export default ProgrammPage;

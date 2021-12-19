@@ -1,3 +1,4 @@
+import { RestaurantMenuTwoTone } from "@mui/icons-material";
 import {
   Button,
   Dialog,
@@ -15,20 +16,61 @@ import {
   Radio,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import colours from "../config/colours";
 
 function CheckoutDialog(props: any) {
-  const { open, handleClose, selectedMovie, finishTransaction } = props;
+  const {
+    open,
+    handleClose,
+    finishTransaction,
+    selectedShow,
+    selectedSeats,
+    user,
+    priceQuery,
+  } = props;
   const [paymentMethod, setPaymentMethod] = useState("creditCard");
-  const [movie, setMovie] = useState(selectedMovie);
-
-  useEffect(() => {
-    setMovie(selectedMovie);
-  }, [selectedMovie]);
 
   const handleRadioChange = (e: any) => {
     setPaymentMethod(e.target.value);
   };
+
+  const blockSeat = () => {
+    var ticketsToDownload: any = "";
+    const apiUrlBlockSeat = `https://wi2020seb-cinema-api-dev.azurewebsites.net/ticket/add`;
+    selectedSeats?.map((item: any) => {
+      const requestOptions = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userID: user.id,
+          seatID: item,
+          priceID: priceQuery?.data?.[0]?.id,
+          showID: selectedShow.id,
+        }),
+      };
+      fetch(apiUrlBlockSeat, requestOptions).then((response) => {
+        if (!response.ok) {
+          console.log(response.statusText);
+          return;
+        }
+        return response.json().then((data) => {
+          console.log(data, data.toString());
+          ticketsToDownload = ticketsToDownload + " " + data.toString();
+        });
+      });
+    });
+    console.log(ticketsToDownload);
+    finishTransaction();
+    var dataStr =
+      "data:text/json;charset=utf-8," +
+      encodeURIComponent(JSON.stringify(ticketsToDownload));
+    var dlAnchorElem: any = document.getElementById("downloadAnchorElem");
+    dlAnchorElem.setAttribute("href", dataStr);
+    dlAnchorElem.setAttribute("download", "scene.json");
+    dlAnchorElem.click();
+  };
+
   return (
     <Dialog
       open={open}
@@ -44,35 +86,39 @@ function CheckoutDialog(props: any) {
         <DialogContentText id="scroll-dialog-description">
           <Grid container spacing={2}>
             <Grid item xs={5}>
-              <h2>{selectedMovie?.movie?.titel}</h2>
+              <h2>{selectedShow?.movie?.titel}</h2>
               <p>
-                {selectedMovie?.startTime} Kino{" "}
-                {selectedMovie?.cinemaRoom?.story} Sprache:{" "}
-                {selectedMovie?.movie?.language}
+                {selectedShow?.startTime} Kino 3
+                <br />
+                Sprache: {selectedShow?.movie?.language}
               </p>
               <Button style={{ marginBottom: "1rem" }} variant="outlined">
                 Verpflegung hinzufügen
               </Button>
               <Box sx={{ p: 2, border: "1px solid grey" }}>
                 <Grid container spacing={1}>
-                  <Grid item xs={10}>
-                    <p>X Sitzplätze</p>
-                    <p>X Nachos(groß)</p>
-                    <p>X Coca Cola (0,5)</p>
+                  <Grid item xs={8}>
+                    <p>{selectedSeats.length} Sitzplätze</p>
+                    <p>2 Nachos(groß)</p>
+                    <p>2 Cola (0,5)</p>
                   </Grid>
-                  <Grid item xs={2}>
-                    <p style={{ textAlign: "right" }}>XX€</p>
-                    <p style={{ textAlign: "right" }}>XX€</p>
-                    <p style={{ textAlign: "right" }}>XX€</p>
+                  <Grid item xs={4}>
+                    <p style={{ textAlign: "right" }}>
+                      {selectedSeats.length * priceQuery?.data?.[0]?.price}€
+                    </p>
+                    <p style={{ textAlign: "right" }}>10€</p>
+                    <p style={{ textAlign: "right" }}>5€</p>
                   </Grid>
                 </Grid>
               </Box>
               <Grid container spacing={2}>
-                <Grid item xs={10}>
+                <Grid item xs={8}>
                   <p>Gesamt:</p>
                 </Grid>
-                <Grid item xs={2}>
-                  <p>X€</p>
+                <Grid item xs={4}>
+                  <p>
+                    {selectedSeats.length * priceQuery?.data?.[0]?.price + 15}€
+                  </p>
                 </Grid>
               </Grid>
             </Grid>
@@ -85,6 +131,7 @@ function CheckoutDialog(props: any) {
                 id="nameInput"
                 label="Name"
                 variant="standard"
+                defaultValue={`${user.firstName} ${user.name}`}
               />
               <TextField
                 fullWidth
@@ -97,6 +144,7 @@ function CheckoutDialog(props: any) {
                 id="emailInput"
                 label="E-Mail"
                 variant="standard"
+                defaultValue={user.email}
               />
               <FormControl style={{ marginTop: "1rem" }} component="fieldset">
                 <FormLabel component="legend">
@@ -177,7 +225,7 @@ function CheckoutDialog(props: any) {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Abbruch</Button>
-        <Button onClick={finishTransaction}>Bezahlen</Button>
+        <Button onClick={blockSeat}>Bezahlen</Button>
       </DialogActions>
     </Dialog>
   );

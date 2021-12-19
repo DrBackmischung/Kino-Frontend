@@ -16,15 +16,14 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import Box from "@mui/material/Box";
 
 function ShowPicker(props: any) {
-  const { setOpen, movieId } = props;
+  const { setOpenSeatBooking, movieId, setSelectedShow } = props;
 
-  const [date, setDate] = useState<Date | null>(new Date("2021-12-16"));
-
+  const [date, setDate] = useState<Date | null>(new Date());
   const [filteredData, setFilteredData] = useState<any>(null);
 
   useEffect(() => {
     setFilteredData(() => {
-      return data?.filter((show: any) => {
+      return data?.filter?.((show: any) => {
         const showDateFormatted = new Date(show.showDate).toLocaleDateString(
           undefined,
           {
@@ -48,9 +47,17 @@ function ShowPicker(props: any) {
 
   const apiUrlAll = `https://wi2020seb-cinema-api-dev.azurewebsites.net/movie/${movieId}/shows`;
 
-  const { isLoading, error, data } = useQuery("shows", () =>
-    fetch(apiUrlAll).then((res) => res.json())
+  const { isLoading, error, data, refetch } = useQuery(
+    "shows",
+    () => fetch(apiUrlAll).then((res) => res.json()),
+    {
+      refetchOnWindowFocus: false,
+      enabled: false,
+    }
   );
+  useEffect(() => {
+    refetch();
+  }, [movieId]);
 
   if (isLoading) {
     return (
@@ -65,9 +72,9 @@ function ShowPicker(props: any) {
     setDate(selectedDate);
   };
 
-  function openDialog(showId: string) {
-    setOpen(true);
-    //setSelectedShow(movieId)
+  function openDialog(show: any) {
+    setOpenSeatBooking(true);
+    setSelectedShow(show);
   }
 
   return (
@@ -102,7 +109,7 @@ function ShowPicker(props: any) {
                 <Button
                   key={`${item.id}`}
                   onClick={() => {
-                    openDialog(`${item.id}`);
+                    openDialog(item);
                   }}
                   variant="contained"
                 >
