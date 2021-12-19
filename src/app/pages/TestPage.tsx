@@ -5,7 +5,6 @@ import SeatBookingDialog from "../components/SeatBookingDialog";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
-import { useQuery } from "react-query";
 
 const testMovie = [
   {
@@ -140,9 +139,9 @@ const testMovie = [
 const user = {
   id: "e3e13a2a-f792-4d50-88fc-6bc05514868c",
   userName: null,
-  name: "Mueller",
-  firstName: "Tomke",
-  email: "jost-tomke-mueller@t-online.de",
+  name: "Mustermann",
+  firstName: "Max",
+  email: "max.mustermann@t-online.de",
   password: null,
   role: null,
 };

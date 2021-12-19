@@ -12,7 +12,7 @@ export default function BasicSelect(props: any) {
   const {location} = props;
 
   const apiUrl =
-      "https://wi2020seb-cinema-api-dev.azurewebsites.net/city/getAll";
+      "https://wi2020seb-cinema-api.azurewebsites.net/city/getAll";
 
 
   const { isLoading, error, data } = useQuery("Cities", () =>

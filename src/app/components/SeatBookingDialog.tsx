@@ -10,10 +10,7 @@ import {
 } from "@mui/material";
 import Person from "@mui/icons-material/Person";
 import React, { useEffect, useState } from "react";
-import colours from "../config/Colours";
 import { useQuery } from "react-query";
-import { AnyMxRecord, AnyRecord } from "dns";
-import { ConstructionOutlined } from "@mui/icons-material";
 
 function SeatBookingDialog(props: any) {
   const {
@@ -27,7 +24,7 @@ function SeatBookingDialog(props: any) {
   } = props;
   const [seatsToRender, setSeatsToRender] = useState([]);
   const cinemaRoom = selectedShow?.cinemaRoom?.cinemaRoomSeatingPlan;
-  const apiUrlSeats = `https://wi2020seb-cinema-api-dev.azurewebsites.net/show/${selectedShow?.id}/seats`;
+  const apiUrlSeats = `https://wi2020seb-cinema-api.azurewebsites.net/show/${selectedShow?.id}/seats`;
   const seatsQuery = useQuery(
     "seatsData",
     () => fetch(apiUrlSeats).then((res) => res.json()),

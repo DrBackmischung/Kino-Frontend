@@ -45,7 +45,7 @@ function ShowPicker(props: any) {
     });
   }, [date]);
 
-  const apiUrlAll = `https://wi2020seb-cinema-api-dev.azurewebsites.net/movie/${movieId}/shows`;
+  const apiUrlAll = `https://wi2020seb-cinema-api.azurewebsites.net/movie/${movieId}/shows`;
 
   const { isLoading, error, data, refetch } = useQuery(
     "shows",

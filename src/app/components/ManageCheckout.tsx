@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
 import CheckoutDialog from "../components/CheckoutDialog";
-import Button from "@mui/material/Button";
 import SeatBookingDialog from "../components/SeatBookingDialog";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import Container from "@mui/material/Container";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 const user = {
   id: "e3e13a2a-f792-4d50-88fc-6bc05514868c",
   userName: null,
-  name: "Mueller",
-  firstName: "Tomke",
-  email: "jost-tomke-mueller@t-online.de",
+  name: "Mustermann",
+  firstName: "Max",
+  email: "max.mustermann@t-online.de",
   password: null,
   role: null,
 };
@@ -26,7 +23,7 @@ function ManageCheckout(props: any) {
   const [openSeatBooking, setOpenSeatBooking] = useState(false);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [selectedShow, setSelectedShow] = useState();
-  const apiUrlPrice = `https://wi2020seb-cinema-api-dev.azurewebsites.net/price/getAll`;
+  const apiUrlPrice = `https://wi2020seb-cinema-api.azurewebsites.net/price/getAll`;
   const priceQuery: any = useQuery("priceData", () =>
     fetch(apiUrlPrice).then((res) => res.json())
   );

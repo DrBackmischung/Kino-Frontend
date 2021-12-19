@@ -11,12 +11,10 @@ import {
 import { createTheme } from "@mui/material/styles";
 import { useQuery } from "react-query";
 import palette from "../config/Colours";
-import SeatBookingDialog from "../components/SeatBookingDialog";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import IconButton from "@mui/material/IconButton";
 import { useLocation } from "react-router-dom";
-import { LineAxisOutlined } from "@mui/icons-material";
 import ManageCheckout from "../components/ManageCheckout";
 
 function DetailsPage(props: any) {
@@ -25,7 +23,7 @@ function DetailsPage(props: any) {
   const [selectedShow, setSelectedShow] = useState();
   const { state } = useLocation();
   let navigate = useNavigate();
-  const apiUrlAll = `https://wi2020seb-cinema-api-dev.azurewebsites.net/movie/${movieId}`;
+  const apiUrlAll = `https://wi2020seb-cinema-api.azurewebsites.net/movie/${movieId}`;
   const { isLoading, error, data, refetch } = useQuery(
     "movie",
     () => fetch(apiUrlAll).then((res) => res.json()),

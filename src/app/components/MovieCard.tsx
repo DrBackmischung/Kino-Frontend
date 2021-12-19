@@ -9,7 +9,6 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import DetailsPage from "../pages/DetailsPage";
 
 function MovieCard(props: any) {
     const {filter} = props;
@@ -21,7 +20,7 @@ function MovieCard(props: any) {
     }
 
     const apiUrl =
-        "https://wi2020seb-cinema-api-dev.azurewebsites.net/movie/getAll";
+        "https://wi2020seb-cinema-api.azurewebsites.net/movie/getAll";
 
     const { isLoading, error, data } = useQuery("Movies", () =>
         fetch(apiUrl).then((res) => res.json())

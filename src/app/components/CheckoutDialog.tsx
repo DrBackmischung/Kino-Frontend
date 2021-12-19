@@ -37,7 +37,7 @@ function CheckoutDialog(props: any) {
 
   const blockSeat = () => {
     var ticketsToDownload: any = "";
-    const apiUrlBlockSeat = `https://wi2020seb-cinema-api-dev.azurewebsites.net/ticket/add`;
+    const apiUrlBlockSeat = `https://wi2020seb-cinema-api.azurewebsites.net/ticket/add`;
     selectedSeats?.map((item: any) => {
       const requestOptions = {
         method: "PUT",
