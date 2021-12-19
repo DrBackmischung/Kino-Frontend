@@ -4,30 +4,40 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import {useQuery} from "react-query";
 
-export default function BasicSelect() {
-  const [location, setLocation] = React.useState("");
+export default function BasicSelect(props: any) {
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setLocation(event.target.value as string);
-  };
+  const {handleSelectChange} = props;
+  const {location} = props;
+
+  const apiUrl =
+      "https://wi2020seb-cinema-api-dev.azurewebsites.net/city/getAll";
+
+
+  const { isLoading, error, data } = useQuery("Cities", () =>
+      fetch(apiUrl).then((res) => res.json())
+  );
+
+
 
   return (
-    <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id="simple-select-label">Location</InputLabel>
-        <Select
-          labelId="simple-select-label"
-          id="simple-select"
-          value={location}
-          label="Location"
-          onChange={handleChange}
-        >
-          <MenuItem value={10}>Mannheim</MenuItem>
-          <MenuItem value={20}>Berlin</MenuItem>
-          <MenuItem value={30}>Heidelberg</MenuItem>
-        </Select>
-      </FormControl>
-    </Box>
+      <Box sx={{ minWidth: 120}}>
+        <FormControl fullWidth>
+          <InputLabel id="simple-select-label">Location</InputLabel>
+          <Select
+              labelId="simple-select-label"
+              id="simple-select"
+              value={location}
+              label="Location"
+              onChange={handleSelectChange}
+
+          >
+            {data?.map((location: any) => (
+                <MenuItem value={location}> {location.city}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
   );
 }
