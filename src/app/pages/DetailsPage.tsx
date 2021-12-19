@@ -21,7 +21,7 @@ function DetailsPage(props: any) {
   const [movieId, setMovieId] = useState();
   const [openSeatBooking, setOpenSeatBooking] = useState<boolean>(false);
   const [selectedShow, setSelectedShow] = useState();
-  const { state } = useLocation();
+  const { state } : any = useLocation();
   let navigate = useNavigate();
   const apiUrlAll = `https://wi2020seb-cinema-api.azurewebsites.net/movie/${movieId}`;
   const { isLoading, error, data, refetch } = useQuery(

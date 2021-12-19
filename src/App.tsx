@@ -1,18 +1,16 @@
 import React from "react";
+import "./App.css";
+import { QueryClient, QueryClientProvider } from "react-query";
+import MenuBar from "./app/components/layouts/MenuBar";
 
-import Homepage from './app/pages/homepage';
-import './App.css';
-import Header from './app/components/layouts/Header';
-import NavBar from './app/components/layouts/NavBar';
+const queryClient = new QueryClient();
 
 function App() {
-  return (
-    <div className='App'>
-      <Header/>
-      <NavBar/>
-      <Homepage />
-    </div>
-  );
+    return (
+        <QueryClientProvider client={queryClient}>
+            <MenuBar />
+        </QueryClientProvider>
+    );
 }
 
 export default App;
