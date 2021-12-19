@@ -1,3 +1,4 @@
+/* eslint-disable */
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,7 +9,7 @@ import { Box, Container, Menu, MenuItem } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { useState } from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import ProgrammPage from "../../pages/ProgramPage";
+import ProgramPage from "../../pages/ProgramPage";
 import ComingSoon from "../../pages/ComingSoon";
 import DetailsPage from "../../pages/DetailsPage";
 
@@ -100,7 +101,7 @@ function MenuBar() {
             </AppBar>
             <Routes>
                 <Route path="/" element={<ComingSoon />} />
-                <Route path="/programPage" element={<ProgrammPage />} />
+                <Route path="/programPage" element={<ProgramPage />} />
                 <Route path="/eventsPage" element={<ComingSoon />} />
                 <Route path="/pricesOverviewPage" element={<ComingSoon />} />
                 <Route path="/newsPage" element={<ComingSoon />} />

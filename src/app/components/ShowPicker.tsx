@@ -1,3 +1,4 @@
+/* eslint-disable */
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
@@ -47,7 +48,7 @@ function ShowPicker(props: any) {
 
   const apiUrlAll = `https://wi2020seb-cinema-api.azurewebsites.net/movie/${movieId}/shows`;
 
-  const { isLoading, error, data, refetch } = useQuery(
+  const { isLoading, data, refetch } = useQuery(
     "shows",
     () => fetch(apiUrlAll).then((res) => res.json()),
     {

@@ -35,6 +35,7 @@ function CheckoutDialog(props: any) {
   const blockSeat = () => {
     var ticketsToDownload: any = "";
     const apiUrlBlockSeat = `https://wi2020seb-cinema-api.azurewebsites.net/ticket/add`;
+    // eslint-disable-next-line
     selectedSeats?.map((item: any) => {
       const requestOptions = {
         method: "PUT",

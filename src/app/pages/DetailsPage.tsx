@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from "react";
 import MovieDetails from "../components/MovieDetails";
 import ShowPicker from "../components/ShowPicker";
@@ -24,7 +25,7 @@ function DetailsPage(props: any) {
   const { state } : any = useLocation();
   let navigate = useNavigate();
   const apiUrlAll = `https://wi2020seb-cinema-api.azurewebsites.net/movie/${movieId}`;
-  const { isLoading, error, data, refetch } = useQuery(
+  const { isLoading, data, refetch } = useQuery(
     "movie",
     () => fetch(apiUrlAll).then((res) => res.json()),
     {
