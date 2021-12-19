@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import Person from "@mui/icons-material/Person";
 import React, { useEffect, useState } from "react";
-import colours from "../config/colours";
+import colours from "../config/Colours";
 import { useQuery } from "react-query";
 import { AnyMxRecord, AnyRecord } from "dns";
 import { ConstructionOutlined } from "@mui/icons-material";

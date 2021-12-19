@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import colours from "../config/colours";
+import colours from "../config/Colours";
 
 function CheckoutDialog(props: any) {
   const {

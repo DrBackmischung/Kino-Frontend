@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { useQuery } from "react-query";
-import palette from "../config/colours";
+import palette from "../config/Colours";
 import SeatBookingDialog from "../components/SeatBookingDialog";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
