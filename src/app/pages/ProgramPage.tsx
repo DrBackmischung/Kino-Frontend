@@ -8,7 +8,7 @@ import {SelectChangeEvent} from "@mui/material/Select";
 
 const theme = createTheme();
 
-function ProgrammPage() {
+function ProgramPage() {
     const [filter, setFilter] = useState("");
 
     const handleSearchChange = (e: any) => {
@@ -32,4 +32,4 @@ function ProgrammPage() {
     );
 }
 
-export default ProgrammPage;
+export default ProgramPage;

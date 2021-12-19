@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from "react";
 import CheckoutDialog from "../components/CheckoutDialog";
 import SeatBookingDialog from "../components/SeatBookingDialog";

@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 import {useQuery} from "react-query";
 
 export default function BasicSelect(props: any) {
@@ -14,12 +14,9 @@ export default function BasicSelect(props: any) {
   const apiUrl =
       "https://wi2020seb-cinema-api.azurewebsites.net/city/getAll";
 
-
-  const { isLoading, error, data } = useQuery("Cities", () =>
+  const { data } = useQuery("Cities", () =>
       fetch(apiUrl).then((res) => res.json())
   );
-
-
 
   return (
       <Box sx={{ minWidth: 120}}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
@@ -22,7 +22,7 @@ function MovieCard(props: any) {
     const apiUrl =
         "https://wi2020seb-cinema-api.azurewebsites.net/movie/getAll";
 
-    const { isLoading, error, data } = useQuery("Movies", () =>
+    const { data } = useQuery("Movies", () =>
         fetch(apiUrl).then((res) => res.json())
     );
 
