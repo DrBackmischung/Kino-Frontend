@@ -1,4 +1,3 @@
-import { RestaurantMenuTwoTone } from "@mui/icons-material";
 import {
   Button,
   Dialog,
@@ -15,9 +14,7 @@ import {
   FormControlLabel,
   Radio,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import colours from "../config/Colours";
+import React, { useState } from "react";
 
 function CheckoutDialog(props: any) {
   const {
