@@ -4,9 +4,9 @@
 name: Build and deploy Node.js app to Azure Web App - wi2020seb-cinema-dev
 
 on:
-  push:
-    branches:
-      - dev
+#  push:
+#    branches:
+#      - dev
   workflow_dispatch:
 
 jobs:
