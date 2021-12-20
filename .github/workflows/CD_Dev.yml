@@ -4,9 +4,9 @@
 name: CD
 
 on:
-  push:
-    branches:
-      - dev
+#  push:
+#    branches:
+#      - dev
   workflow_dispatch:
 
 jobs:
