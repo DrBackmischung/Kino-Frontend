@@ -1,5 +1,5 @@
-/* eslint-disable */
-import * as React from "react";
+// eslint-disable-next-line
+import React from "react";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import {
@@ -21,6 +21,17 @@ function ShowPicker(props: any) {
 
   const [date, setDate] = useState<Date | null>(new Date());
   const [filteredData, setFilteredData] = useState<any>(null);
+  const apiUrlAll = `https://wi2020seb-cinema-api.azurewebsites.net/movie/${movieId}/shows`;
+  // eslint-disable-next-line
+  const { isLoading, error, data } = useQuery(
+    ["shows", movieId],
+    () => {
+      return fetch(apiUrlAll).then((res) => {
+        return res.json();
+      });
+    },
+    { enabled: Boolean(movieId) }
+  );
 
   useEffect(() => {
     setFilteredData(() => {
@@ -44,21 +55,7 @@ function ShowPicker(props: any) {
         return showDateFormatted === selectedDateFormatted;
       });
     });
-  }, [date]);
-
-  const apiUrlAll = `https://wi2020seb-cinema-api.azurewebsites.net/movie/${movieId}/shows`;
-
-  const { isLoading, data, refetch } = useQuery(
-    "shows",
-    () => fetch(apiUrlAll).then((res) => res.json()),
-    {
-      refetchOnWindowFocus: false,
-      enabled: false,
-    }
-  );
-  useEffect(() => {
-    refetch();
-  }, [movieId]);
+  }, [date, data]);
 
   if (isLoading) {
     return (
@@ -74,10 +71,11 @@ function ShowPicker(props: any) {
   };
 
   function openDialog(show: any) {
-    setOpenSeatBooking(true);
+    setOpenSeatBooking((prevVal: any) => prevVal + 1);
     setSelectedShow(show);
   }
 
+  console.log(data, movieId);
   return (
     <Container className="overallContainer" maxWidth="sm">
       <h3>Shows:</h3>

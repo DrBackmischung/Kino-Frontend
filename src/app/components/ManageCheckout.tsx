@@ -29,7 +29,7 @@ function ManageCheckout(props: any) {
     fetch(apiUrlPrice).then((res) => res.json())
   );
   useEffect(() => {
-    if (open === true) {
+    if (open > 0) {
       setOpenSeatBooking(true);
     }
   }, [open]);
@@ -45,18 +45,30 @@ function ManageCheckout(props: any) {
 
   const handleCloseCheckout = () => {
     setOpenCheckout(false);
+    resetSelectedSeats();
+  };
+
+  const finishTransaction = () => {
+    setOpenCheckout(false);
+    resetSelectedSeats();
     navigate("/");
+    alert("Tickets erfolgreich gebucht!");
   };
 
   const handleCloseBooking = () => {
     setOpenSeatBooking(false);
+    resetSelectedSeats();
+  };
+
+  const resetSelectedSeats = () => {
+    setSelectedSeats([]);
   };
   return (
     <ThemeProvider theme={theme}>
       <CheckoutDialog
         open={openCheckout}
         handleClose={handleCloseCheckout}
-        finishTransaction={handleCloseCheckout}
+        finishTransaction={finishTransaction}
         user={user}
         selectedShow={selectedShow}
         selectedSeats={selectedSeats}
