@@ -20,9 +20,9 @@ import ManageCheckout from "../components/ManageCheckout";
 
 function DetailsPage(props: any) {
   const [movieId, setMovieId] = useState();
-  const [openSeatBooking, setOpenSeatBooking] = useState<boolean>(false);
+  const [openSeatBooking, setOpenSeatBooking] = useState(0);
   const [selectedShow, setSelectedShow] = useState();
-  const { state } : any = useLocation();
+  const { state }: any = useLocation();
   let navigate = useNavigate();
   const apiUrlAll = `https://wi2020seb-cinema-api.azurewebsites.net/movie/${movieId}`;
   const { isLoading, data, refetch } = useQuery(
@@ -93,6 +93,7 @@ function DetailsPage(props: any) {
                 setOpenSeatBooking={setOpenSeatBooking}
                 movieId={movieId}
                 setSelectedShow={setSelectedShow}
+                data={data}
               />
             </Grid>
             <br />

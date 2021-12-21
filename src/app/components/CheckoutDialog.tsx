@@ -60,13 +60,14 @@ function CheckoutDialog(props: any) {
     });
     console.log(ticketsToDownload);
     finishTransaction();
+    /* TODO: Print tickets
     var dataStr =
       "data:text/json;charset=utf-8," +
       encodeURIComponent(JSON.stringify(ticketsToDownload));
     var dlAnchorElem: any = document.getElementById("downloadAnchorElem");
     dlAnchorElem.setAttribute("href", dataStr);
     dlAnchorElem.setAttribute("download", "scene.json");
-    dlAnchorElem.click();
+    dlAnchorElem.click(); */
   };
 
   return (

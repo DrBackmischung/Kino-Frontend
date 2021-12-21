@@ -132,6 +132,7 @@ function SeatBookingDialog(props: any) {
                     style={{
                       height: "19.62px",
                       width: "19.62px",
+                      marginLeft: ".4rem",
                     }}
                     icon={<Person />}
                     checkedIcon={<Person />}
@@ -145,7 +146,12 @@ function SeatBookingDialog(props: any) {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Abbruch</Button>
-        <Button onClick={proceedToCheckout}>Reservieren</Button>
+        <Button
+          disabled={selectedSeats?.length > 0 ? false : true}
+          onClick={proceedToCheckout}
+        >
+          Reservieren
+        </Button>
       </DialogActions>
     </Dialog>
   );
