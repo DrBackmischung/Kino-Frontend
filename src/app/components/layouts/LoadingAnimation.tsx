@@ -11,7 +11,7 @@ function LoadingAnimation() {
         transform: "translate(-50%, -50%)",
       }}
     >
-      <Loader type="MutatingDots" color="#00BFFF" height={100} width={100} />
+      <Loader type="MutatingDots" color="#000000" height={100} width={100} />
     </div>
   );
 }
