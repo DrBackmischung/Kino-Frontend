@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import ErrorPage from "../pages/ErrorPage";
 import LoadingAnimation from "./layouts/LoadingAnimation";
+import APIUrl from "../config/APIUrl";
 
 function SeatBookingDialog(props: any) {
   const {
@@ -27,7 +28,7 @@ function SeatBookingDialog(props: any) {
   } = props;
   const [seatsToRender, setSeatsToRender] = useState([]);
   const cinemaRoom = selectedShow?.cinemaRoom?.cinemaRoomSeatingPlan;
-  const apiUrlSeats = `https://wi2020seb-cinema-api.azurewebsites.net/show/${selectedShow?.id}/seats`;
+  const apiUrlSeats = `${APIUrl.apiUrl}/show/${selectedShow?.id}/seats`;
   const seatsQuery = useQuery(
     "seatsData",
     () => fetch(apiUrlSeats).then((res) => res.json()),
