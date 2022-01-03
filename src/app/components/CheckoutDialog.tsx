@@ -17,6 +17,7 @@ import {
 import React, { useState } from "react";
 import ErrorPage from "../pages/ErrorPage";
 import LoadingAnimation from "./layouts/LoadingAnimation";
+import APIUrl from "../config/APIUrl";
 
 function CheckoutDialog(props: any) {
   const {
@@ -39,7 +40,7 @@ function CheckoutDialog(props: any) {
   const blockSeat = () => {
     setIsLoading(true);
     var ticketsToDownload: any = "";
-    const apiUrlBlockSeat = `https://wi2020seb-cinema-api.azurewebsites.net/ticket/add`;
+    const apiUrlBlockSeat = `${APIUrl.apiUrl}/ticket/add`;
     // eslint-disable-next-line
     selectedSeats?.map((item: any) => {
       const requestOptions = {

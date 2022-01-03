@@ -16,13 +16,14 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import Box from "@mui/material/Box";
 import ErrorPage from "../pages/ErrorPage";
 import LoadingAnimation from "./layouts/LoadingAnimation";
+import APIUrl from "../config/APIUrl";
 
 function ShowPicker(props: any) {
   const { setOpenSeatBooking, movieId, setSelectedShow } = props;
 
   const [date, setDate] = useState<Date | null>(new Date());
   const [filteredData, setFilteredData] = useState<any>(null);
-  const apiUrlAll = `https://wi2020seb-cinema-api.azurewebsites.net/movie/${movieId}/shows`;
+  const apiUrlAll = `${APIUrl.apiUrl}/movie/${movieId}/shows`;
   const { isLoading, error, data } = useQuery(
     ["shows", movieId],
     () => {

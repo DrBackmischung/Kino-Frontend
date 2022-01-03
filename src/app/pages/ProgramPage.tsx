@@ -9,6 +9,7 @@ import { useQuery } from "react-query";
 import Container from "@mui/material/Container";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
+import APIUrl from "../config/APIUrl";
 
 const theme = createTheme();
 
@@ -18,22 +19,21 @@ function ProgramPage() {
   const handleSearchChange = (e: any) => {
     setFilter(e.target.value.toLowerCase());
   };
-
   const [location, setLocation] = React.useState("");
 
   const handleSelectChange = (event: SelectChangeEvent) => {
     setLocation(event.target.value as string);
   };
 
-  const apiUrlCity =
-    "https://wi2020seb-cinema-api.azurewebsites.net/city/getAll";
+  const apiUrlCity = `${APIUrl.apiUrl}/city/getAll`;
+
+  console.log(apiUrlCity);
 
   const cityData = useQuery("Cities", () =>
     fetch(apiUrlCity).then((res) => res.json())
   );
 
-  const apiUrlMovies =
-    "https://wi2020seb-cinema-api.azurewebsites.net/movie/getAll";
+  const apiUrlMovies = `${APIUrl.apiUrl}/movie/getAll`;
 
   const moviesData = useQuery("Movies", () =>
     fetch(apiUrlMovies).then((res) => res.json())

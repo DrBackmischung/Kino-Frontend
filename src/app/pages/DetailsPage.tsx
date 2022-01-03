@@ -19,6 +19,7 @@ import { useLocation } from "react-router-dom";
 import ManageCheckout from "../components/ManageCheckout";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
+import APIUrl from "../config/APIUrl";
 
 function DetailsPage(props: any) {
   const [movieId, setMovieId] = useState();
@@ -26,7 +27,7 @@ function DetailsPage(props: any) {
   const [selectedShow, setSelectedShow] = useState();
   const { state }: any = useLocation();
   let navigate = useNavigate();
-  const apiUrlAll = `https://wi2020seb-cinema-api.azurewebsites.net/movie/${movieId}`;
+  const apiUrlAll = `${APIUrl.apiUrl}/movie/${movieId}`;
   const { isLoading, data, refetch, error } = useQuery(
     "movie",
     () => fetch(apiUrlAll).then((res) => res.json()),

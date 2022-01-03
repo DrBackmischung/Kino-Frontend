@@ -5,6 +5,7 @@ import SeatBookingDialog from "../components/SeatBookingDialog";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
+import APIUrl from "../config/APIUrl";
 
 const user = {
   id: "e3e13a2a-f792-4d50-88fc-6bc05514868c",
@@ -24,7 +25,7 @@ function ManageCheckout(props: any) {
   const [openSeatBooking, setOpenSeatBooking] = useState(false);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [selectedShow, setSelectedShow] = useState();
-  const apiUrlPrice = `https://wi2020seb-cinema-api.azurewebsites.net/price/getAll`;
+  const apiUrlPrice = `${APIUrl.apiUrl}/price/getAll`;
   const priceQuery: any = useQuery("priceData", () =>
     fetch(apiUrlPrice).then((res) => res.json())
   );
