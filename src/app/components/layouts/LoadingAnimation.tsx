@@ -1,16 +1,10 @@
 import React from "react";
 import Loader from "react-loader-spinner";
+import "./LoadingAnimation.css";
 
 function LoadingAnimation() {
   return (
-    <div
-      style={{
-        position: "absolute",
-        left: "50%",
-        top: "50%",
-        transform: "translate(-50%, -50%)",
-      }}
-    >
+    <div className="loadingContainer">
       <Loader type="MutatingDots" color="#000000" height={100} width={100} />
     </div>
   );
