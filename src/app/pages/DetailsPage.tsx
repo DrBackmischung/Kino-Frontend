@@ -17,6 +17,8 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import IconButton from "@mui/material/IconButton";
 import { useLocation } from "react-router-dom";
 import ManageCheckout from "../components/ManageCheckout";
+import ErrorPage from "./ErrorPage";
+import LoadingAnimation from "../components/layouts/LoadingAnimation";
 
 function DetailsPage(props: any) {
   const [movieId, setMovieId] = useState();
@@ -25,7 +27,7 @@ function DetailsPage(props: any) {
   const { state }: any = useLocation();
   let navigate = useNavigate();
   const apiUrlAll = `https://wi2020seb-cinema-api.azurewebsites.net/movie/${movieId}`;
-  const { isLoading, data, refetch } = useQuery(
+  const { isLoading, data, refetch, error } = useQuery(
     "movie",
     () => fetch(apiUrlAll).then((res) => res.json()),
     {
@@ -43,12 +45,11 @@ function DetailsPage(props: any) {
   }, [movieId]);
 
   if (isLoading) {
-    return (
-      <div>
-        <CircularProgress />
-        <span>Loading...</span>
-      </div>
-    );
+    return <LoadingAnimation />;
+  }
+
+  if (error) {
+    return <ErrorPage />;
   }
 
   const theme = createTheme(palette);
