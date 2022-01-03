@@ -12,6 +12,7 @@ import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import ProgramPage from "../../pages/ProgramPage";
 import ComingSoon from "../../pages/ComingSoon";
 import DetailsPage from "../../pages/DetailsPage";
+import SignInPage from "../../pages/SignInPage";
 
 function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -93,7 +94,7 @@ function MenuBar() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem component={Link} to="/SignInPage">Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
               </Menu>
             </Box>
@@ -106,7 +107,8 @@ function MenuBar() {
         <Route path="/eventsPage" element={<ComingSoon />} />
         <Route path="/pricesOverviewPage" element={<ComingSoon />} />
         <Route path="/newsPage" element={<ComingSoon />} />
-        <Route path="/DetailsPage" element={<DetailsPage />} />
+        <Route path="/DetailsPage" element={<DetailsPage />}/>
+        <Route path="/SignInPage" element={<SignInPage />}/>
       </Routes>
     </BrowserRouter>
   );
