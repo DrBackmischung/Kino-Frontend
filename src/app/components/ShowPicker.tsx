@@ -1,10 +1,9 @@
-/* eslint-disable */
-import * as React from "react";
+// eslint-disable-next-line
+import React from "react";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import {
   Button,
-  CircularProgress,
   Container,
   Grid,
   TextField,
@@ -15,12 +14,24 @@ import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import Box from "@mui/material/Box";
+import ErrorPage from "../pages/ErrorPage";
+import LoadingAnimation from "./layouts/LoadingAnimation";
 
 function ShowPicker(props: any) {
   const { setOpenSeatBooking, movieId, setSelectedShow } = props;
 
   const [date, setDate] = useState<Date | null>(new Date());
   const [filteredData, setFilteredData] = useState<any>(null);
+  const apiUrlAll = `https://wi2020seb-cinema-api.azurewebsites.net/movie/${movieId}/shows`;
+  const { isLoading, error, data } = useQuery(
+    ["shows", movieId],
+    () => {
+      return fetch(apiUrlAll).then((res) => {
+        return res.json();
+      });
+    },
+    { enabled: Boolean(movieId) }
+  );
 
   useEffect(() => {
     setFilteredData(() => {
@@ -44,37 +55,20 @@ function ShowPicker(props: any) {
         return showDateFormatted === selectedDateFormatted;
       });
     });
-  }, [date]);
-
-  const apiUrlAll = `https://wi2020seb-cinema-api.azurewebsites.net/movie/${movieId}/shows`;
-
-  const { isLoading, data, refetch } = useQuery(
-    "shows",
-    () => fetch(apiUrlAll).then((res) => res.json()),
-    {
-      refetchOnWindowFocus: false,
-      enabled: false,
-    }
-  );
-  useEffect(() => {
-    refetch();
-  }, [movieId]);
+  }, [date, data]);
 
   if (isLoading) {
-    return (
-      <div>
-        <CircularProgress />
-        <span>Loading...</span>
-      </div>
-    );
+    return <LoadingAnimation />;
   }
+
+  if (error) return <ErrorPage />;
 
   const handleChange = (selectedDate: Date | null) => {
     setDate(selectedDate);
   };
 
   function openDialog(show: any) {
-    setOpenSeatBooking(true);
+    setOpenSeatBooking((prevVal: any) => prevVal + 1);
     setSelectedShow(show);
   }
 
@@ -100,25 +94,31 @@ function ShowPicker(props: any) {
           spacing={{ xs: 2, md: 3 }}
           columns={{ xs: 4, sm: 8, md: 12 }}
         >
-          {filteredData?.map((item: any) => (
-            <Grid item xs={2} sm={4} md={4} key={`${item.id}`}>
-              <Tooltip
-                TransitionComponent={Zoom}
-                title="Click to book a seat!"
-                arrow
-              >
-                <Button
-                  key={`${item.id}`}
-                  onClick={() => {
-                    openDialog(item);
-                  }}
-                  variant="contained"
+          {error ? (
+            <ErrorPage />
+          ) : isLoading ? (
+            <LoadingAnimation />
+          ) : (
+            filteredData?.map((item: any) => (
+              <Grid item xs={2} sm={4} md={4} key={`${item.id}`}>
+                <Tooltip
+                  TransitionComponent={Zoom}
+                  title="Click to book a seat!"
+                  arrow
                 >
-                  {item.startTime}
-                </Button>
-              </Tooltip>
-            </Grid>
-          ))}
+                  <Button
+                    key={`${item.id}`}
+                    onClick={() => {
+                      openDialog(item);
+                    }}
+                    variant="contained"
+                  >
+                    {item.startTime}
+                  </Button>
+                </Tooltip>
+              </Grid>
+            ))
+          )}
         </Grid>
       </Box>
     </Container>

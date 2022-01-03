@@ -17,15 +17,17 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import IconButton from "@mui/material/IconButton";
 import { useLocation } from "react-router-dom";
 import ManageCheckout from "../components/ManageCheckout";
+import ErrorPage from "./ErrorPage";
+import LoadingAnimation from "../components/layouts/LoadingAnimation";
 
 function DetailsPage(props: any) {
   const [movieId, setMovieId] = useState();
-  const [openSeatBooking, setOpenSeatBooking] = useState<boolean>(false);
+  const [openSeatBooking, setOpenSeatBooking] = useState(0);
   const [selectedShow, setSelectedShow] = useState();
-  const { state } : any = useLocation();
+  const { state }: any = useLocation();
   let navigate = useNavigate();
   const apiUrlAll = `https://wi2020seb-cinema-api.azurewebsites.net/movie/${movieId}`;
-  const { isLoading, data, refetch } = useQuery(
+  const { isLoading, data, refetch, error } = useQuery(
     "movie",
     () => fetch(apiUrlAll).then((res) => res.json()),
     {
@@ -43,12 +45,11 @@ function DetailsPage(props: any) {
   }, [movieId]);
 
   if (isLoading) {
-    return (
-      <div>
-        <CircularProgress />
-        <span>Loading...</span>
-      </div>
-    );
+    return <LoadingAnimation />;
+  }
+
+  if (error) {
+    return <ErrorPage />;
   }
 
   const theme = createTheme(palette);
@@ -93,6 +94,7 @@ function DetailsPage(props: any) {
                 setOpenSeatBooking={setOpenSeatBooking}
                 movieId={movieId}
                 setSelectedShow={setSelectedShow}
+                data={data}
               />
             </Grid>
             <br />

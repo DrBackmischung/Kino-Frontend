@@ -12,6 +12,8 @@ import {
 import Person from "@mui/icons-material/Person";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import ErrorPage from "../pages/ErrorPage";
+import LoadingAnimation from "./layouts/LoadingAnimation";
 
 function SeatBookingDialog(props: any) {
   const {
@@ -85,67 +87,81 @@ function SeatBookingDialog(props: any) {
       <DialogTitle id="scroll-dialog-title">Checkout</DialogTitle>
       <DialogContent dividers={true}>
         <DialogContentText id="scroll-dialog-description">
-          <strong>{selectedShow?.movie?.titel}</strong>
-          <p>
-            {selectedShow?.startTime} Kino 3 Sprache:{" "}
-            {selectedShow?.movie?.language}
-          </p>
-          <strong>
-            {selectedSeats?.length} Sitze{" "}
-            {selectedSeats?.length * priceQuery?.data?.[0]?.price}€
-          </strong>
-          <div
-            style={{
-              marginTop: "2rem",
-              marginLeft: "auto",
-              marginRight: "auto",
-              borderBottom: "2px solid grey",
-              width: "80%",
-              textAlign: "center",
-            }}
-          >
-            <strong>Leinwand</strong>
-          </div>
-          <Box
-            sx={{
-              p: 2,
-              border: "1px solid grey",
-              marginTop: "1rem",
-              width: "95%",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          >
-            {seatsToRender?.map((row: any, index) => (
+          {seatsQuery.error || priceQuery.error ? (
+            <ErrorPage />
+          ) : seatsQuery.isLoading || priceQuery.isLoading ? (
+            <LoadingAnimation />
+          ) : (
+            <>
+              <strong>{selectedShow?.movie?.titel}</strong>
+              <p>
+                {selectedShow?.startTime} Kino 3 Sprache:{" "}
+                {selectedShow?.movie?.language}
+              </p>
+              <strong>
+                {selectedSeats?.length} Sitze{" "}
+                {selectedSeats?.length * priceQuery?.data?.[0]?.price}€
+              </strong>
               <div
-                key={index}
                 style={{
-                  marginBottom: ".5rem",
+                  marginTop: "2rem",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  borderBottom: "2px solid grey",
+                  width: "80%",
+                  textAlign: "center",
+                }}
+              >
+                <strong>Leinwand</strong>
+              </div>
+              <Box
+                sx={{
+                  p: 2,
+                  border: "1px solid grey",
+                  marginTop: "1rem",
+                  width: "95%",
                   marginLeft: "auto",
                   marginRight: "auto",
                 }}
               >
-                {row?.map((seat: any) => (
-                  <Checkbox
-                    disabled={seat.blocked}
-                    key={`${seat.id}`}
+                {seatsToRender?.map((row: any, index) => (
+                  <div
+                    key={index}
                     style={{
-                      height: "19.62px",
-                      width: "19.62px",
+                      marginBottom: ".5rem",
+                      marginLeft: "auto",
+                      marginRight: "auto",
                     }}
-                    icon={<Person />}
-                    checkedIcon={<Person />}
-                    onChange={(e) => handleSeatChecked(e, seat.id)}
-                  />
+                  >
+                    {row?.map((seat: any) => (
+                      <Checkbox
+                        disabled={seat.blocked}
+                        key={`${seat.id}`}
+                        style={{
+                          height: "19.62px",
+                          width: "19.62px",
+                          marginLeft: ".4rem",
+                        }}
+                        icon={<Person />}
+                        checkedIcon={<Person />}
+                        onChange={(e) => handleSeatChecked(e, seat.id)}
+                      />
+                    ))}
+                  </div>
                 ))}
-              </div>
-            ))}
-          </Box>
+              </Box>
+            </>
+          )}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Abbruch</Button>
-        <Button onClick={proceedToCheckout}>Reservieren</Button>
+        <Button
+          disabled={selectedSeats?.length > 0 ? false : true}
+          onClick={proceedToCheckout}
+        >
+          Reservieren
+        </Button>
       </DialogActions>
     </Dialog>
   );

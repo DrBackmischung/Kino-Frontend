@@ -1,12 +1,12 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: CD
+name: Build and deploy Node.js app to Azure Web App - wi2020seb-cinema-dev2
 
 on:
-#  push:
-#    branches:
-#      - main
+  push:
+    branches:
+      - dev
   workflow_dispatch:
 
 jobs:
@@ -28,12 +28,13 @@ jobs:
         run: |
           npm install
           npm run build --if-present
+          npm run test --if-present
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
-          app-name: 'wi2020seb-cinema'
+          app-name: 'wi2020seb-cinema-dev2'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0F196C8993A0483486D45C282932220D }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EB86D537AB29489CBDA64A7645338A85 }}
           package: .

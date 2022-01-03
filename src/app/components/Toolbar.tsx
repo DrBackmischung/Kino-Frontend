@@ -8,30 +8,31 @@ import Sort from "./Sort";
 import { createTheme } from "@mui/material/styles";
 
 function Toolbar(props: any) {
+  const theme: any = createTheme();
+  const { handleSearchChange, handleSelectChange, cityData } = props;
 
-    const theme: any = createTheme();
-    const {handleSearchChange} = props;
-    const {handleSelectChange} = props;
-
-    return (
-        <Container
-            sx={{
-                bgcolor: "background.paper",
-                pt: 8,
-                pb: 6,
-                position: "relative",
-                marginTop: theme.spacing(12),
-            }}
-            maxWidth="md"
-        >
-            <Grid container spacing={4} sx={{ justifyContent: "space-evenly" }}>
-                <BasicSelect handleSelectChange={handleSelectChange}/>
-                <SearchField handleSearchChange={handleSearchChange}  />
-                <Filter />
-                <Sort />
-            </Grid>
-        </Container>
-    );
+  return (
+    <Container
+      sx={{
+        bgcolor: "background.paper",
+        pt: 8,
+        pb: 6,
+        position: "relative",
+        marginTop: theme.spacing(12),
+      }}
+      maxWidth="md"
+    >
+      <Grid container spacing={4} sx={{ justifyContent: "space-evenly" }}>
+        <BasicSelect
+          handleSelectChange={handleSelectChange}
+          cityData={cityData}
+        />
+        <SearchField handleSearchChange={handleSearchChange} />
+        <Filter />
+        <Sort />
+      </Grid>
+    </Container>
+  );
 }
 
 export default Toolbar;
