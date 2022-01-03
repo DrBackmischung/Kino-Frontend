@@ -39,7 +39,7 @@ function ProgramPage() {
     fetch(apiUrlMovies).then((res) => res.json())
   );
 
-  if (cityData.error || moviesData.error || true) {
+  if (cityData.error || moviesData.error) {
     return (
       <Container
         sx={{
