@@ -33,12 +33,15 @@ function MenuBar() {
 
   return (
     <BrowserRouter>
-      <AppBar style={{ backgroundColor: "black" }} position="fixed">
+      <AppBar
+        style={{ backgroundColor: "#393E41", opacity: 0.95 }}
+        position="fixed"
+      >
         <Container fixed>
           <Toolbar>
             <IconButton
               style={{ backgroundColor: "white" }}
-              sx={{ color: "black", height: "40px", width: "40px" }}
+              sx={{ height: "40px", width: "40px" }}
               size="large"
               edge="start"
               aria-label="menu"
@@ -56,7 +59,7 @@ function MenuBar() {
             >
               {pages.map((page) => (
                 <Button
-                  style={{ backgroundColor: "white" }}
+                  style={{ backgroundColor: "white", opacity: 0.95 }}
                   key={page.name}
                   //onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: "black", display: "block" }}
@@ -94,21 +97,24 @@ function MenuBar() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem component={Link} to="/SignInPage">Profile</MenuItem>
+                <MenuItem component={Link} to="/SignInPage">
+                  Profile
+                </MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
               </Menu>
             </Box>
           </Toolbar>
         </Container>
       </AppBar>
+
       <Routes>
         <Route path="/" element={<ComingSoon />} />
         <Route path="/programPage" element={<ProgramPage />} />
         <Route path="/eventsPage" element={<ComingSoon />} />
         <Route path="/pricesOverviewPage" element={<ComingSoon />} />
         <Route path="/newsPage" element={<ComingSoon />} />
-        <Route path="/DetailsPage" element={<DetailsPage />}/>
-        <Route path="/SignInPage" element={<SignInPage />}/>
+        <Route path="/DetailsPage" element={<DetailsPage />} />
+        <Route path="/SignInPage" element={<SignInPage />} />
       </Routes>
     </BrowserRouter>
   );
