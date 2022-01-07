@@ -1,6 +1,4 @@
 import * as React from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Toolbar from "../components/Toolbar";
 import MovieCard from "../components/MovieCard";
 import { useState } from "react";
@@ -10,8 +8,6 @@ import Container from "@mui/material/Container";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
-
-const theme = createTheme();
 
 function ProgramPage() {
   const [filter, setFilter] = useState("");
@@ -47,7 +43,7 @@ function ProgramPage() {
           pt: 8,
           pb: 6,
           position: "relative",
-          marginTop: theme.spacing(15),
+          marginTop: "15rem",
         }}
         maxWidth="md"
       >
@@ -63,7 +59,7 @@ function ProgramPage() {
           pt: 8,
           pb: 6,
           position: "relative",
-          marginTop: theme.spacing(12),
+          marginTop: "15rem",
         }}
         maxWidth="md"
       >
@@ -72,22 +68,19 @@ function ProgramPage() {
     );
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <main>
-        <Toolbar
-          handleSearchChange={handleSearchChange}
-          handleSelectChange={handleSelectChange}
-          location={location}
-          cityData={cityData.data}
-        />
-        <MovieCard
-          filter={filter}
-          location={location}
-          moviesData={moviesData.data}
-        />
-      </main>
-    </ThemeProvider>
+    <div>
+      <Toolbar
+        handleSearchChange={handleSearchChange}
+        handleSelectChange={handleSelectChange}
+        location={location}
+        cityData={cityData.data}
+      />
+      <MovieCard
+        filter={filter}
+        location={location}
+        moviesData={moviesData.data}
+      />
+    </div>
   );
 }
 
