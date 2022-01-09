@@ -1,12 +1,9 @@
 // eslint-disable-next-line
 import React from "react";
-import {useEffect, useState} from "react";
 import {useQuery} from "react-query";
 import {
     Button,
-    Container,
     Grid,
-    TextField,
     Tooltip,
     Zoom,
 } from "@mui/material";
@@ -48,29 +45,6 @@ function ShowPicker(props: any) {
         return returnedShows;
     };
 
-    /*useEffect(() => {
-      setFilteredData(() => {
-        return data?.filter?.((show: any) => {
-          const showDateFormatted = new Date(show.showDate).toLocaleDateString(
-            undefined,
-            {
-              day: "2-digit",
-              month: "2-digit",
-              year: "2-digit",
-            }
-          );
-          const showTimeFormatted = new Date(show.startTime).toLocaleDateString(
-            undefined,
-            {
-              hour: "2-digit",
-              minute: "2-digit"
-            }
-          );
-          return showDateFormatted + showTimeFormatted;
-        });
-      });
-    }, [date, data]);*/
-
     if (isLoading) {
         return <LoadingAnimation/>;
     }
@@ -110,28 +84,9 @@ function ShowPicker(props: any) {
                                         }}
                                         variant="contained"
                                     >
-                                        {item.showDate/*prepareShows((show: any) => {
-                                            const showDateFormatted = new Date(show.showDate).toLocaleDateString(
-                                                undefined,
-                                                {
-                                                    day: "2-digit",
-                                                    month: "2-digit",
-                                                    year: "2-digit",
-                                                });
-                                            return showDateFormatted.toString();
-                                        })*/
-                                        }
+                                        {item.showDate}
                                         <br/>
-                                        {item.startTime/*prepareShows((show: any) => {
-                                            const showTimeFormatted = new Date(show.startTime).toLocaleDateString(
-                                                undefined,
-                                                {
-                                                    hour: "2-digit",
-                                                    minute: "2-digit",
-                                                });
-                                            return showTimeFormatted.toString();
-                                        })*/
-                                        }
+                                        {item.startTime}
                                     </Button>
                                 </Tooltip>
                             </Grid>
