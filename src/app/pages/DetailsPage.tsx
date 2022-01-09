@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import MovieDetails from "../components/MovieDetails";
 import ShowPicker from "../components/ShowPicker";
 import {
+  Box,
   CardMedia,
-  CircularProgress,
   Container,
   Grid,
   ThemeProvider,
@@ -61,7 +61,13 @@ function DetailsPage(props: any) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container className="wholeContainer">
+      <Container className="wholeContainer" sx={{
+        bgcolor: "background.paper",
+        pt: 8,
+        pb: 6,
+        position: "relative",
+        marginTop: theme.spacing(12),
+      }}>
         <IconButton onClick={goBack}>
           <ArrowBackIosIcon />
         </IconButton>
@@ -70,7 +76,7 @@ function DetailsPage(props: any) {
             sx={{
               display: "grid",
               gap: 5,
-              gridTemplateColumns: "repeat(2, 1fr)",
+              gridTemplateColumns: "repeat(2, 5fr)",
             }}
           >
             <div className="imageContainer">
@@ -87,9 +93,10 @@ function DetailsPage(props: any) {
               className="detailsContainer"
               sx={{
                 display: "grid",
-                gridTemplateRows: "repeat(2,1fr)",
+                gridTemplateRows: "repeat(1,1fr)",
               }}
             >
+              <Box>
               <MovieDetails selectedMovie={data} />
               <ShowPicker
                 setOpenSeatBooking={setOpenSeatBooking}
@@ -97,6 +104,7 @@ function DetailsPage(props: any) {
                 setSelectedShow={setSelectedShow}
                 data={data}
               />
+              </Box>
             </Grid>
             <br />
           </Grid>
