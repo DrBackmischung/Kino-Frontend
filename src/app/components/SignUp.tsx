@@ -13,6 +13,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import APIUrl from "../config/APIUrl";
 import {useNavigate} from "react-router-dom";
+import {createTheme} from "@mui/material/styles";
+import palette from "../config/Colours";
 
 function Copyright(props: any) {
     let navigate = useNavigate();
@@ -51,6 +53,8 @@ function SignUp(props: any) {
     let navigate = useNavigate();
 
     const apiUrlAll = `${APIUrl.apiUrl}/registration`;
+
+    const theme = createTheme(palette);
 
     const redirectToHome = () => {
         navigate('/');
@@ -110,7 +114,12 @@ function SignUp(props: any) {
     }
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" sx={{
+            bgcolor: "background.paper",
+            pt: 8,
+            pb: 6,
+            position: "relative",
+        }}>
             <CssBaseline/>
             <Box
                 sx={{
@@ -124,7 +133,7 @@ function SignUp(props: any) {
                     <LockOutlinedIcon/>
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign up
+                    Sign Up
                 </Typography>
                 <form noValidate>
                     <Box component="form" noValidate sx={{mt: 3}}>
