@@ -10,14 +10,10 @@ import {
     Tooltip,
     Zoom,
 } from "@mui/material";
-import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import Box from "@mui/material/Box";
 import ErrorPage from "../pages/ErrorPage";
 import LoadingAnimation from "./layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
-import Rating from "./Ratings";
 
 function ShowPicker(props: any) {
     const {setOpenSeatBooking, movieId, setSelectedShow} = props;

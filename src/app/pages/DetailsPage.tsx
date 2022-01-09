@@ -5,7 +5,6 @@ import ShowPicker from "../components/ShowPicker";
 import {
   Box,
   CardMedia,
-  CircularProgress,
   Container,
   Grid,
   ThemeProvider,
@@ -21,8 +20,6 @@ import ManageCheckout from "../components/ManageCheckout";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
-import Rating from "../components/Ratings";
-import Reviews from "../components/Reviews";
 
 function DetailsPage(props: any) {
   const [movieId, setMovieId] = useState();
