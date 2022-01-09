@@ -101,8 +101,6 @@ function DetailsPage(props: any) {
             >
               <Box>
               <MovieDetails selectedMovie={data} />
-              {/*TODO Add Rating Value in Backend*/}
-              <Rating ratingValue={2.5}/>
               <ShowPicker
                 setOpenSeatBooking={setOpenSeatBooking}
                 movieId={movieId}
@@ -115,8 +113,6 @@ function DetailsPage(props: any) {
           </Grid>
         </Container>
         <ManageCheckout show={selectedShow} open={openSeatBooking} />
-        {/*TODO Add Comments in Backend*/}
-        <Reviews /*comments={comments}*//>
       </Container>
     </ThemeProvider>
   );
