@@ -1,0 +1,17 @@
+.addCateringButton {
+  margin-bottom: 1rem;
+}
+.textAlignRight {
+  text-align: right;
+}
+.marginTop1Rem {
+  margin-top: 1rem;
+}
+.lineOfDivision {
+  border-left: 1px solid grey;
+  height: 100%;
+}
+.outlinedBox {
+  border: 1px solid grey;
+  padding: 0.5rem;
+}
