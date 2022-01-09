@@ -58,42 +58,6 @@ function SignUp(props: any) {
 
     const apiUrlAll = `${APIUrl.apiUrl}/registration`;
 
-    /*const sendDetailsToServer = () => {
-        if(state.email.length && state.password.length) {
-            props.showError(null);
-            const payload={
-                "firstName": state.firstName,
-                "lastName": state.lastName,
-                "email": state.email,
-                "password": passwordMd5,
-                "confirmPassword": confirmPasswordMd5,
-                "street": state.street,
-                "number": state.number,
-                "plz": state.plz,
-                "city": state.city
-            }
-            axios.post(apiUrlAll, payload)
-                .then(function (response: any) {
-                    if(response.status === 200){
-                        setState(prevState => ({
-                            ...prevState,
-                            'successMessage' : 'Registration successful. Redirecting to home page..'
-                        }))
-                        localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token);
-                        redirectToHome();
-                        props.showError(null)
-                    } else{
-                        props.showError("Some error ocurred");
-                    }
-                })
-                .catch(function (error: any) {
-                    console.log(error);
-                });
-        } else {
-            props.showError('Please enter valid username and password')
-        }
-    }*/
-
     const redirectToHome = () => {
         navigate('/');
     }
@@ -104,13 +68,13 @@ function SignUp(props: any) {
 
     const passwordMd5 = (password: any) => {
         let md5 = require('md5');
-        let hashPassword = md5(password); //TODO md5 password
+        let hashPassword = md5(password);
         return hashPassword;
     };
 
     const confirmPasswordMd5 = (confirmPassword: any) => {
         let md5 = require('md5');
-        let hashConfirmPassword = md5(confirmPassword); //TODO md5 password
+        let hashConfirmPassword = md5(confirmPassword);
         return hashConfirmPassword;
     };
 
