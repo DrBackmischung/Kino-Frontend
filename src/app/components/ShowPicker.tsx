@@ -28,10 +28,8 @@ function ShowPicker(props: any) {
 
     let prepareShows: any = (shows: any) => {
         if (data === undefined) return;
-        let returnedShows: any = [];
         const sortedShows = data?.sort(
-            (itemA: any, itemB: any) =>
-            {
+            (itemA: any, itemB: any) => {
                 if (itemA.showDate !== itemB.showDate) {
                     return new Date(itemA.showDate).getTime() - new Date(itemB.showDate).getTime();
                 } else {
@@ -40,10 +38,33 @@ function ShowPicker(props: any) {
                 }
             }
         );
-        returnedShows.push(sortedShows);
         console.log(sortedShows)
-        return returnedShows;
+        return sortedShows;
     };
+
+    let formattedDate: any = (showDate: any) => {
+        const showDateFormatted = new Date(showDate).toLocaleDateString(
+            undefined,
+            {
+                weekday: "short",
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+            });
+        return showDateFormatted;
+    }
+
+    //TODO Format Time
+    /*let formattedTime: any = (item: any) => {
+        //TODO Fix Time Format
+        const showTimeFormatted = new Date(item.startTime).toLocaleDateString(
+            undefined,
+            {
+                hour: "2-digit",
+                minute: "2-digit",
+            });
+        return showTimeFormatted;
+    }*/
 
     if (isLoading) {
         return <LoadingAnimation/>;
@@ -84,7 +105,7 @@ function ShowPicker(props: any) {
                                         }}
                                         variant="contained"
                                     >
-                                        {item.showDate}
+                                        {formattedDate(item.showDate)}
                                         <br/>
                                         {item.startTime}
                                     </Button>
