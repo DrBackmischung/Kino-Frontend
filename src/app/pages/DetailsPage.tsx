@@ -91,6 +91,7 @@ function DetailsPage(props: any) {
               }}
             >
               <MovieDetails selectedMovie={data} />
+
               <ShowPicker
                 setOpenSeatBooking={setOpenSeatBooking}
                 movieId={movieId}
