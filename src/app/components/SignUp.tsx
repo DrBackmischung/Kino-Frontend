@@ -110,7 +110,12 @@ function SignUp(props: any) {
     }
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" sx={{
+            bgcolor: "background.paper",
+            pt: 8,
+            pb: 6,
+            position: "relative",
+        }}>
             <CssBaseline/>
             <Box
                 sx={{

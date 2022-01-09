@@ -1,9 +1,11 @@
 import React from "react";
-import { Container, Grid } from "@mui/material";
+import { Container } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
+import {createTheme} from "@mui/material/styles";
+import palette from "../config/Colours";
 
 function Impressum() {
   let navigate = useNavigate();
@@ -12,8 +14,16 @@ function Impressum() {
     navigate(-1);
   };
 
+  const theme = createTheme(palette);
+
   return (
-    <Container className="wholeContainer">
+    <Container className="wholeContainer" sx={{
+      bgcolor: "background.paper",
+      pt: 8,
+      pb: 6,
+      position: "relative",
+      marginTop: theme.spacing(2),
+    }}>
       <IconButton onClick={goBack}>
         <ArrowBackIosIcon />
       </IconButton>
