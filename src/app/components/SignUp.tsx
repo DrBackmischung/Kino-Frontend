@@ -18,6 +18,7 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {useForm} from "react-hook-form";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {Md5} from 'ts-md5/dist/md5';
 
 function Copyright(props: any) {
     let navigate = useNavigate();
@@ -42,43 +43,20 @@ function Copyright(props: any) {
 }
 
 function SignUp(props: any) {
-    const [state, setState] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        street: "",
-        number: "",
-        plz: "",
-        city: "",
-        successMessage: null
-    })
+    const [userName, setUserName ] = useState("");
+    const [firstName, setFirstName ] = useState("");
+    const [lastName, setLastName ] = useState("");
+    const [email, setEmail ] = useState("");
+    const [password, setPassword ] = useState("");
+    const [confirmPassword, setConfirmPassword ] = useState("");
+    const [street, setStreet ] = useState("");
+    const [number, setNumber ] = useState("");
+    const [plz, setPlz ] = useState("");
+    const [city, setCity ] = useState("");
 
     let navigate = useNavigate();
 
-    /*const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');*/
-
-    const apiUrlAll = `${APIUrl.apiUrl}/user/put`;
-    const {isLoading, data, refetch, error} = useQuery(
-        "user",
-        () => fetch(apiUrlAll).then((res) => res.json()),
-        {
-            refetchOnWindowFocus: false,
-            enabled: false,
-        }
-    );
-
-    const handleChange = (e: any) => {
-        const {id, value} = e.target
-        setState((prevState: any) => ({
-            ...prevState,
-            [id]: value
-        }))
-    }
+    const apiUrlAll = `${APIUrl.apiUrl}/registration`;
 
     /*const sendDetailsToServer = () => {
         if(state.email.length && state.password.length) {
@@ -125,60 +103,53 @@ function SignUp(props: any) {
     }
 
     const passwordMd5 = (password: any) => {
-        let hashPassword; //TODO md5 password
+        let md5 = require('md5');
+        let hashPassword = md5(password); //TODO md5 password
         return hashPassword;
     };
 
-    const confirmPasswordMd5 = (password: any) => {
-        let hashConfirmPassword; //TODO md5 password
+    const confirmPasswordMd5 = (confirmPassword: any) => {
+        let md5 = require('md5');
+        let hashConfirmPassword = md5(confirmPassword); //TODO md5 password
         return hashConfirmPassword;
     };
 
     const handleSubmitClick = (e: any) => {
         e.preventDefault();
-        if (passwordMd5 === confirmPasswordMd5) {
-            //sendDetailsToServer()
-            console.log("Passwort matches");
+
+        let hashPassword = passwordMd5(password);
+        let hashConfirmPassword = confirmPasswordMd5(confirmPassword);
+
+        if (hashPassword === hashConfirmPassword) {
+                const requestOptions = {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        username: userName,
+                        firstName: firstName,
+                        name: lastName,
+                        email: email,
+                        passwordHash: hashPassword,
+                        passwordConfirmHash: hashConfirmPassword,
+                        street: street,
+                        number: number,
+                        plz: plz,
+                        city: city
+                    }),
+                };
+            fetch(apiUrlAll, requestOptions).then((response) => {
+                if (!response.ok) {
+                    // TODO Error Handling
+                    console.log(response);
+                    return;
+                }
+            });
+            postMessage("Registration successfull! Redirecting to Homepage!")
+            redirectToHome();
         } else {
-            props.showError('Passwords do not match');
+            // TODO Error Handling
         }
     }
-
-    const schema = yup.object().shape({
-        firstName: yup.string().required().min(2).max(25),
-        lastName: yup.string().required().min(2).max(30),
-        email: yup.string().required().email(),
-        password: yup.string().required().min(8).max(120),
-        street: yup.string().required().min(8).max(120),
-        number: yup.string().required().min(1).max(15),
-        plz: yup.number().required().min(5).max(6),
-        city: yup.string().required().min(2).max(50)
-    });
-
-    interface IFormInput {
-        firstName: string;
-        lastName: string;
-        email: string;
-        password: string;
-        street: string;
-        number: string;
-        plz: number;
-        city: string
-    }
-
-    const {
-        register,
-        handleSubmit,
-        formState: {errors},
-    } = useForm<IFormInput>({
-        resolver: yupResolver(schema),
-    });
-
-    const [json, setJson] = useState<string>();
-
-    const onSubmit = (data: IFormInput) => {
-        setJson(JSON.stringify(data));
-    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -197,12 +168,23 @@ function SignUp(props: any) {
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-                <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                <form noValidate>
                     <Box component="form" noValidate sx={{mt: 3}}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
-                                    {...register("firstName")}
+                                    name="userName"
+                                    required
+                                    fullWidth
+                                    id="userName"
+                                    label="User Name"
+                                    autoFocus
+                                    onChange={(e: any) => setUserName(e.target.value)}
+                                    value={userName}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
                                     autoComplete="given-name"
                                     name="firstName"
                                     required
@@ -210,46 +192,37 @@ function SignUp(props: any) {
                                     id="firstName"
                                     label="First Name"
                                     autoFocus
-                                    onChange={handleChange}
-                                    value={state.firstName}
-                                    helperText={errors.firstName?.message}
-                                    error={!!errors.firstName?.message}
+                                    onChange={(e: any) => setFirstName(e.target.value)}
+                                    value={firstName}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
-                                    {...register("lastName")}
                                     required
                                     fullWidth
                                     id="lastName"
                                     label="Last Name"
                                     name="lastName"
                                     autoComplete="family-name"
-                                    onChange={handleChange}
-                                    value={state.lastName}
-                                    helperText={errors.lastName?.message}
-                                    error={!!errors.lastName?.message}
+                                    onChange={(e: any) => setLastName(e.target.value)}
+                                    value={lastName}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    {...register("email")}
                                     required
                                     fullWidth
                                     id="email"
                                     label="E-mail Address"
                                     name="email"
                                     autoComplete="email"
-                                    onChange={handleChange}
-                                    value={state.email}
-                                    helperText={errors.email?.message}
-                                    error={!!errors.email?.message}
+                                    onChange={(e: any) => setEmail(e.target.value)}
+                                    value={email}
                                 />
                                 <small>We won't share your e-mail with anyone else!</small>
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    {...register("password")}
                                     required
                                     fullWidth
                                     name="password"
@@ -257,10 +230,8 @@ function SignUp(props: any) {
                                     type="password"
                                     id="password"
                                     autoComplete="new-password"
-                                    onChange={handleChange}
-                                    value={state.password}
-                                    helperText={errors.password?.message}
-                                    error={!!errors.password?.message}
+                                    onChange={(e: any) => setPassword(e.target.value)}
+                                    value={password}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -271,8 +242,8 @@ function SignUp(props: any) {
                                     label="Confirm Password"
                                     type="password"
                                     id="confirmPassword"
-                                    value={state.confirmPassword}
-                                    onChange={handleChange}
+                                    value={confirmPassword}
+                                    onChange={(e: any) => setConfirmPassword(e.target.value)}
                                 />
                             </Grid>
                             <Grid container
@@ -288,8 +259,8 @@ function SignUp(props: any) {
                                         name="street"
                                         label="Street"
                                         id="street"
-                                        value={state.street}
-                                        onChange={handleChange}
+                                        value={street}
+                                        onChange={(e: any) => setStreet(e.target.value)}
                                     />
                                 </Grid>
                                 <Grid item xs={4}>
@@ -299,8 +270,8 @@ function SignUp(props: any) {
                                         name="number"
                                         label="Number"
                                         id="number"
-                                        value={state.number}
-                                        onChange={handleChange}
+                                        value={number}
+                                        onChange={(e: any) => setNumber(e.target.value)}
                                     />
                                 </Grid>
                             </Grid>
@@ -311,8 +282,8 @@ function SignUp(props: any) {
                                     name="PLZ"
                                     label="PLZ"
                                     id="plz"
-                                    value={state.plz}
-                                    onChange={handleChange}
+                                    value={plz}
+                                    onChange={(e: any) => setPlz(e.target.value)}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -322,8 +293,8 @@ function SignUp(props: any) {
                                     name="city"
                                     label="City"
                                     id="city"
-                                    value={state.city}
-                                    onChange={handleChange}
+                                    value={city}
+                                    onChange={(e: any) => setCity(e.target.value)}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -342,11 +313,6 @@ function SignUp(props: any) {
                         >
                             Sign Up
                         </Button>
-                        <div className="alert alert-success mt-2"
-                             style={{display: state.successMessage ? 'block' : 'none'}}
-                             role="alert">
-                            {state.successMessage}
-                        </div>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <Link className="loginText" onClick={() => redirectToLogin()}>Already have an account?
