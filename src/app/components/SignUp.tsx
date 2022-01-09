@@ -13,6 +13,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import APIUrl from "../config/APIUrl";
 import {useNavigate} from "react-router-dom";
+import palette from "../config/Colours";
+import {createTheme} from "@mui/material/styles";
 
 function Copyright(props: any) {
     let navigate = useNavigate();
@@ -109,8 +111,15 @@ function SignUp(props: any) {
         }
     }
 
+    const theme = createTheme(palette);
+
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" sx={{
+            bgcolor: "background.paper",
+            pt: 8,
+            pb: 6,
+            position: "relative",
+        }}>
             <CssBaseline/>
             <Box
                 sx={{
