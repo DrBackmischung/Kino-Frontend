@@ -54,7 +54,8 @@ function ShowPicker(props: any) {
         return showDateFormatted;
     }
 
-    let formattedTime: any = (item: any) => {
+    //TODO Format Time
+    /*let formattedTime: any = (item: any) => {
         //TODO Fix Time Format
         const showTimeFormatted = new Date(item.startTime).toLocaleDateString(
             undefined,
@@ -63,7 +64,7 @@ function ShowPicker(props: any) {
                 minute: "2-digit",
             });
         return showTimeFormatted;
-    }
+    }*/
 
     if (isLoading) {
         return <LoadingAnimation/>;
