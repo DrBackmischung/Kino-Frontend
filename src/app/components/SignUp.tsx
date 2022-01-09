@@ -12,13 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import APIUrl from "../config/APIUrl";
-import {useQuery} from "react-query";
-import * as yup from "yup";
-import {yupResolver} from "@hookform/resolvers/yup";
-import {useForm} from "react-hook-form";
-import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import {Md5} from 'ts-md5/dist/md5';
 
 function Copyright(props: any) {
     let navigate = useNavigate();
