@@ -20,6 +20,7 @@ import ManageCheckout from "../components/ManageCheckout";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
+import Ratings from "../components/Ratings";
 
 function DetailsPage(props: any) {
   const [movieId, setMovieId] = useState();
@@ -91,7 +92,8 @@ function DetailsPage(props: any) {
               }}
             >
               <MovieDetails selectedMovie={data} />
-
+              {/*TODO Add Ratings to Movies in Backend*/}
+              <Ratings value={2.5}/>
               <ShowPicker
                 setOpenSeatBooking={setOpenSeatBooking}
                 movieId={movieId}
@@ -102,6 +104,8 @@ function DetailsPage(props: any) {
             <br />
           </Grid>
         </Container>
+        {/*TODO Add Reviews to Movies in Backend*/}
+        <Reviews comments={comments}/>
         <ManageCheckout show={selectedShow} open={openSeatBooking} />
       </Container>
     </ThemeProvider>
