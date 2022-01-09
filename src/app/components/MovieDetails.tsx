@@ -3,7 +3,6 @@ import React from "react";
 function MovieDetails(props: any) {
   const { selectedMovie } = props;
   return (
-    <div className="detailsContainer">
       <div className="movieDetails">
         <h1>{selectedMovie?.titel}</h1>
         <h2>
@@ -15,9 +14,9 @@ function MovieDetails(props: any) {
         <p>{selectedMovie?.description}</p>
         <br />
         <p>Director: {selectedMovie?.director}</p>
+        {/*TODO Add Actors in Backend*/}
         <p>Actors: {selectedMovie?.actors}</p>
       </div>
-    </div>
   );
 }
 

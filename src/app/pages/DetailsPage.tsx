@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import MovieDetails from "../components/MovieDetails";
 import ShowPicker from "../components/ShowPicker";
 import {
+  Box,
   CardMedia,
   CircularProgress,
   Container,
@@ -20,6 +21,8 @@ import ManageCheckout from "../components/ManageCheckout";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
+import Rating from "../components/Ratings";
+import Reviews from "../components/Reviews";
 
 function DetailsPage(props: any) {
   const [movieId, setMovieId] = useState();
@@ -61,7 +64,13 @@ function DetailsPage(props: any) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container className="wholeContainer">
+      <Container className="wholeContainer" sx={{
+        bgcolor: "background.paper",
+        pt: 8,
+        pb: 6,
+        position: "relative",
+        marginTop: theme.spacing(12),
+      }}>
         <IconButton onClick={goBack}>
           <ArrowBackIosIcon />
         </IconButton>
@@ -70,7 +79,7 @@ function DetailsPage(props: any) {
             sx={{
               display: "grid",
               gap: 5,
-              gridTemplateColumns: "repeat(2, 1fr)",
+              gridTemplateColumns: "repeat(2, 5fr)",
             }}
           >
             <div className="imageContainer">
@@ -87,21 +96,27 @@ function DetailsPage(props: any) {
               className="detailsContainer"
               sx={{
                 display: "grid",
-                gridTemplateRows: "repeat(2,1fr)",
+                gridTemplateRows: "repeat(1,1fr)",
               }}
             >
+              <Box>
               <MovieDetails selectedMovie={data} />
+              {/*TODO Add Rating Value in Backend*/}
+              <Rating ratingValue={2.5}/>
               <ShowPicker
                 setOpenSeatBooking={setOpenSeatBooking}
                 movieId={movieId}
                 setSelectedShow={setSelectedShow}
                 data={data}
               />
+              </Box>
             </Grid>
             <br />
           </Grid>
         </Container>
         <ManageCheckout show={selectedShow} open={openSeatBooking} />
+        {/*TODO Add Comments in Backend*/}
+        <Reviews /*comments={comments}*//>
       </Container>
     </ThemeProvider>
   );
