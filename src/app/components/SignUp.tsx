@@ -13,8 +13,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import APIUrl from "../config/APIUrl";
 import {useNavigate} from "react-router-dom";
-import palette from "../config/Colours";
-import {createTheme} from "@mui/material/styles";
 
 function Copyright(props: any) {
     let navigate = useNavigate();
@@ -110,8 +108,6 @@ function SignUp(props: any) {
             // TODO Error Handling
         }
     }
-
-    const theme = createTheme(palette);
 
     return (
         <Container component="main" maxWidth="xs" sx={{
