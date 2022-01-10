@@ -33,8 +33,6 @@ const useStyles = makeStyles({
     },
 });
 
-
-
 export default function SignIn() {
     const classes = useStyles();
 
@@ -94,7 +92,7 @@ export default function SignIn() {
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link href="/SignUpPage" variant="body2">
                                 {"Neuer Benutzer? Registrieren"}
                             </Link>
                         </Grid>
