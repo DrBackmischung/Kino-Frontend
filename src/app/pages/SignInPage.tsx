@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import Grid from "@mui/material/Grid";
 import {Avatar, Checkbox, Container, CssBaseline, FormControlLabel, TextField} from "@mui/material";
@@ -38,7 +38,6 @@ const useStyles = makeStyles({
 
 export default function SignIn() {
     const classes = useStyles();
-
 
     return (
         <Container component="main" maxWidth="xs"
