@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import Grid from "@mui/material/Grid";
 import {Avatar, Checkbox, Container, CssBaseline, FormControlLabel, TextField} from "@mui/material";
@@ -9,6 +9,9 @@ import { makeStyles } from '@mui/styles';
 import {createTheme} from "@mui/material/styles";
 import LockIcon from '@mui/icons-material/Lock';
 import colours from '../config/Colours';
+import SignInGoogle from "../components/SignInGoogle";
+import {SignInApple} from "../components/SignInApple";
+import appleAuth, {AppleButton} from "@invertase/react-native-apple-authentication";
 
 const theme = createTheme();
 
@@ -33,10 +36,9 @@ const useStyles = makeStyles({
     },
 });
 
-
-
 export default function SignIn() {
     const classes = useStyles();
+
 
     return (
         <Container component="main" maxWidth="xs"
@@ -94,7 +96,7 @@ export default function SignIn() {
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link href="/SignUpPage" variant="body2">
                                 {"Neuer Benutzer? Registrieren"}
                             </Link>
                         </Grid>
