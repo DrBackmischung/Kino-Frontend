@@ -9,9 +9,6 @@ import { makeStyles } from '@mui/styles';
 import {createTheme} from "@mui/material/styles";
 import LockIcon from '@mui/icons-material/Lock';
 import colours from '../config/Colours';
-import SignInGoogle from "../components/SignInGoogle";
-import {SignInApple} from "../components/SignInApple";
-import appleAuth, {AppleButton} from "@invertase/react-native-apple-authentication";
 
 const theme = createTheme();
 
