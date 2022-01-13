@@ -31,7 +31,7 @@ function MovieCard(props: any) {
       <Grid container spacing={4}>
         {moviesData?.map(
           (movie: any) =>
-            movie.titel.toLowerCase().includes(filter) && (
+            movie.title.toLowerCase().includes(filter) && (
               <Grid item key={movie.id} xs={12} sm={6} md={4}>
                 <Card
                   sx={{
