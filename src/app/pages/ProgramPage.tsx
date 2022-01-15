@@ -12,6 +12,7 @@ import ManageAdminMovie from "../components/ManageAdminMovie";
 
 function ProgramPage() {
   const [filter, setFilter] = useState("");
+  // eslint-disable-next-line
   const [openAddMovieDialog, setOpenAddMovieDialog] = useState(0);
 
   const handleSearchChange = (e: any) => {
