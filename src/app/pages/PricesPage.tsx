@@ -1,22 +1,12 @@
 import React from 'react';
 
-import Grid from "@mui/material/Grid";
 import {Avatar, Checkbox, Container, CssBaseline, FormControlLabel, TextField} from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Link from '@mui/material/Link';
-import { makeStyles } from '@mui/styles';
-import {createTheme} from "@mui/material/styles";
-import LockIcon from '@mui/icons-material/Lock';
-import colours from '../config/Colours';
 import APIUrl from "../config/APIUrl";
 import LoadingAnimation from "../components/layouts/LoadingAnimation"
 import { useQuery } from 'react-query';
 import PriceCard from '../components/PriceCard';
 
 function PricesPage(){
-
-    const theme = createTheme();
 
     const apiUrlPrices = `${APIUrl.apiUrl}/price/getAll`;
 
