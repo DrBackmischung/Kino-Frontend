@@ -7,24 +7,14 @@ import { AddMovieDialog } from "./dialogs/Movie";
 const theme = createTheme();
 function ManageAdminMovie(props: any) {
   const navigate = useNavigate();
-  const { openAdd, openUpdate, openDelete } = props;
-  const [openAddMovie, setOpenAddMovie] = useState(false);
-  useEffect(() => {
-    if (openAdd > 0) {
-      setOpenAddMovie(true);
-    }
-  }, [open]);
-
-  const cancelAddMovie = () => {
-    setOpenAddMovie(false);
-  };
+  const { isOpenAdd, openAdd, closeAdd, isOpenUpdate, openUpdate, closeUpdate, isOpenDelete, openDelete, closeDelete } = props;
   
   return (
     <ThemeProvider theme={theme}>
-      <AddMovieDialog
-        open={openAddMovie}
-        cancel={cancelAddMovie}
-      />
+      {isOpenAdd ? <AddMovieDialog
+        open={openAdd}
+        cancel={closeAdd}
+      /> : null}
     </ThemeProvider>
   );
 }
