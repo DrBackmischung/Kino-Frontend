@@ -8,12 +8,9 @@ import Container from "@mui/material/Container";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
-import ManageAdminMovie from "../components/ManageAdminMovie";
 
 function ProgramPage() {
   const [filter, setFilter] = useState("");
-  // eslint-disable-next-line
-  const [openAddMovieDialog, setOpenAddMovieDialog] = useState(0);
 
   const handleSearchChange = (e: any) => {
     setFilter(e.target.value.toLowerCase());
@@ -83,7 +80,6 @@ function ProgramPage() {
         location={location}
         moviesData={moviesData.data}
       />
-      <ManageAdminMovie openAdd={openAddMovieDialog} />
     </div>
   );
 }
