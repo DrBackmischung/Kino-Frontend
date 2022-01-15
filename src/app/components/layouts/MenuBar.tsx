@@ -15,6 +15,7 @@ import DetailsPage from "../../pages/DetailsPage";
 import SignInPage from "../../pages/SignInPage";
 import UserRegistrationPage from "../../pages/UserRegistrationPage";
 import Impressum from "../../pages/Impressum";
+import PricesPage from "../../pages/PricesPage";
 
 function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -113,7 +114,7 @@ function MenuBar() {
         <Route path="/" element={<ComingSoon />} />
         <Route path="/programPage" element={<ProgramPage />} />
         <Route path="/eventsPage" element={<ComingSoon />} />
-        <Route path="/pricesOverviewPage" element={<ComingSoon />} />
+        <Route path="/pricesOverviewPage" element={<PricesPage />} />
         <Route path="/newsPage" element={<ComingSoon />} />
         <Route path="/DetailsPage" element={<DetailsPage />} />
         <Route path="/SignInPage" element={<SignInPage />} />
