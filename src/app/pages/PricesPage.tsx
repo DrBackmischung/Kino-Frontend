@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Avatar, Checkbox, Container, CssBaseline, FormControlLabel, TextField} from "@mui/material";
+import {Container} from "@mui/material";
 import APIUrl from "../config/APIUrl";
 import LoadingAnimation from "../components/layouts/LoadingAnimation"
 import { useQuery } from 'react-query';
