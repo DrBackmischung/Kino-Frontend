@@ -47,7 +47,7 @@ function SeatBookingDialog(props: any) {
       seatsQuery.refetch();
     }
   }, [selectedShow?.id]);
-  console.log(selectedShow, seatsQuery.data);
+
   const preparedSeatsForRender: any = (seats: any, numberOfRows: any) => {
     let mostSeatsInARow = 0;
     if (seatsQuery?.data === undefined) return;

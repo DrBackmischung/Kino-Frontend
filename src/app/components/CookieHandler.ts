@@ -5,13 +5,13 @@ HOW TO USE:
 3) Use cookies. Check for it with getCookie(cookieName: String) returns boolean; getCookie(cookieName:String) returns value from cookie.
 */
 
-export const setCookie = (cookieName: String, cookieValue: String, expireDays: number) => {
+export const setCookie = (cookieName: string, cookieValue: string, expireDays: number) => {
     const expireDate: Date = new Date();
     expireDate.setTime(expireDate.getTime() + (expireDays*24*60*60*1000));
     document.cookie = `${cookieName}=${cookieValue};expires=${expireDate};path=/`;
 }
 
-export const getCookie = (cookieName: String): String => {
+export const getCookie = (cookieName: string): string => {
     let name = cookieName + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
     let allCookies = decodedCookie.split(';');
@@ -24,12 +24,12 @@ export const getCookie = (cookieName: String): String => {
         return cookie.substring(name.length, cookie.length);
       }
     }
-    return "NotFound!";
+    return "null";
 }
 
-export const isCookieSet = (cookieName: String): boolean => {
+export const isCookieSet = (cookieName: string): boolean => {
     let cookie = getCookie(cookieName);
-    if(cookie !== "NotFound!" ) {
+    if(cookie !== "null" ) {
         return true;
     } else {
         return false;
