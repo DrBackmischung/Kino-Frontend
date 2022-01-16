@@ -568,21 +568,21 @@ export function DeleteShowDialog(props: any) {
       cancel
     } = props;
 
-    const apiUrlGetAllMovies = `${APIUrl.apiUrl}/movie/getAll`;
+    const apiUrlGetAllShows = `${APIUrl.apiUrl}/show/getAll`;
   
     const {isLoading, error, data} : any = useQuery("Movies", () =>
-      fetch(apiUrlGetAllMovies).then((res) => res.json())
+      fetch(apiUrlGetAllShows).then((res) => res.json())
     );
   
-    const deleteMovie = () => {
+    const deleteShow = () => {
 
         // setIsLoading(true);
-        const apiUrlAddMovie = `${APIUrl.apiUrl}/movie/${id}`;
+        const apiUrlDeleteShow = `${APIUrl.apiUrl}/show/${id}`;
         // eslint-disable-next-line
         const requestOptions = {
             method: "DELETE"
         };
-        fetch(apiUrlAddMovie, requestOptions).then((response) => {
+        fetch(apiUrlDeleteShow, requestOptions).then((response) => {
             if (!response.ok) {
                 // setError(true);
                 // setIsLoading(false);
@@ -608,7 +608,7 @@ export function DeleteShowDialog(props: any) {
           fullWidth={true}
           maxWidth="sm"
         >
-          <DialogTitle id="scroll-dialog-title">Movie</DialogTitle>
+          <DialogTitle id="scroll-dialog-title">Show</DialogTitle>
           {error ? (
             <ErrorPage />
           ) : isLoading ? (
@@ -632,7 +632,7 @@ export function DeleteShowDialog(props: any) {
                             }}
                         >
                             <Typography component="h1" variant="h5">
-                                Delete a movie
+                                Delete a show
                             </Typography>
                             <form noValidate>
                                 <Box component="form" noValidate sx={{mt: 3}}>
@@ -671,7 +671,7 @@ export function DeleteShowDialog(props: any) {
           )}
           <DialogActions>
             <Button onClick={cancel}>Abbruch</Button>
-            <Button onClick={deleteMovie}>Löschen</Button>
+            <Button onClick={deleteShow}>Löschen</Button>
           </DialogActions>
         </Dialog>
       </ThemeProvider>
