@@ -4,7 +4,7 @@ import {useQuery} from "react-query";
 import {
     Button,
     Grid,
-    Tooltip,
+    Tooltip, Typography,
     Zoom,
 } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -46,7 +46,7 @@ function ShowPicker(props: any) {
         const showDateFormatted = new Date(showDate).toLocaleDateString(
             undefined,
             {
-                weekday: "short",
+                weekday: "long",
                 day: "2-digit",
                 month: "2-digit",
                 year: "numeric",
@@ -55,16 +55,10 @@ function ShowPicker(props: any) {
     }
 
     //TODO Format Time
-    /*let formattedTime: any = (item: any) => {
-        //TODO Fix Time Format
-        const showTimeFormatted = new Date(item.startTime).toLocaleDateString(
-            undefined,
-            {
-                hour: "2-digit",
-                minute: "2-digit",
-            });
+    let formattedTime: any = (item: any) => {
+        const showTimeFormatted = (item.startTime).substring(0,5);
         return showTimeFormatted;
-    }*/
+    }
 
     if (isLoading) {
         return <LoadingAnimation/>;
@@ -80,7 +74,7 @@ function ShowPicker(props: any) {
     return (
         <Box className="overallContainer" maxWidth="sm">
             <h3>Shows:</h3>
-            <Box className="showTimeContainer" sx={{mt: 5}}>
+            <Box className="showTimeContainer">
                 <Grid
                     container
                     spacing={{xs: 2, md: 3}}
@@ -92,7 +86,10 @@ function ShowPicker(props: any) {
                         <LoadingAnimation/>
                     ) : (
                         prepareShows(data)?.map((item: any) => (
-                            <Grid item xs={2} sm={4} md={4} key={`${item.id}`}>
+                            <Grid item xs={1} sm={4} md={4} key={`${item.id}`}>
+                                <Typography>
+                                    <Box sx={{ fontWeight: 'bold'}}>{formattedDate(item.showDate)}</Box>
+                                </Typography>
                                 <Tooltip
                                     TransitionComponent={Zoom}
                                     title="Click to book a seat!"
@@ -100,14 +97,18 @@ function ShowPicker(props: any) {
                                 >
                                     <Button
                                         key={`${item.id}`}
+                                        fullWidth
                                         onClick={() => {
                                             openDialog(item);
                                         }}
                                         variant="contained"
                                     >
-                                        {formattedDate(item.showDate)}
-                                        <br/>
-                                        {item.startTime}
+                                        <Typography>
+                                            <Box sx={{ fontFamily: 'Monospace', fontSize: 30}}>
+                                                {formattedTime(item)}
+                                            </Box>
+                                        </Typography>
+
                                     </Button>
                                 </Tooltip>
                             </Grid>
