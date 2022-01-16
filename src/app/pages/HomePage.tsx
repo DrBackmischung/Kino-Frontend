@@ -56,7 +56,7 @@ function HomePage(){
             position: "relative",
             marginTop: theme.spacing(12)
         }}>
-            <img src={KinovationLogo} height={100}/>
+            <img src={KinovationLogo} alt={"Here should be our Kinovation Logo! I wonder where it went..." height={100}/>
             <Box>
                 <Carousel>
                     {
