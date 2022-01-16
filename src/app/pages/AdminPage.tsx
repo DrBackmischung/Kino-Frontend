@@ -4,6 +4,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import {
     Button,
+    Box,
+    Stack,
 } from "@mui/material";
 import { useState } from "react";
 import ManageAdminMovie from "../components/ManageAdminMovie";
@@ -15,6 +17,7 @@ function AdminPage() {
   // eslint-disable-next-line
   const [openAddMovie, setOpenAddMovie] = useState(false);
   const [openUpdateMovie, setUpdateMovie] = useState(false);
+  const [openDeleteMovie, setDeleteMovie] = useState(false);
 
   const handleAddMovieClickOpen = () => {
     setOpenAddMovie(true);
@@ -30,6 +33,13 @@ function AdminPage() {
     setUpdateMovie(false);
   };
 
+  const handleDeleteMovieClickOpen = () => {
+    setDeleteMovie(true);
+  };
+  const handleDeleteMovieClose = () => {
+    setDeleteMovie(false);
+  };
+
   // only render site when user with userID cookie has admin role
   return (
     <ThemeProvider theme={theme}>
@@ -42,24 +52,51 @@ function AdminPage() {
           position: "relative",
           marginTop: theme.spacing(12),
         }}>
-          <Button
-            key={"addMovie"}
-            onClick={() => {
-              handleAddMovieClickOpen();
+          <Box
+            sx={{
+                marginTop: 8,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
             }}
-            variant="contained"
           >
-            Add Movie
-          </Button>
-          <Button
-            key={"updateMovie"}
-            onClick={() => {
-              handleUpdateMovieClickOpen();
-            }}
-            variant="contained"
-          >
-            Update Movie
-          </Button>
+            <Box
+              sx={{
+                  marginTop: 8,
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+              }}
+            >
+              <Button
+                key={"addMovie"}
+                onClick={() => {
+                  handleAddMovieClickOpen();
+                }}
+                variant="contained"
+              >
+                Add Movie
+              </Button>
+              <Button
+                key={"updateMovie"}
+                onClick={() => {
+                  handleUpdateMovieClickOpen();
+                }}
+                variant="contained"
+              >
+                Update Movie
+              </Button>
+              <Button
+                key={"deleteMovie"}
+                onClick={() => {
+                  handleDeleteMovieClickOpen();
+                }}
+                variant="contained"
+              >
+                Delete Movie
+              </Button>
+            </Box>
+          </Box>
           <ManageAdminMovie
             isOpenAdd={openAddMovie}
             openAdd={handleAddMovieClickOpen}
@@ -67,6 +104,9 @@ function AdminPage() {
             isOpenUpdate={openUpdateMovie}
             openUpdate={handleUpdateMovieClickOpen}
             closeUpdate={handleUpdateMovieClose}
+            isOpenDelete={openDeleteMovie}
+            openDelete={handleDeleteMovieClickOpen}
+            closeDelete={handleDeleteMovieClose}
           />
         </Container>
       </main>

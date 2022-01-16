@@ -79,14 +79,6 @@ export function AddMovieDialog(props: any) {
         });
         cancel();
     };
-
-    function generate(element: any) {
-      return [0, 1, 2].map((value) =>
-        React.cloneElement(element, {
-          key: value,
-        }),
-      );
-    }
   
     const theme = createTheme(palette);
   
@@ -310,22 +302,6 @@ export function UpdateMovieDialog(props: any) {
     const {isLoading, error, data} : any = useQuery("Movies", () =>
       fetch(apiUrlGetAllMovies).then((res) => res.json())
     );
-
-    let prepareMovies: any = (movies: any) => {
-        if (data === undefined) return;
-        const sortedShows = data?.sort(
-            (itemA: any, itemB: any) => {
-                if (itemA.showDate !== itemB.showDate) {
-                    return new Date(itemA.showDate).getTime() - new Date(itemB.showDate).getTime();
-                } else {
-                    return new Date(itemA.startTime).getTime() - new Date(itemB.startTime).getTime();
-                    //TODO nach Zeit sortieren
-                }
-            }
-        );
-        console.log(sortedShows)
-        return sortedShows;
-    };
   
     const updateMovie = () => {
 
@@ -410,8 +386,8 @@ export function UpdateMovieDialog(props: any) {
                                                 (movie: any) => 
                                                     <ListItem>
                                                         <ListItemText
-                                                            primary={movie.id}
-                                                            secondary={movie.title}
+                                                            primary={movie.title}
+                                                            secondary={movie.id}
                                                         />
                                                     </ListItem>
                                                 )    
@@ -579,6 +555,123 @@ export function UpdateMovieDialog(props: any) {
           <DialogActions>
             <Button onClick={cancel}>Abbruch</Button>
             <Button onClick={updateMovie}>Speichern</Button>
+          </DialogActions>
+        </Dialog>
+      </ThemeProvider>
+    );
+}
+  
+export function DeleteMovieDialog(props: any) {
+    const [id, setId ] = useState("");
+    const {
+      open,
+      cancel
+    } = props;
+
+    const apiUrlGetAllMovies = `${APIUrl.apiUrl}/movie/getAll`;
+  
+    const {isLoading, error, data} : any = useQuery("Movies", () =>
+      fetch(apiUrlGetAllMovies).then((res) => res.json())
+    );
+  
+    const deleteMovie = () => {
+
+        // setIsLoading(true);
+        const apiUrlAddMovie = `${APIUrl.apiUrl}/movie/${id}`;
+        // eslint-disable-next-line
+        const requestOptions = {
+            method: "DELETE"
+        };
+        fetch(apiUrlAddMovie, requestOptions).then((response) => {
+            if (!response.ok) {
+                // setError(true);
+                // setIsLoading(false);
+                return;
+            }
+            return response.json().then((data) => {
+                // setIsLoading(false);
+            });
+        });
+        cancel();
+    };
+  
+    const theme = createTheme(palette);
+  
+    return (
+      <ThemeProvider theme={theme}>
+        <Dialog
+          open={open}
+          onClose={cancel}
+          scroll="paper"
+          aria-labelledby="scroll-dialog-title"
+          aria-describedby="scroll-dialog-description"
+          fullWidth={true}
+          maxWidth="sm"
+        >
+          <DialogTitle id="scroll-dialog-title">Movie</DialogTitle>
+          {error ? (
+            <ErrorPage />
+          ) : isLoading ? (
+            <LoadingAnimation />
+          ) : (
+            <DialogContent dividers={true}>
+                <DialogContentText id="scroll-dialog-description">
+                    <Container component="main" maxWidth="xs" sx={{
+                        bgcolor: "background.paper",
+                        pt: 8,
+                        pb: 6,
+                        position: "relative",
+                    }}>
+                        <CssBaseline/>
+                        <Box
+                            sx={{
+                                marginTop: 8,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Typography component="h1" variant="h5">
+                                Delete a movie
+                            </Typography>
+                            <form noValidate>
+                                <Box component="form" noValidate sx={{mt: 3}}>
+                                    <Grid container spacing={2}>
+                                        <List>
+                                            {data?.map( 
+                                                (movie: any) => 
+                                                    <ListItem>
+                                                        <ListItemText
+                                                            primary={movie.title}
+                                                            secondary={movie.id}
+                                                        />
+                                                    </ListItem>
+                                                )    
+                                            }
+                                        </List>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                name="id"
+                                                required
+                                                fullWidth
+                                                id="id"
+                                                label="ID"
+                                                autoFocus
+                                                onChange={(e: any) => setId(e.target.value)}
+                                                value={id}
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                </Box>
+                            </form>
+                        </Box>
+                    </Container>
+                </DialogContentText>
+            </DialogContent>
+          )}
+          <DialogActions>
+            <Button onClick={cancel}>Abbruch</Button>
+            <Button onClick={deleteMovie}>Löschen</Button>
           </DialogActions>
         </Dialog>
       </ThemeProvider>
