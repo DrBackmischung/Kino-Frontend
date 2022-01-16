@@ -12,6 +12,9 @@ import {
     Container,
     Typography,
     CssBaseline,
+    List,
+    ListItem,
+    ListItemText,
 } from "@mui/material";
 import React, { useState } from "react";
 import ErrorPage from "../../pages/ErrorPage";
@@ -20,6 +23,7 @@ import APIUrl from "../../config/APIUrl";
 import "./Dialogs.css";
 import { createTheme } from "@mui/material/styles";
 import palette from "../../config/Colours";
+import { useQuery } from "react-query";
   
 export function AddMovieDialog(props: any) {
     const [title, setTitle ] = useState("");
@@ -75,6 +79,14 @@ export function AddMovieDialog(props: any) {
         });
         cancel();
     };
+
+    function generate(element: any) {
+      return [0, 1, 2].map((value) =>
+        React.cloneElement(element, {
+          key: value,
+        }),
+      );
+    }
   
     const theme = createTheme(palette);
   
@@ -294,8 +306,15 @@ export function UpdateMovieDialog(props: any) {
     } = props;
     const [error, setError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+
+    const apiUrlGetAllMovies = `${APIUrl.apiUrl}/movie/getAll`;
+  
+    const moviesData : any = useQuery("Movies", () =>
+      fetch(apiUrlGetAllMovies).then((res) => res.json())
+    );
   
     const updateMovie = () => {
+
         setIsLoading(true);
         const apiUrlAddMovie = `${APIUrl.apiUrl}/movie/${id}`;
         // eslint-disable-next-line
@@ -372,6 +391,18 @@ export function UpdateMovieDialog(props: any) {
                             <form noValidate>
                                 <Box component="form" noValidate sx={{mt: 3}}>
                                     <Grid container spacing={2}>
+                                        <List>
+                                            {moviesData?.map( 
+                                                (movie: any) => 
+                                                    <ListItem>
+                                                        <ListItemText
+                                                            primary={movie.id}
+                                                            secondary={movie.title}
+                                                        />
+                                                    </ListItem>
+                                                )    
+                                            }
+                                        </List>
                                         <Grid item xs={12}>
                                             <TextField
                                                 name="title"

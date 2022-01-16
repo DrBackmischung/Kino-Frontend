@@ -14,6 +14,7 @@ const theme = createTheme(palette);
 function AdminPage() {
   // eslint-disable-next-line
   const [openAddMovie, setOpenAddMovie] = useState(false);
+  const [openUpdateMovie, setUpdateMovie] = useState(false);
 
   const handleAddMovieClickOpen = () => {
     setOpenAddMovie(true);
@@ -21,6 +22,14 @@ function AdminPage() {
   const handleAddMovieClose = () => {
     setOpenAddMovie(false);
   };
+
+  const handleUpdateMovieClickOpen = () => {
+    setOpenAddMovie(true);
+  };
+  const handleUpdateMovieClose = () => {
+    setOpenAddMovie(false);
+  };
+
   // only render site when user with userID cookie has admin role
   return (
     <ThemeProvider theme={theme}>
@@ -42,7 +51,23 @@ function AdminPage() {
           >
             Add Movie
           </Button>
-          <ManageAdminMovie isOpenAdd={openAddMovie} openAdd={handleAddMovieClickOpen} closeAdd={handleAddMovieClose}/>
+          <Button
+            key={"updateMovie"}
+            onClick={() => {
+              handleUpdateMovieClickOpen();
+            }}
+            variant="contained"
+          >
+            Update Movie
+          </Button>
+          <ManageAdminMovie
+            isOpenAdd={openAddMovie}
+            openAdd={handleAddMovieClickOpen}
+            closeAdd={handleAddMovieClose}
+            isOpenUpdate={openUpdateMovie}
+            openUpdate={handleUpdateMovieClickOpen}
+            closeUpdate={handleUpdateMovieClose}
+          />
         </Container>
       </main>
     </ThemeProvider>
