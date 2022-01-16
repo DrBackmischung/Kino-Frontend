@@ -14,7 +14,6 @@ function MovieDetails(props: any) {
         <p>{selectedMovie?.description}</p>
         <br />
         <p>Director: {selectedMovie?.director}</p>
-        {/*TODO Add Actors in Backend*/}
         <p>Actors: {selectedMovie?.actors}</p>
       </div>
   );
