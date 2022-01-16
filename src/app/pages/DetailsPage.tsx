@@ -21,6 +21,7 @@ import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import Ratings from "../components/Ratings";
 
 
 function DetailsPage() {
@@ -91,6 +92,7 @@ function DetailsPage() {
             >
               <Box>
               <MovieDetails selectedMovie={data} />
+              <Ratings ratingValue={2}/>
               <ShowPicker
                 setOpenSeatBooking={setOpenSeatBooking}
                 movieId={movieId}
