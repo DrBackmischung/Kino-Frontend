@@ -50,7 +50,7 @@ function MovieCard(props: any) {
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      {movie.titel}
+                      {movie.title}
                     </Typography>
                     <Typography>
                       {movie.duration} Min FSK {movie.fsk}
