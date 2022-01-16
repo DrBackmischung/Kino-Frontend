@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { AddMovieDialog } from "./dialogs/Movie";
+import { AddMovieDialog, UpdateMovieDialog } from "./dialogs/Movie";
 
 const theme = createTheme();
 function ManageAdminMovie(props: any) {
@@ -14,6 +14,10 @@ function ManageAdminMovie(props: any) {
       {isOpenAdd ? <AddMovieDialog
         open={openAdd}
         cancel={closeAdd}
+      /> : null}
+      {isOpenUpdate ? <UpdateMovieDialog
+        open={openUpdate}
+        cancel={closeUpdate}
       /> : null}
     </ThemeProvider>
   );

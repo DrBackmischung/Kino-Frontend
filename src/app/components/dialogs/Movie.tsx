@@ -304,19 +304,33 @@ export function UpdateMovieDialog(props: any) {
       open,
       cancel
     } = props;
-    const [error, setError] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
 
     const apiUrlGetAllMovies = `${APIUrl.apiUrl}/movie/getAll`;
   
-    const moviesData : any = useQuery("Movies", () =>
+    const {isLoading, error, data} : any = useQuery("Movies", () =>
       fetch(apiUrlGetAllMovies).then((res) => res.json())
     );
+
+    let prepareMovies: any = (movies: any) => {
+        if (data === undefined) return;
+        const sortedShows = data?.sort(
+            (itemA: any, itemB: any) => {
+                if (itemA.showDate !== itemB.showDate) {
+                    return new Date(itemA.showDate).getTime() - new Date(itemB.showDate).getTime();
+                } else {
+                    return new Date(itemA.startTime).getTime() - new Date(itemB.startTime).getTime();
+                    //TODO nach Zeit sortieren
+                }
+            }
+        );
+        console.log(sortedShows)
+        return sortedShows;
+    };
   
     const updateMovie = () => {
 
-        setIsLoading(true);
-        const apiUrlAddMovie = `${APIUrl.apiUrl}/movie/${id}`;
+        // setIsLoading(true);
+        const apiUrlAddMovie = `${APIUrl.apiUrl}/movie/update/${id}`;
         // eslint-disable-next-line
         const requestOptions = {
             method: "PUT",
@@ -338,12 +352,12 @@ export function UpdateMovieDialog(props: any) {
         };
         fetch(apiUrlAddMovie, requestOptions).then((response) => {
             if (!response.ok) {
-                setError(true);
-                setIsLoading(false);
+                // setError(true);
+                // setIsLoading(false);
                 return;
             }
             return response.json().then((data) => {
-                setIsLoading(false);
+                // setIsLoading(false);
             });
         });
         cancel();
@@ -392,7 +406,7 @@ export function UpdateMovieDialog(props: any) {
                                 <Box component="form" noValidate sx={{mt: 3}}>
                                     <Grid container spacing={2}>
                                         <List>
-                                            {moviesData?.map( 
+                                            {data?.map( 
                                                 (movie: any) => 
                                                     <ListItem>
                                                         <ListItemText
@@ -403,6 +417,18 @@ export function UpdateMovieDialog(props: any) {
                                                 )    
                                             }
                                         </List>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                name="id"
+                                                required
+                                                fullWidth
+                                                id="id"
+                                                label="ID"
+                                                autoFocus
+                                                onChange={(e: any) => setId(e.target.value)}
+                                                value={id}
+                                            />
+                                        </Grid>
                                         <Grid item xs={12}>
                                             <TextField
                                                 name="title"

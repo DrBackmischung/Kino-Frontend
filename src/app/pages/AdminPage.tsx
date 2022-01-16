@@ -24,10 +24,10 @@ function AdminPage() {
   };
 
   const handleUpdateMovieClickOpen = () => {
-    setOpenAddMovie(true);
+    setUpdateMovie(true);
   };
   const handleUpdateMovieClose = () => {
-    setOpenAddMovie(false);
+    setUpdateMovie(false);
   };
 
   // only render site when user with userID cookie has admin role
