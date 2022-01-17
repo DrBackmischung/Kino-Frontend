@@ -89,6 +89,7 @@ export function SeatPlanPainter(props: any) {
                 cinemaRoomID: cinemaRoomID
             });
         }
+        setRowToAdd(rowToAdd + 1);
         setSeatsToRender(seatsToRender);
     }
   
