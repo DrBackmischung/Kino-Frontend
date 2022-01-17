@@ -56,7 +56,6 @@ function Impressum() {
             <p>Frederick Orschiedt</p>
             <p>Jost-Tomke Müller</p>
             <p>Marcel Mildenberger</p>
-            <p>Mathis Neunzig</p>
             <p>Nathalie Möck</p>
           </Box>
         </Box>
