@@ -41,7 +41,6 @@ function AdminPage() {
   };
   
   const [openAddShow, setOpenAddShow] = useState(false);
-  const [openUpdateShow, setUpdateShow] = useState(false);
   const [openDeleteShow, setDeleteShow] = useState(false);
 
   const handleAddShowClickOpen = () => {
@@ -49,13 +48,6 @@ function AdminPage() {
   };
   const handleAddShowClose = () => {
     setOpenAddShow(false);
-  };
-
-  const handleUpdateShowClickOpen = () => {
-    setUpdateShow(true);
-  };
-  const handleUpdateShowClose = () => {
-    setUpdateShow(false);
   };
 
   const handleDeleteShowClickOpen = () => {
@@ -139,15 +131,6 @@ function AdminPage() {
                 Add Show
               </Button>
               <Button
-                key={"updateShow"}
-                onClick={() => {
-                  handleUpdateShowClickOpen();
-                }}
-                variant="contained"
-              >
-                Update Show
-              </Button>
-              <Button
                 key={"deleteMovie"}
                 onClick={() => {
                   handleDeleteShowClickOpen();
@@ -173,9 +156,6 @@ function AdminPage() {
             isOpenAdd={openAddShow}
             openAdd={handleAddShowClickOpen}
             closeAdd={handleAddShowClose}
-            isOpenUpdate={openUpdateShow}
-            openUpdate={handleUpdateShowClickOpen}
-            closeUpdate={handleUpdateShowClose}
             isOpenDelete={openDeleteShow}
             openDelete={handleDeleteShowClickOpen}
             closeDelete={handleDeleteShowClose}

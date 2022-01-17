@@ -6,7 +6,6 @@ import { AddMovieDialog, UpdateMovieDialog, DeleteMovieDialog } from "./dialogs/
 
 const theme = createTheme();
 function ManageAdminMovie(props: any) {
-  const navigate = useNavigate();
   const { isOpenAdd, openAdd, closeAdd, isOpenUpdate, openUpdate, closeUpdate, isOpenDelete, openDelete, closeDelete } = props;
   
   return (
