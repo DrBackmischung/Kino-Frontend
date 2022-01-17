@@ -32,11 +32,12 @@ function Impressum() {
           <h1>Impressum</h1>
           <h2>Verantwortliche für den Inhalt der Webseite:</h2>
           <Box className="mainNameBox" sx={{ fontStyle: "italic" }}>
-            <p>Vorname Nachname</p>
-            <p>Straße Hausnummer</p>
-            <p>PLZ Ort</p>
+            <p>Mathis Neunzig</p>
+            <p>Parkring 21</p>
+            <p>68159 Mannheim</p>
             <p>Deutschland</p>
-            <p>E-Mail: </p>
+            <p>mathis.neunzig@gmail.com</p>
+            <p>+49 174 9885992</p>
           </Box>
           <br />
           <p>
