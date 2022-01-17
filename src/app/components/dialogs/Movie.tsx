@@ -20,7 +20,6 @@ import React, { useState } from "react";
 import ErrorPage from "../../pages/ErrorPage";
 import LoadingAnimation from "../layouts/LoadingAnimation";
 import APIUrl from "../../config/APIUrl";
-import "./Dialogs.css";
 import { createTheme } from "@mui/material/styles";
 import palette from "../../config/Colours";
 import { useQuery } from "react-query";

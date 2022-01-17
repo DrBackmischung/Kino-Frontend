@@ -20,61 +20,58 @@ import React, { useState } from "react";
 import ErrorPage from "../../pages/ErrorPage";
 import LoadingAnimation from "../layouts/LoadingAnimation";
 import APIUrl from "../../config/APIUrl";
-import "./Dialogs.css";
 import { createTheme } from "@mui/material/styles";
 import palette from "../../config/Colours";
 import { useQuery } from "react-query";
   
 export function AddShowDialog(props: any) {
-    const [title, setTitle ] = useState("");
-    const [originalTitle, setOGTitle ] = useState("");
-    const [language, setLanguage ] = useState("");
-    const [duration, setDuration ] = useState("");
-    const [director, setDirector ] = useState("");
-    const [actors, setActors ] = useState("");
-    const [description, setDescription ] = useState("");
-    const [originalDescription, setOGDescription ] = useState("");
-    const [pictureLink, setPictureLink ] = useState("");
-    const [trailerLink, setTrailerLink ] = useState("");
-    const [genre, setGenre ] = useState("");
-    const [FSK, setFSK ] = useState("");
+    const [date, setDate ] = useState("");
+    const [start, setStart ] = useState("");
+    const [end, setEnd ] = useState("");
+    const [movieID, setMovieID ] = useState("");
+    const [cinemaID, setCinemaID ] = useState("");
+    const [cinemaRoomID, setCinemaRoomID ] = useState("");
     const {
       open,
       cancel
     } = props;
-    const [error, setError] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+
+    const apiUrlGetAllShow = `${APIUrl.apiUrl}/cinema/getAll`;
   
-    const addMovie = () => {
-        setIsLoading(true);
-        const apiUrlAddMovie = `${APIUrl.apiUrl}/movie/add`;
+    const {isLoading, error, data} : any = useQuery("Cinemas", () =>
+      fetch(apiUrlGetAllShow).then((res) => res.json())
+    );
+
+    const apiUrlGetAllCinema = `${APIUrl.apiUrl}/cinemaRoom/getAll`;
+  
+    const {isLoading2, error2, data2} : any = useQuery("Cinema Rooms", () =>
+      fetch(apiUrlGetAllCinema).then((res) => res.json())
+    );
+  
+    const addShow = () => {
+        // setIsLoading(true);
+        const apiUrlAddShow = `${APIUrl.apiUrl}/show/add`;
         // eslint-disable-next-line
         const requestOptions = {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                title,
-                originalTitle,
-                language,
-                duration,
-                director,
-                actors,
-                description,
-                originalDescription,
-                pictureLink,
-                trailerLink,
-                genre,
-                FSK,
+                date,
+                start,
+                end,
+                movieID,
+                cinemaID,
+                cinemaRoomID,
             }),
         };
-        fetch(apiUrlAddMovie, requestOptions).then((response) => {
+        fetch(apiUrlAddShow, requestOptions).then((response) => {
             if (!response.ok) {
-                setError(true);
-                setIsLoading(false);
+        //        setError(true);
+        //        setIsLoading(false);
                 return;
             }
             return response.json().then((data) => {
-                setIsLoading(false);
+        //        setIsLoading(false);
             });
         });
         cancel();
@@ -93,10 +90,10 @@ export function AddShowDialog(props: any) {
           fullWidth={true}
           maxWidth="sm"
         >
-          <DialogTitle id="scroll-dialog-title">Movie</DialogTitle>
-          {error ? (
+          <DialogTitle id="scroll-dialog-title">Show</DialogTitle>
+          {error || error2 ? (
             <ErrorPage />
-          ) : isLoading ? (
+          ) : isLoading || isLoading2 ? (
             <LoadingAnimation />
           ) : (
             <DialogContent dividers={true}>
@@ -117,148 +114,114 @@ export function AddShowDialog(props: any) {
                             }}
                         >
                             <Typography component="h1" variant="h5">
-                                Add a movie
+                                Add a show
                             </Typography>
                             <form noValidate>
                                 <Box component="form" noValidate sx={{mt: 3}}>
                                     <Grid container spacing={2}>
+                                        <Typography component="h1" variant="h5">
+                                            Cinema list
+                                        </Typography>
+                                        <List>
+                                            {data?.map( 
+                                                (cinema: any) => 
+                                                    <ListItem>
+                                                        <ListItemText
+                                                            primary={cinema.title}
+                                                            secondary={cinema.id}
+                                                        />
+                                                    </ListItem>
+                                                )    
+                                            }
+                                        </List>
+                                        <Typography component="h1" variant="h5">
+                                            CinemaRoom list
+                                        </Typography>
+                                        <List>
+                                            {data2?.map( 
+                                                (cr: any) => 
+                                                    <ListItem>
+                                                        <ListItemText
+                                                            primary={cr.title}
+                                                            secondary={cr.id}
+                                                        />
+                                                    </ListItem>
+                                                )    
+                                            }
+                                        </List>
                                         <Grid item xs={12}>
                                             <TextField
-                                                name="title"
+                                                name="date"
                                                 required
                                                 fullWidth
-                                                id="title"
-                                                label="Film Title"
+                                                type="date"
+                                                id="date"
+                                                label="Show Date"
                                                 autoFocus
-                                                onChange={(e: any) => setTitle(e.target.value)}
-                                                value={title}
+                                                onChange={(e: any) => setDate(e.target.value)}
+                                                value={date}
                                             />
                                         </Grid>
-                                        <Grid item xs={12} sm={6}>
+                                        <Grid item xs={12}>
                                             <TextField
-                                                name="OGTitle"
+                                                name="start"
                                                 required
                                                 fullWidth
-                                                id="OGTitle"
-                                                label="Original Title"
+                                                type="time"
+                                                id="start"
+                                                label="Start Time"
                                                 autoFocus
-                                                onChange={(e: any) => setOGTitle(e.target.value)}
-                                                value={originalTitle}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12} sm={6}>
-                                            <TextField
-                                                required
-                                                fullWidth
-                                                id="language"
-                                                label="Language"
-                                                name="language"
-                                                onChange={(e: any) => setLanguage(e.target.value)}
-                                                value={language}
+                                                onChange={(e: any) => setStart(e.target.value)}
+                                                value={start}
                                             />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextField
+                                                name="end"
                                                 required
                                                 fullWidth
-                                                id="duration"
-                                                label="Duration"
-                                                name="duration"
-                                                onChange={(e: any) => setDuration(e.target.value)}
-                                                value={duration}
+                                                type="time"
+                                                id="end"
+                                                label="End Time"
+                                                autoFocus
+                                                onChange={(e: any) => setEnd(e.target.value)}
+                                                value={end}
                                             />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextField
+                                                name="movieID"
                                                 required
                                                 fullWidth
-                                                name="director"
-                                                label="Director"
-                                                id="director"
-                                                autoComplete="new-password"
-                                                onChange={(e: any) => setDirector(e.target.value)}
-                                                value={director}
+                                                id="movieID"
+                                                label="Movie ID"
+                                                autoFocus
+                                                onChange={(e: any) => setMovieID(e.target.value)}
+                                                value={movieID}
                                             />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextField
+                                                name="cinemaID"
                                                 required
                                                 fullWidth
-                                                name="actors"
-                                                label="Actors"
-                                                id="actors"
-                                                value={actors}
-                                                onChange={(e: any) => setActors(e.target.value)}
+                                                id="cinemaID"
+                                                label="Cinema ID"
+                                                autoFocus
+                                                onChange={(e: any) => setCinemaID(e.target.value)}
+                                                value={cinemaID}
                                             />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextField
+                                                name="cinemaRoomID"
                                                 required
                                                 fullWidth
-                                                multiline
-                                                minRows={5}
-                                                name="description"
-                                                label="Description"
-                                                id="description"
-                                                value={description}
-                                                onChange={(e: any) => setDescription(e.target.value)}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                required
-                                                fullWidth
-                                                multiline
-                                                minRows={5}
-                                                name="OGdescription"
-                                                label="Description"
-                                                id="OGdescription"
-                                                value={originalDescription}
-                                                onChange={(e: any) => setOGDescription(e.target.value)}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                required
-                                                fullWidth
-                                                name="pictureLink"
-                                                label="Link to Thumbnail Picture"
-                                                id="pictureLink"
-                                                value={pictureLink}
-                                                onChange={(e: any) => setPictureLink(e.target.value)}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                required
-                                                fullWidth
-                                                name="trailerLink"
-                                                label="Link to Youtube Trailer"
-                                                id="trailerLink"
-                                                value={trailerLink}
-                                                onChange={(e: any) => setTrailerLink(e.target.value)}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                required
-                                                fullWidth
-                                                name="genre"
-                                                label="Genre"
-                                                id="genre"
-                                                value={genre}
-                                                onChange={(e: any) => setGenre(e.target.value)}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                required
-                                                fullWidth
-                                                name="FSK"
-                                                label="FSK"
-                                                id="FSK"
-                                                value={FSK}
-                                                onChange={(e: any) => setFSK(e.target.value)}
+                                                id="cinemaRoomID"
+                                                label="CinemaRoom ID"
+                                                autoFocus
+                                                onChange={(e: any) => setCinemaRoomID(e.target.value)}
+                                                value={cinemaRoomID}
                                             />
                                         </Grid>
                                     </Grid>
@@ -271,7 +234,7 @@ export function AddShowDialog(props: any) {
           )}
           <DialogActions>
             <Button onClick={cancel}>Abbruch</Button>
-            <Button onClick={addMovie}>Speichern</Button>
+            <Button onClick={addShow}>Speichern</Button>
           </DialogActions>
         </Dialog>
       </ThemeProvider>
@@ -280,50 +243,50 @@ export function AddShowDialog(props: any) {
   
 export function UpdateShowDialog(props: any) {
     const [id, setId ] = useState("");
-    const [title, setTitle ] = useState("");
-    const [originalTitle, setOGTitle ] = useState("");
-    const [language, setLanguage ] = useState("");
-    const [duration, setDuration ] = useState("");
-    const [director, setDirector ] = useState("");
-    const [actors, setActors ] = useState("");
-    const [description, setDescription ] = useState("");
-    const [originalDescription, setOGDescription ] = useState("");
-    const [pictureLink, setPictureLink ] = useState("");
-    const [trailerLink, setTrailerLink ] = useState("");
-    const [genre, setGenre ] = useState("");
-    const [FSK, setFSK ] = useState("");
+    const [date, setDate ] = useState("");
+    const [start, setStart ] = useState("");
+    const [end, setEnd ] = useState("");
+    const [movieID, setMovieID ] = useState("");
+    const [cinemaID, setCinemaID ] = useState("");
+    const [cinemaRoomID, setCinemaRoomID ] = useState("");
     const {
       open,
       cancel
     } = props;
 
-    const apiUrlGetAllMovies = `${APIUrl.apiUrl}/movie/getAll`;
+    const apiUrlGetAllShow = `${APIUrl.apiUrl}/show/getAll`;
   
-    const {isLoading, error, data} : any = useQuery("Movies", () =>
-      fetch(apiUrlGetAllMovies).then((res) => res.json())
+    const {isLoading, error, data} : any = useQuery("Shows", () =>
+      fetch(apiUrlGetAllShow).then((res) => res.json())
+    );
+
+    const apiUrlGetAllCinema = `${APIUrl.apiUrl}/cinema/getAll`;
+  
+    const {isLoading2, error2, data2} : any = useQuery("Cinemas", () =>
+      fetch(apiUrlGetAllCinema).then((res) => res.json())
+    );
+
+    const apiUrlGetAllCinemaRoom = `${APIUrl.apiUrl}/cinemaRoom/getAll`;
+  
+    const {isLoading3, error3, data3} : any = useQuery("Cinema Rooms", () =>
+      fetch(apiUrlGetAllCinemaRoom).then((res) => res.json())
     );
   
-    const updateMovie = () => {
+    const updateShow = () => {
 
         // setIsLoading(true);
-        const apiUrlAddMovie = `${APIUrl.apiUrl}/movie/update/${id}`;
+        const apiUrlAddMovie = `${APIUrl.apiUrl}/show/${id}`;
         // eslint-disable-next-line
         const requestOptions = {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                title,
-                originalTitle,
-                language,
-                duration,
-                director,
-                actors,
-                description,
-                originalDescription,
-                pictureLink,
-                trailerLink,
-                genre,
-                FSK,
+                date,
+                start,
+                end,
+                movieID,
+                cinemaID,
+                cinemaRoomID,
             }),
         };
         fetch(apiUrlAddMovie, requestOptions).then((response) => {
@@ -352,10 +315,10 @@ export function UpdateShowDialog(props: any) {
           fullWidth={true}
           maxWidth="sm"
         >
-          <DialogTitle id="scroll-dialog-title">Movie</DialogTitle>
-          {error ? (
+          <DialogTitle id="scroll-dialog-title">Show</DialogTitle>
+          {error || error2 || error3 ? (
             <ErrorPage />
-          ) : isLoading ? (
+          ) : isLoading || isLoading2 || isLoading3 ? (
             <LoadingAnimation />
           ) : (
             <DialogContent dividers={true}>
@@ -381,13 +344,46 @@ export function UpdateShowDialog(props: any) {
                             <form noValidate>
                                 <Box component="form" noValidate sx={{mt: 3}}>
                                     <Grid container spacing={2}>
+                                        <Typography component="h1" variant="h5">
+                                            Show list
+                                        </Typography>
                                         <List>
                                             {data?.map( 
-                                                (movie: any) => 
+                                                (show: any) => 
                                                     <ListItem>
                                                         <ListItemText
-                                                            primary={movie.title}
-                                                            secondary={movie.id}
+                                                            primary={show.title}
+                                                            secondary={show.id}
+                                                        />
+                                                    </ListItem>
+                                                )    
+                                            }
+                                        </List>
+                                        <Typography component="h1" variant="h5">
+                                            Cinema list
+                                        </Typography>
+                                        <List>
+                                            {data2?.map( 
+                                                (cinema: any) => 
+                                                    <ListItem>
+                                                        <ListItemText
+                                                            primary={cinema.title}
+                                                            secondary={cinema.id}
+                                                        />
+                                                    </ListItem>
+                                                )    
+                                            }
+                                        </List>
+                                        <Typography component="h1" variant="h5">
+                                            CinemaRoom list
+                                        </Typography>
+                                        <List>
+                                            {data3?.map( 
+                                                (cr: any) => 
+                                                    <ListItem>
+                                                        <ListItemText
+                                                            primary={cr.title}
+                                                            secondary={cr.id}
                                                         />
                                                     </ListItem>
                                                 )    
@@ -407,141 +403,77 @@ export function UpdateShowDialog(props: any) {
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextField
-                                                name="title"
+                                                name="date"
                                                 required
                                                 fullWidth
-                                                id="title"
-                                                label="Film Title"
+                                                type="date"
+                                                id="date"
+                                                label="Show Date"
                                                 autoFocus
-                                                onChange={(e: any) => setTitle(e.target.value)}
-                                                value={title}
+                                                onChange={(e: any) => setDate(e.target.value)}
+                                                value={date}
                                             />
                                         </Grid>
-                                        <Grid item xs={12} sm={6}>
+                                        <Grid item xs={12}>
                                             <TextField
-                                                name="OGTitle"
+                                                name="start"
                                                 required
                                                 fullWidth
-                                                id="OGTitle"
-                                                label="Original Title"
+                                                type="time"
+                                                id="start"
+                                                label="Start Time"
                                                 autoFocus
-                                                onChange={(e: any) => setOGTitle(e.target.value)}
-                                                value={originalTitle}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12} sm={6}>
-                                            <TextField
-                                                required
-                                                fullWidth
-                                                id="language"
-                                                label="Language"
-                                                name="language"
-                                                onChange={(e: any) => setLanguage(e.target.value)}
-                                                value={language}
+                                                onChange={(e: any) => setStart(e.target.value)}
+                                                value={start}
                                             />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextField
+                                                name="end"
                                                 required
                                                 fullWidth
-                                                id="duration"
-                                                label="Duration"
-                                                name="duration"
-                                                onChange={(e: any) => setDuration(e.target.value)}
-                                                value={duration}
+                                                type="time"
+                                                id="end"
+                                                label="End Time"
+                                                autoFocus
+                                                onChange={(e: any) => setEnd(e.target.value)}
+                                                value={end}
                                             />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextField
+                                                name="movieID"
                                                 required
                                                 fullWidth
-                                                name="director"
-                                                label="Director"
-                                                id="director"
-                                                autoComplete="new-password"
-                                                onChange={(e: any) => setDirector(e.target.value)}
-                                                value={director}
+                                                id="movieID"
+                                                label="Movie ID"
+                                                autoFocus
+                                                onChange={(e: any) => setMovieID(e.target.value)}
+                                                value={movieID}
                                             />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextField
+                                                name="cinemaID"
                                                 required
                                                 fullWidth
-                                                name="actors"
-                                                label="Actors"
-                                                id="actors"
-                                                value={actors}
-                                                onChange={(e: any) => setActors(e.target.value)}
+                                                id="cinemaID"
+                                                label="Cinema ID"
+                                                autoFocus
+                                                onChange={(e: any) => setCinemaID(e.target.value)}
+                                                value={cinemaID}
                                             />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextField
+                                                name="cinemaRoomID"
                                                 required
                                                 fullWidth
-                                                multiline
-                                                minRows={5}
-                                                name="description"
-                                                label="Description"
-                                                id="description"
-                                                value={description}
-                                                onChange={(e: any) => setDescription(e.target.value)}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                required
-                                                fullWidth
-                                                multiline
-                                                minRows={5}
-                                                name="OGdescription"
-                                                label="Description"
-                                                id="OGdescription"
-                                                value={originalDescription}
-                                                onChange={(e: any) => setOGDescription(e.target.value)}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                required
-                                                fullWidth
-                                                name="pictureLink"
-                                                label="Link to Thumbnail Picture"
-                                                id="pictureLink"
-                                                value={pictureLink}
-                                                onChange={(e: any) => setPictureLink(e.target.value)}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                required
-                                                fullWidth
-                                                name="trailerLink"
-                                                label="Link to Youtube Trailer"
-                                                id="trailerLink"
-                                                value={trailerLink}
-                                                onChange={(e: any) => setTrailerLink(e.target.value)}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                required
-                                                fullWidth
-                                                name="genre"
-                                                label="Genre"
-                                                id="genre"
-                                                value={genre}
-                                                onChange={(e: any) => setGenre(e.target.value)}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                required
-                                                fullWidth
-                                                name="FSK"
-                                                label="FSK"
-                                                id="FSK"
-                                                value={FSK}
-                                                onChange={(e: any) => setFSK(e.target.value)}
+                                                id="cinemaRoomID"
+                                                label="CinemaRoom ID"
+                                                autoFocus
+                                                onChange={(e: any) => setCinemaRoomID(e.target.value)}
+                                                value={cinemaRoomID}
                                             />
                                         </Grid>
                                     </Grid>
@@ -554,7 +486,7 @@ export function UpdateShowDialog(props: any) {
           )}
           <DialogActions>
             <Button onClick={cancel}>Abbruch</Button>
-            <Button onClick={updateMovie}>Speichern</Button>
+            <Button onClick={updateShow}>Speichern</Button>
           </DialogActions>
         </Dialog>
       </ThemeProvider>
