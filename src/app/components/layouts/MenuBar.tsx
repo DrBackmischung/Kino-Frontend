@@ -18,6 +18,7 @@ import Impressum from "../../pages/Impressum";
 import { getCookie, setCookie } from "../CookieHandler";
 import { useQuery } from "react-query";
 import APIUrl from "../../config/APIUrl";
+import HomePage from "../../pages/HomePage";
 
 function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -168,7 +169,7 @@ function MenuBar() {
       </AppBar>
 
       <Routes>
-        <Route path="/" element={<ComingSoon />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/programPage" element={<ProgramPage />} />
         <Route path="/eventsPage" element={<ComingSoon />} />
         <Route path="/pricesOverviewPage" element={<ComingSoon />} />
