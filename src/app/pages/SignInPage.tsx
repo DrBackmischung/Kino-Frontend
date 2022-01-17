@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import Grid from "@mui/material/Grid";
 import {
@@ -16,10 +16,9 @@ import { makeStyles } from "@mui/styles";
 import { createTheme } from "@mui/material/styles";
 import LockIcon from "@mui/icons-material/Lock";
 import colours from "../config/Colours";
-import { setCookie, getCookie } from "../components/CookieHandler";
+import { setCookie } from "../components/CookieHandler";
 import { useNavigate } from "react-router-dom";
 import APIUrl from "../config/APIUrl";
-import { RestaurantMenuTwoTone } from "@mui/icons-material";
 
 const theme = createTheme();
 
@@ -78,22 +77,21 @@ export default function SignIn(props: any) {
         passwordHash: passwordToSend,
       }),
     };
-    fetch(apiUlr, requestOptions).then((response) => {
-      if (!response.ok) {
-        debugger;
-        // TODO Error Handling
-        console.log(response);
-        return;
-      } else if (response.ok) {
-        debugger;
-        console.log(response);
-        setCookie("userPasswordHash", passwordToSend, 7);
-        setCookie("userName", userName, 7);
+    fetch(apiUlr, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          return response.json();
+        } else if (response.ok) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        if (data.id !== "undefined") {
+          setCookie("userId", data.id, 7);
+        }
         setUser();
         redirectToHome();
-        return;
-      }
-    });
+      });
   };
 
   return (

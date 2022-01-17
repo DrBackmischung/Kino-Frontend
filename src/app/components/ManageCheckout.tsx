@@ -7,20 +7,10 @@ import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import APIUrl from "../config/APIUrl";
 
-const user = {
-  id: "e3e13a2a-f792-4d50-88fc-6bc05514868c",
-  userName: null,
-  name: "Mustermann",
-  firstName: "Max",
-  email: "max.mustermann@t-online.de",
-  password: null,
-  role: null,
-};
-
 const theme = createTheme();
 function ManageCheckout(props: any) {
   const navigate = useNavigate();
-  const { show, open } = props;
+  const { show, open, userData } = props;
   const [openCheckout, setOpenCheckout] = useState(false);
   const [openSeatBooking, setOpenSeatBooking] = useState(false);
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -70,17 +60,18 @@ function ManageCheckout(props: any) {
         open={openCheckout}
         handleClose={handleCloseCheckout}
         finishTransaction={finishTransaction}
-        user={user}
+        user={userData}
         selectedShow={selectedShow}
         selectedSeats={selectedSeats}
         priceQuery={priceQuery}
+        userData={userData}
       />
       <SeatBookingDialog
         open={openSeatBooking}
         handleClose={handleCloseBooking}
         selectedShow={selectedShow}
         proceedToCheckout={handleClickOpenCheckout}
-        userId={user.id}
+        userId={userData.id}
         selectedSeats={selectedSeats}
         setSelectedSeats={setSelectedSeats}
         priceQuery={priceQuery}

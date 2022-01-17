@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import APIUrl from "../config/APIUrl";
 import { useNavigate } from "react-router-dom";
-import { setCookie, getCookie } from "./CookieHandler";
+import { setCookie } from "./CookieHandler";
 
 function Copyright(props: any) {
   let navigate = useNavigate();
@@ -101,21 +101,22 @@ function SignUp(props: any) {
           city: city,
         }),
       };
-      fetch(apiUrlAll, requestOptions).then((response) => {
-        if (!response.ok) {
-          // TODO Error Handling
-          console.log(response);
-          return;
-        } else if (response.ok) {
-          console.log(response);
-          setCookie("userName", userName, 7);
-          setCookie("userPasswordHash", passwordMd5(password), 7);
-          setCookie("userEmail", email, 7);
-          setUser();
+      fetch(apiUrlAll, requestOptions)
+        .then((response) => {
+          if (!response.ok) {
+            return response.json();
+          } else if (response.ok) {
+            return response.json();
+          }
+        })
+        .then((data) => {
           postMessage("Registration successfull! Redirecting to Homepage!");
+          if (data.id !== "undefined") {
+            setCookie("userId", data.id, 7);
+          }
+          setUser();
           redirectToHome();
-        }
-      });
+        });
     } else {
       // TODO Error Handling
     }

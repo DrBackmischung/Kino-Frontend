@@ -152,20 +152,21 @@ function CheckoutDialog(props: any) {
                     id="nameInput"
                     label="Name"
                     variant="standard"
-                    defaultValue={`${user.firstName} ${user.name}`}
+                    defaultValue={`${user?.firstName} ${user?.name}`}
                   />
                   <TextField
                     fullWidth
                     id="adressInput"
                     label="Adresse"
                     variant="standard"
+                    defaultValue={`${user?.street}`}
                   />
                   <TextField
                     fullWidth
                     id="emailInput"
                     label="E-Mail"
                     variant="standard"
-                    defaultValue={user.email}
+                    defaultValue={user?.email}
                   />
                   <FormControl className="marginTop1Rem" component="fieldset">
                     <FormLabel component="legend">
@@ -194,6 +195,7 @@ function CheckoutDialog(props: any) {
                             id="nameOfCardUserInput"
                             label="Name des Karteninhabers"
                             variant="standard"
+                            defaultValue={`${user?.firstName} ${user?.name}`}
                           />
                           <TextField
                             id="cardValidTo"
@@ -219,6 +221,7 @@ function CheckoutDialog(props: any) {
                             id="paypalEmailInput"
                             label="E-Mail"
                             variant="standard"
+                            defaultValue={`${user?.email}`}
                           />
                           <TextField
                             fullWidth

@@ -15,13 +15,32 @@ import DetailsPage from "../../pages/DetailsPage";
 import SignInPage from "../../pages/SignInPage";
 import UserRegistrationPage from "../../pages/UserRegistrationPage";
 import Impressum from "../../pages/Impressum";
-import { getCookie } from "../CookieHandler";
+import { getCookie, setCookie } from "../CookieHandler";
+import { useQuery } from "react-query";
+import APIUrl from "../../config/APIUrl";
 
 function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  const [currentUser, setCurrentUser] = useState({
+    userId: getCookie("userId"),
+  });
+
+  const apiUrl = `${APIUrl.apiUrl}/user/${currentUser.userId}`;
+  const { data, refetch } = useQuery(
+    "userData",
+    () => fetch(apiUrl).then((res) => res.json()),
+    {
+      refetchOnWindowFocus: false,
+      enabled: false,
+    }
+  );
+
+  useEffect(() => {
+    refetch();
+  }, [currentUser.userId]);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -34,19 +53,12 @@ function MenuBar() {
     { name: "News", link: "/newsPage" },
   ]);
 
-  const [currentUser, setCurrentUser] = useState({
-    userName: getCookie("userName"),
-    userPassword: getCookie("userPasswordHash"),
-    userEmail: getCookie("userEmail"),
-  });
-
   const setUser = () => {
     setCurrentUser({
-      userName: getCookie("userName"),
-      userPassword: getCookie("userPasswordHash"),
-      userEmail: getCookie("userEmail"),
+      userId: getCookie("userId"),
     });
   };
+
   return (
     <BrowserRouter>
       <AppBar
@@ -88,14 +100,13 @@ function MenuBar() {
               ))}
             </Box>
             <Box>
-              {currentUser.userName !== "null" &&
-              currentUser.userPassword !== "null" ? (
+              {currentUser.userId !== "null" ? (
                 <>
                   <Grid container spacing={2}>
                     <Grid item xs={8}>
                       <p
                         style={{ marginTop: "1.35rem" }}
-                      >{`Eingeloggt als: ${currentUser.userName}`}</p>
+                      >{`Eingeloggt als: ${data?.userName}`}</p>
                     </Grid>
                     <Grid item xs={4}>
                       <Button
@@ -103,13 +114,12 @@ function MenuBar() {
                         key="Ausloggen"
                         sx={{ my: 2, color: "black", display: "block" }}
                         variant="outlined"
-                        onClick={(e) =>
+                        onClick={(e) => {
+                          setCookie("userId", "null", 7);
                           setCurrentUser({
-                            userName: "null",
-                            userPassword: "null",
-                            userEmail: "null",
-                          })
-                        }
+                            userId: "null",
+                          });
+                        }}
                       >
                         Ausloggen
                       </Button>
@@ -163,7 +173,11 @@ function MenuBar() {
         <Route path="/eventsPage" element={<ComingSoon />} />
         <Route path="/pricesOverviewPage" element={<ComingSoon />} />
         <Route path="/newsPage" element={<ComingSoon />} />
-        <Route path="/DetailsPage" element={<DetailsPage />} />
+        <Route
+          path="/DetailsPage"
+          // @ts-ignore
+          element={<DetailsPage userData={data} />}
+        />
         <Route
           path="/SignInPage"
           // @ts-ignore
