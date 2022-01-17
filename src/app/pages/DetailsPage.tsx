@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from "react";
 import MovieDetails from "../components/MovieDetails";
 import ShowPicker from "../components/ShowPicker";
+import Slider from "../components/Slider";
 import {
   Box,
-  CardMedia,
   Container,
   Grid,
   ThemeProvider,
@@ -20,8 +20,11 @@ import ManageCheckout from "../components/ManageCheckout";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import Ratings from "../components/Ratings";
 
-function DetailsPage(props: any) {
+
+function DetailsPage() {
   const [movieId, setMovieId] = useState();
   const [openSeatBooking, setOpenSeatBooking] = useState(0);
   const [selectedShow, setSelectedShow] = useState();
@@ -63,7 +66,7 @@ function DetailsPage(props: any) {
     <ThemeProvider theme={theme}>
       <Container className="wholeContainer" sx={{
         bgcolor: "background.paper",
-        pt: 8,
+        pt: 4,
         pb: 6,
         position: "relative",
         marginTop: theme.spacing(12),
@@ -79,16 +82,7 @@ function DetailsPage(props: any) {
               gridTemplateColumns: "repeat(2, 5fr)",
             }}
           >
-            <div className="imageContainer">
-              <CardMedia
-                component="img"
-                sx={{
-                  pt: "6%",
-                }}
-                src={data?.pictureLink}
-                alt="poster"
-              />
-            </div>
+          <Slider selectedMovie={data}/>
             <Grid
               className="detailsContainer"
               sx={{
@@ -98,6 +92,7 @@ function DetailsPage(props: any) {
             >
               <Box>
               <MovieDetails selectedMovie={data} />
+              <Ratings ratingValue={2}/>
               <ShowPicker
                 setOpenSeatBooking={setOpenSeatBooking}
                 movieId={movieId}
