@@ -10,6 +10,7 @@ import { useState } from "react";
 import ManageAdminMovie from "../components/ManageAdminMovie";
 import ManageAdminShow from "../components/ManageAdminShow";
 import palette from "../config/Colours";
+import ManageAdminRoom from "../components/ManageAdminRoom";
 
 const theme = createTheme(palette);
 
@@ -55,6 +56,15 @@ function AdminPage() {
   };
   const handleDeleteShowClose = () => {
     setDeleteShow(false);
+  };
+
+  const [openRoom, setOpenRoom] = useState(false);
+
+  const handleRoomClickOpen = () => {
+    setOpenRoom(true);
+  };
+  const handleRoomClose = () => {
+    setOpenRoom(false);
   };
 
   // only render site when user with userID cookie has admin role
@@ -140,6 +150,24 @@ function AdminPage() {
                 Delete Show
               </Button>
             </Box>
+            <Box
+              sx={{
+                  marginTop: 8,
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+              }}
+            >
+              <Button
+                key={"createRoom"}
+                onClick={() => {
+                  handleRoomClickOpen();
+                }}
+                variant="contained"
+              >
+                Add Seatplan
+              </Button>
+            </Box>
           </Box>
           <ManageAdminMovie
             isOpenAdd={openAddMovie}
@@ -159,6 +187,12 @@ function AdminPage() {
             isOpenDelete={openDeleteShow}
             openDelete={handleDeleteShowClickOpen}
             closeDelete={handleDeleteShowClose}
+          />
+          <ManageAdminRoom
+            isOpen={openRoom}
+            open={handleRoomClickOpen}
+            close={handleRoomClose}
+            cinemaRoomID=""
           />
         </Container>
       </main>
