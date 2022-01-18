@@ -149,6 +149,7 @@ function CheckoutDialog(props: any) {
                   <Button className="addCateringButton" variant="outlined">
                     Verpflegung hinzufügen
                   </Button>
+                  <br />
                   <Box className="outlinedBox">
                     <Grid container spacing={1}>
                       <Grid item xs={8}>
@@ -182,27 +183,6 @@ function CheckoutDialog(props: any) {
                   <div className="lineOfDivision" />
                 </Grid>
                 <Grid item xs={6}>
-                  <TextField
-                    fullWidth
-                    id="nameInput"
-                    label="Name"
-                    variant="standard"
-                    defaultValue={`${user?.firstName} ${user?.name}`}
-                  />
-                  <TextField
-                    fullWidth
-                    id="adressInput"
-                    label="Adresse"
-                    variant="standard"
-                    defaultValue={`${user?.street}`}
-                  />
-                  <TextField
-                    fullWidth
-                    id="emailInput"
-                    label="E-Mail"
-                    variant="standard"
-                    defaultValue={user?.email}
-                  />
                   <FormControl className="marginTop1Rem" component="fieldset">
                     <FormLabel component="legend">
                       <strong>Zahlungsart</strong>
@@ -250,21 +230,10 @@ function CheckoutDialog(props: any) {
                         label="Paypal"
                       />
                       {paymentMethod === "paypal" ? (
-                        <div>
-                          <TextField
-                            fullWidth
-                            id="paypalEmailInput"
-                            label="E-Mail"
-                            variant="standard"
-                            defaultValue={`${user?.email}`}
-                          />
-                          <TextField
-                            fullWidth
-                            id="paypalPasswordInput"
-                            label="Passwort"
-                            variant="standard"
-                          />
-                        </div>
+                        <p>
+                          Sie werden während des Checkouts zu Paypal
+                          weitergeleitet.
+                        </p>
                       ) : null}
                       <FormControlLabel
                         value="instantBankTransfer"
