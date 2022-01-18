@@ -32,6 +32,7 @@ function SeatBookingDialog(props: any) {
   } = props;
   const [seatsToRender, setSeatsToRender] = useState([]);
   const [widthForSeats, setWidthForSeats] = useState("5%"); //initial value
+  const [trigger, setTrigger] = useState(1);
   const cinemaRoom = selectedShow?.cinemaRoom?.cinemaRoomSeatingPlan;
   const apiUrlSeats = `${APIUrl.apiUrl}/show/${selectedShow?.id}/seats`;
   const seatsQuery = useQuery(
@@ -46,8 +47,8 @@ function SeatBookingDialog(props: any) {
     if (selectedShow?.id !== undefined) {
       seatsQuery.refetch();
     }
-  }, [selectedShow?.id]);
-
+    setTrigger((val) => val + 1);
+  }, [selectedShow?.id, open]);
   const preparedSeatsForRender: any = (seats: any, numberOfRows: any) => {
     let mostSeatsInARow = 0;
     if (seatsQuery?.data === undefined) return;
@@ -74,7 +75,7 @@ function SeatBookingDialog(props: any) {
     setSeatsToRender(
       preparedSeatsForRender(seatsQuery.data, cinemaRoom?.reihen)
     );
-  }, [seatsQuery?.data]);
+  }, [trigger, seatsQuery?.dataUpdatedAt]);
 
   const handleSeatChecked = (e: any, seatId: any) => {
     if (e.target.checked) {

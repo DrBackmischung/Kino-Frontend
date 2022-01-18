@@ -22,6 +22,7 @@ import APIUrl from "../config/APIUrl";
 import "./CheckoutDialog.css";
 import { createTheme } from "@mui/material/styles";
 import palette from "../config/Colours";
+import { useNavigate } from "react-router-dom";
 
 function CheckoutDialog(props: any) {
   const {
@@ -36,6 +37,7 @@ function CheckoutDialog(props: any) {
   const [paymentMethod, setPaymentMethod] = useState("creditCard");
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleRadioChange = (e: any) => {
     setPaymentMethod(e.target.value);
@@ -43,7 +45,6 @@ function CheckoutDialog(props: any) {
 
   const blockSeat = () => {
     setIsLoading(true);
-    var ticketsToDownload: any = "";
     const apiUrlBlockSeat = `${APIUrl.apiUrl}/ticket/add`;
     // eslint-disable-next-line
     selectedSeats?.map((item: any) => {
@@ -63,27 +64,61 @@ function CheckoutDialog(props: any) {
           setIsLoading(false);
           return;
         }
-        return response.json().then((data) => {
-          console.log(data, data.toString());
-          ticketsToDownload = ticketsToDownload + " " + data.toString();
-          setIsLoading(false);
-        });
+        setError(false);
+        setIsLoading(false);
       });
     });
-    console.log(ticketsToDownload);
     finishTransaction();
-    /* TODO: Print tickets
-    var dataStr =
-      "data:text/json;charset=utf-8," +
-      encodeURIComponent(JSON.stringify(ticketsToDownload));
-    var dlAnchorElem: any = document.getElementById("downloadAnchorElem");
-    dlAnchorElem.setAttribute("href", dataStr);
-    dlAnchorElem.setAttribute("download", "scene.json");
-    dlAnchorElem.click(); */
   };
 
   const theme = createTheme(palette);
-
+  if (user.id === undefined) {
+    return (
+      <ThemeProvider theme={theme}>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          scroll="paper"
+          aria-labelledby="scroll-dialog-title"
+          aria-describedby="scroll-dialog-description"
+          fullWidth={true}
+          maxWidth="sm"
+        >
+          <DialogTitle id="scroll-dialog-title">
+            Bitte loggen Sie sich ein, um fortzufahren!
+          </DialogTitle>
+          <DialogContent dividers={true}>
+            <DialogContentText
+              id="scroll-dialog-description"
+              className="alignCenter"
+            >
+              Um bei uns Tickets buchen zu können, loggen Sie sich bitte ein
+              oder registrieren Sie sich kostenfrei!
+              <br />
+              <br />
+              <Button
+                variant="contained"
+                onClick={(e) => navigate("/SignInPage")}
+              >
+                Einloggen
+              </Button>
+              <strong>{` oder `}</strong>
+              <Button
+                className="smallButton"
+                variant="contained"
+                onClick={(e) => navigate("/SignUpPage")}
+              >
+                Registrieren
+              </Button>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Abbruch</Button>
+          </DialogActions>
+        </Dialog>
+      </ThemeProvider>
+    );
+  }
   return (
     <ThemeProvider theme={theme}>
       <Dialog
