@@ -50,47 +50,90 @@ export function SeatPlanPainter(props: any) {
         setOpenDialog(false);
     }
   
-    const save = (seats: any) => {
+    const save = () => {
         setIsLoading(true);
         const apiURLSeats = `${APIUrl.apiUrl}/seatsBlueprint/massAdd`;
         // eslint-disable-next-line
-        seats?.map((seat: any) => {
-            const requestOptions = {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    line: seat.id,
-                    place: seat.place,
-                    type: seat.type,
-                    cinemaRoomID: cinemaRoomID,
-                }),
-            };
-            fetch(apiURLSeats, requestOptions).then((response) => {
-                if (!response.ok) {
-                    setError(true);
-                    setIsLoading(false);
-                    return;
-                }
-                return response.json().then((data) => {
-                    console.log(data, data.toString());
-                    setIsLoading(false);
-                });
+        const seatData = convertRenderToPlainList(seatsToRender);
+        const requestOptions = {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(seatData),
+        };
+        fetch(apiURLSeats, requestOptions).then((response) => {
+            if (!response.ok) {
+                setError(true);
+                setIsLoading(false);
+                return;
+            }
+            return response.json().then((data) => {
+                setIsLoading(false);
             });
         });
 
     }
   
-    const addRow = (seats: any) => {
+    const addRow = () => {
+        let list = convertRenderToPlainList(seatsToRender);
+        if(list === undefined)
+            list = [];
         for (var i = 1; i <= numberOfSeats; i++) {
-            seatsToRender.push({
+            list.push({
                 line: rowToAdd,
                 place: i,
-                type: "PARKETT",
+                type: 0,
                 cinemaRoomID: cinemaRoomID
             });
         }
+        setSeatsToRender(preparedSeatsForRender(list, rowToAdd));
         setRowToAdd(rowToAdd + 1);
-        setSeatsToRender(seatsToRender);
+    }
+
+    const convertRenderToPlainList: any = (data: any) => {
+        let list: any = [];
+        data?.map((row: any) => {
+            row?.map((seat: any) => {
+                list.push({
+                    line: seat.line,
+                    place: seat.place,
+                    type: seat.type,
+                    cinemaRoomID: seat.cinemaRoomID
+                });
+            })
+        })
+        return list;
+    }
+
+    const preparedSeatsForRender: any = (seats: any, numberOfRows: any) => {
+        let list : any = [];
+        for(let i : number = 1; i <= numberOfRows; i++) {
+            let row : any = [];
+            seats?.map((seat: any) => {
+                if(seat.line === i) {
+                    row.push({
+                        line: seat.line,
+                        place: seat.place,
+                        type: seat.type,
+                        cinemaRoomID: seat.cinemaRoomID
+                    });
+                }
+            });
+            list.push(row);
+        }
+        return list;
+    };
+
+    const convertType: any = (t: number) => {
+        switch (t) {
+            case 0:
+                return "P"
+            case 1:
+                return "L"
+            case 2:
+                return "V"
+            case 3:
+                return "W"
+          }
     }
   
     const theme = createTheme(palette);
@@ -104,7 +147,7 @@ export function SeatPlanPainter(props: any) {
           aria-labelledby="scroll-dialog-title"
           aria-describedby="scroll-dialog-description"
           fullWidth={true}
-          maxWidth="sm"
+          maxWidth="xl"
         >
           <DialogTitle id="scroll-dialog-title">Movie</DialogTitle>
           {error ? (
@@ -114,7 +157,7 @@ export function SeatPlanPainter(props: any) {
           ) : (
             <DialogContent dividers={true}>
                 <DialogContentText id="scroll-dialog-description">
-                    <Container component="main" maxWidth="xs" sx={{
+                    <Container component="main" maxWidth="xl" sx={{
                         bgcolor: "background.paper",
                         pt: 8,
                         pb: 6,
@@ -150,12 +193,12 @@ export function SeatPlanPainter(props: any) {
                                         </Grid>
                                         <Box className="cinemaBox">
                                         {seatsToRender?.map((row: any, index) => (
-                                            <div key={index} className="rowContainer">
+                                            <div key={index} className="rowContainer" >
                                             {row?.map((seat: any) => (
                                                 <Button
                                                     variant="outlined"
-                                                    onClick={() => openSeatTypeDialog(seat.reihe, seat.place)}
-                                                >  </Button>
+                                                    onClick={() => openSeatTypeDialog(seat.line, seat.place)}
+                                                >{convertType(seat.type)}</Button>
                                             ))}
                                             </div>
                                         ))}
@@ -166,6 +209,7 @@ export function SeatPlanPainter(props: any) {
                                             setSeatData={setSeatsToRender}
                                             row={row}
                                             nr={nr}
+                                            nrOfRows={rowToAdd-1}
                                         /> : null}
                                         </Box>
                                     </Grid>
@@ -188,7 +232,7 @@ export function SeatPlanPainter(props: any) {
 
 function SeatTypeDialog(props: any) {
     
-    const [type, setType ] = useState("");
+    const [type, setType ] = useState(0);
     const {
       open,
       cancel,
@@ -196,22 +240,61 @@ function SeatTypeDialog(props: any) {
       setSeatData,
       row,
       nr,
+      nrOfRows,
     } = props;
 
     function saveType() {
-        let data : any[] = [];
-        for (const e of seatData) {
-            data.push({
+        let data : any = convertRenderToPlainList(seatData);
+        let list : any = [];
+        if(data === undefined)
+            data = [];
+        for (const e of data) {
+            list.push({
                 line: e.line,
                 place: e.place,
                 type: ((row == e.line) && (nr == e.place) ? type : e.type),
                 cinemaRoomID: e.cinemaRoomID
             });
         }
-        setSeatData(data);
+        setSeatData(preparedSeatsForRender(list, nrOfRows));
+        cancel();
     }
   
     const theme = createTheme(palette);
+
+    const preparedSeatsForRender: any = (seats: any, numberOfRows: any) => {
+        let list : any = [];
+        for(let i : number = 1; i <= numberOfRows; i++) {
+            let row : any = [];
+            seats?.map((seat: any) => {
+                if(seat.line === i) {
+                    row.push({
+                        line: seat.line,
+                        place: seat.place,
+                        type: seat.type,
+                        cinemaRoomID: seat.cinemaRoomID
+                    });
+                }
+            });
+            list.push(row);
+        }
+        return list;
+    };
+
+    const convertRenderToPlainList: any = (data: any) => {
+        let list: any = [];
+        data?.map((row: any) => {
+            row?.map((seat: any) => {
+                list.push({
+                    line: seat.line,
+                    place: seat.place,
+                    type: seat.type,
+                    cinemaRoomID: seat.cinemaRoomID
+                });
+            })
+        })
+        return list;
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -252,10 +335,10 @@ function SeatTypeDialog(props: any) {
                                         defaultValue="parkett"
                                         name="radio-buttons-seat"
                                     >
-                                        <FormControlLabel value="parkett" control={<Radio onChange={() => setType("Parkett")}/>} label="Parkett" />
-                                        <FormControlLabel value="loge" control={<Radio onChange={() => setType("Loge")}/>} label="Loge" />
-                                        <FormControlLabel value="premium" control={<Radio onChange={() => setType("Premium")}/>} label="Premium" />
-                                        <FormControlLabel value="wheelchair" control={<Radio onChange={() => setType("Wheelchair")}/>} label="Wheelchair" />
+                                        <FormControlLabel value="parkett" control={<Radio onChange={() => setType(0)}/>} label="Parkett" />
+                                        <FormControlLabel value="loge" control={<Radio onChange={() => setType(1)}/>} label="Loge" />
+                                        <FormControlLabel value="premium" control={<Radio onChange={() => setType(2)}/>} label="Premium" />
+                                        <FormControlLabel value="wheelchair" control={<Radio onChange={() => setType(3)}/>} label="Wheelchair" />
                                     </RadioGroup>
                                 </Box>
                             </form>

@@ -1,17 +1,16 @@
 /* eslint-disable */
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { SeatPlanPainter } from "./dialogs/SeatPlanBluePrint";
+import { AddCinemaRoomDialog } from "./dialogs/CinemaRoom";
 
 const theme = createTheme();
 function ManageAdminRoom(props: any) {
-  const { isOpen, open, close, cinemaRoomID } = props;
+  const { isOpen, open, close } = props;
   
   return (
     <ThemeProvider theme={theme}>
-      {isOpen ? <SeatPlanPainter
+      {isOpen ? <AddCinemaRoomDialog
         open={open}
         cancel={close}
-        cinemaRoomID={cinemaRoomID}
       /> : null}
     </ThemeProvider>
   );

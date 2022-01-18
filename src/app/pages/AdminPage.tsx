@@ -192,7 +192,6 @@ function AdminPage() {
             isOpen={openRoom}
             open={handleRoomClickOpen}
             close={handleRoomClose}
-            cinemaRoomID=""
           />
         </Container>
       </main>
