@@ -18,6 +18,7 @@ import Impressum from "../../pages/Impressum";
 import { getCookie, setCookie } from "../CookieHandler";
 import { useQuery } from "react-query";
 import APIUrl from "../../config/APIUrl";
+import PricesPage from "../../pages/PricesPage";
 import HomePage from "../../pages/HomePage";
 
 function MenuBar() {
@@ -172,7 +173,7 @@ function MenuBar() {
         <Route path="/" element={<HomePage />} />
         <Route path="/programPage" element={<ProgramPage />} />
         <Route path="/eventsPage" element={<ComingSoon />} />
-        <Route path="/pricesOverviewPage" element={<ComingSoon />} />
+        <Route path="/pricesOverviewPage" element={<PricesPage />} />
         <Route path="/newsPage" element={<ComingSoon />} />
         <Route
           path="/DetailsPage"
