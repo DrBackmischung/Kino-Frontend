@@ -1,13 +1,14 @@
-import React from 'react';
-import SignUp from '../components/SignUp';
-import {Container} from "@mui/material";
+import React from "react";
+import SignUp from "../components/SignUp";
+import { Container } from "@mui/material";
 
-function UserRegistrationPage(){
-    return(
-        <Container>
-            <SignUp/>
-        </Container>
-    )
+function UserRegistrationPage(props: any) {
+  const { setUser } = props;
+  return (
+    <Container>
+      <SignUp setUser={setUser} />
+    </Container>
+  );
 }
 
 export default UserRegistrationPage;
