@@ -150,6 +150,7 @@ function CheckoutDialog(props: any) {
                     Verpflegung hinzufügen
                   </Button>
                   <br />
+                  <br />
                   <Box className="outlinedBox">
                     <Grid container spacing={1}>
                       <Grid item xs={8}>
