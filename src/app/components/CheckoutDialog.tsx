@@ -33,6 +33,7 @@ function CheckoutDialog(props: any) {
     selectedSeats,
     user,
     priceQuery,
+    priceForSeats,
   } = props;
   const [paymentMethod, setPaymentMethod] = useState("creditCard");
   const [error, setError] = useState(false);
@@ -45,28 +46,28 @@ function CheckoutDialog(props: any) {
 
   const blockSeat = () => {
     setIsLoading(true);
-    const apiUrlBlockSeat = `${APIUrl.apiUrl}/ticket/add`;
+    const apiUrlBlockSeat = `${APIUrl.apiUrl}/booking/add`;
     // eslint-disable-next-line
-    selectedSeats?.map((item: any) => {
-      const requestOptions = {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userID: user.id,
-          seatID: item,
-          priceID: priceQuery?.data?.[0]?.id,
-          showID: selectedShow.id,
-        }),
-      };
-      fetch(apiUrlBlockSeat, requestOptions).then((response) => {
-        if (!response.ok) {
-          setError(true);
-          setIsLoading(false);
-          return;
-        }
-        setError(false);
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userID: user.id,
+        seatIDs: selectedSeats,
+        // priceID: priceQuery?.data?.[0]?.id,
+        showID: selectedShow.id,
+        state: "Paid",
+        bookingDate: new Date(),
+      }),
+    };
+    fetch(apiUrlBlockSeat, requestOptions).then((response) => {
+      if (!response.ok) {
+        setError(true);
         setIsLoading(false);
-      });
+        return;
+      }
+      setError(false);
+      setIsLoading(false);
     });
     finishTransaction();
   };
@@ -159,9 +160,7 @@ function CheckoutDialog(props: any) {
                         <p>2 Cola (0,5)</p>
                       </Grid>
                       <Grid item xs={4} className="textAlignRight">
-                        <p>
-                          {selectedSeats.length * priceQuery?.data?.[0]?.price}€
-                        </p>
+                        <p>{priceForSeats}€</p>
                         <p>10€</p>
                         <p>5€</p>
                       </Grid>
@@ -172,11 +171,7 @@ function CheckoutDialog(props: any) {
                       <p>Gesamt:</p>
                     </Grid>
                     <Grid item xs={4}>
-                      <p>
-                        {selectedSeats.length * priceQuery?.data?.[0]?.price +
-                          15}
-                        €
-                      </p>
+                      <p>{priceForSeats + 15}€</p>
                     </Grid>
                   </Grid>
                 </Grid>

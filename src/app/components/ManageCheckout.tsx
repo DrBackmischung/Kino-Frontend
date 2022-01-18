@@ -15,6 +15,7 @@ function ManageCheckout(props: any) {
   const [openSeatBooking, setOpenSeatBooking] = useState(false);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [selectedShow, setSelectedShow] = useState();
+  const [priceForSeats, setPriceForSeats] = useState(0);
   const apiUrlPrice = `${APIUrl.apiUrl}/price/getAll`;
   const priceQuery: any = useQuery("priceData", () =>
     fetch(apiUrlPrice).then((res) => res.json())
@@ -53,6 +54,7 @@ function ManageCheckout(props: any) {
 
   const resetSelectedSeats = () => {
     setSelectedSeats([]);
+    setPriceForSeats(0);
   };
   return (
     <ThemeProvider theme={theme}>
@@ -65,6 +67,7 @@ function ManageCheckout(props: any) {
         selectedSeats={selectedSeats}
         priceQuery={priceQuery}
         userData={userData}
+        priceForSeats={priceForSeats}
       />
       <SeatBookingDialog
         open={openSeatBooking}
@@ -75,6 +78,8 @@ function ManageCheckout(props: any) {
         selectedSeats={selectedSeats}
         setSelectedSeats={setSelectedSeats}
         priceQuery={priceQuery}
+        setPriceForSeats={setPriceForSeats}
+        priceForSeats={priceForSeats}
       />
     </ThemeProvider>
   );

@@ -108,7 +108,7 @@ function MenuBar() {
                     <Grid item xs={8}>
                       <p
                         style={{ marginTop: "1.35rem" }}
-                      >{`Eingeloggt als: ${data?.userName}`}</p>
+                      >{`Willkommen ${data?.userName}!`}</p>
                     </Grid>
                     <Grid item xs={4}>
                       <Button
