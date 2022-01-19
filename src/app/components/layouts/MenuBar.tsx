@@ -16,6 +16,7 @@ import SignInPage from "../../pages/SignInPage";
 import UserRegistrationPage from "../../pages/UserRegistrationPage";
 import Impressum from "../../pages/Impressum";
 import HomePage from "../../pages/HomePage";
+import CookiesNotification from "../CookiesNotification";
 
 function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -100,9 +101,7 @@ function MenuBar() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem component={Link} to="/SignInPage">
-                  Profile
-                </MenuItem>
+                <MenuItem component={Link} to="/SignInPage">My Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
               </Menu>
             </Box>
@@ -121,6 +120,7 @@ function MenuBar() {
         <Route path="/SignUpPage" element={<UserRegistrationPage />} />
         <Route path="/Impressum" element={<Impressum />} />
       </Routes>
+      <CookiesNotification/>
     </BrowserRouter>
   );
 }

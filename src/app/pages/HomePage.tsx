@@ -80,7 +80,6 @@ function HomePage(){
                     moviesData={moviesData.data}
                 />
             </Box>
-            <CookiesNotification/>
         </Container>
     )
 }
