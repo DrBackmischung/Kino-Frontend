@@ -142,13 +142,10 @@ export function SeatPlanPainter(props: any) {
     const convertType: any = (t: number) => {
         switch (t) {
             case 0:
-                //return "P"
                 return grey;
             case 1:
-                //return "L"
                 return blue;
             case 2:
-                //return "V"
                 return orange;
           }
     }
