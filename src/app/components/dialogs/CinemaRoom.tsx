@@ -178,6 +178,7 @@ export function AddCinemaRoomDialog(props: any) {
                                             open={openSeatPlanDialog}
                                             cancel={closeSeatPlanDialog}
                                             cinemaRoomID={cinemaRoomID}
+                                            closeRoomDialog={closeSeatPlanDialog}
                                         /> : null}
                                     </Grid>
                                 </Box>

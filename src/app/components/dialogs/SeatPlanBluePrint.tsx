@@ -23,31 +23,45 @@ import APIUrl from "../../config/APIUrl";
 import { createTheme } from "@mui/material/styles";
 import palette from "../../config/Colours";
 import { useQuery } from "react-query";
+import PersonIcon from '@mui/icons-material/Person';
 import "./SeatPlanBluePrint.css";
+import { grey, blue, orange } from '@mui/material/colors';
 
 export function SeatPlanPainter(props: any) {
     const [numberOfSeats, setNumberOfSeats ] = useState(0);
     const [rowToAdd, setRowToAdd ] = useState(1);
     const [seatsToRender, setSeatsToRender] = useState<any[]>([]);
-    const [openDialog, setOpenDialog] = useState(false);
+    const [openSeatTypeDialog, setOpenSeatTypeDialog] = useState(false);
+    const [openRowTypeDialog, setOpenRowTypeDialog] = useState(false);
     const [row, setRow] = useState(0);
     const [nr, setNr] = useState(0);
+    const [rowType, setRowType] = useState(0);
     const {
       open,
       cancel,
       cinemaRoomID,
+      closeRoomDialog,
     } = props;
     const [error, setError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    function openSeatTypeDialog(row: any, nr: any) {
-        setOpenDialog(true);
+    function handleOpenSeatTypeDialog(row: any, nr: any) {
+        setOpenSeatTypeDialog(true);
         setRow(row);
         setNr(nr);
     }
 
-    function closeSeatTypeDialog() {
-        setOpenDialog(false);
+    function handleCloseSeatTypeDialog() {
+        setOpenSeatTypeDialog(false);
+    }
+
+    function handleOpenRowTypeDialog() {
+        setRowType(0);
+        setOpenRowTypeDialog(true);
+    }
+
+    function handleCloseRowTypeDialog() {
+        setOpenRowTypeDialog(false);
     }
   
     const save = () => {
@@ -70,6 +84,8 @@ export function SeatPlanPainter(props: any) {
                 setIsLoading(false);
             });
         });
+        closeRoomDialog();
+        cancel();
 
     }
   
@@ -81,7 +97,7 @@ export function SeatPlanPainter(props: any) {
             list.push({
                 line: rowToAdd,
                 place: i,
-                type: 0,
+                type: rowType,
                 cinemaRoomID: cinemaRoomID
             });
         }
@@ -126,13 +142,14 @@ export function SeatPlanPainter(props: any) {
     const convertType: any = (t: number) => {
         switch (t) {
             case 0:
-                return "P"
+                //return "P"
+                return grey;
             case 1:
-                return "L"
+                //return "L"
+                return blue;
             case 2:
-                return "V"
-            case 3:
-                return "W"
+                //return "V"
+                return orange;
           }
     }
   
@@ -149,7 +166,7 @@ export function SeatPlanPainter(props: any) {
           fullWidth={true}
           maxWidth="xl"
         >
-          <DialogTitle id="scroll-dialog-title">Movie</DialogTitle>
+          <DialogTitle id="scroll-dialog-title">Seat Plan</DialogTitle>
           {error ? (
             <ErrorPage />
           ) : isLoading ? (
@@ -173,7 +190,7 @@ export function SeatPlanPainter(props: any) {
                             }}
                         >
                             <Typography component="h1" variant="h5">
-                                Add a movie
+                                Create a seat layout
                             </Typography>
                             <form noValidate>
                                 <Box component="form" noValidate sx={{mt: 3}}>
@@ -197,19 +214,26 @@ export function SeatPlanPainter(props: any) {
                                             {row?.map((seat: any) => (
                                                 <Button
                                                     variant="outlined"
-                                                    onClick={() => openSeatTypeDialog(seat.line, seat.place)}
-                                                >{convertType(seat.type)}</Button>
+                                                    onClick={() => handleOpenSeatTypeDialog(seat.line, seat.place)}
+                                                    startIcon={<PersonIcon sx={{ color: convertType(seat.type)[500] }}/>}
+                                                ></Button>
                                             ))}
                                             </div>
                                         ))}
-                                        {openDialog ? <SeatTypeDialog
-                                            open={openSeatTypeDialog}
-                                            cancel={closeSeatTypeDialog}
+                                        {openSeatTypeDialog ? <SeatTypeDialog
+                                            open={handleOpenSeatTypeDialog}
+                                            cancel={handleCloseSeatTypeDialog}
                                             seatData={seatsToRender}
                                             setSeatData={setSeatsToRender}
                                             row={row}
                                             nr={nr}
                                             nrOfRows={rowToAdd-1}
+                                        /> : null}
+                                        {openRowTypeDialog ? <RowTypeDialog
+                                            open={handleOpenRowTypeDialog}
+                                            cancel={handleCloseRowTypeDialog}
+                                            changeRowType={setRowType}
+                                            addRow={addRow}
                                         /> : null}
                                         </Box>
                                     </Grid>
@@ -222,7 +246,7 @@ export function SeatPlanPainter(props: any) {
           )}
           <DialogActions>
             <Button onClick={cancel}>Abbruch</Button>
-            <Button onClick={addRow}>Reihe hinzufügen</Button>
+            <Button onClick={handleOpenRowTypeDialog}>Reihe hinzufügen</Button>
             <Button onClick={save}>Speichern</Button>
           </DialogActions>
         </Dialog>
@@ -338,7 +362,79 @@ function SeatTypeDialog(props: any) {
                                         <FormControlLabel value="parkett" control={<Radio onChange={() => setType(0)}/>} label="Parkett" />
                                         <FormControlLabel value="loge" control={<Radio onChange={() => setType(1)}/>} label="Loge" />
                                         <FormControlLabel value="premium" control={<Radio onChange={() => setType(2)}/>} label="Premium" />
-                                        <FormControlLabel value="wheelchair" control={<Radio onChange={() => setType(3)}/>} label="Wheelchair" />
+                                    </RadioGroup>
+                                </Box>
+                            </form>
+                        </Box>
+                    </Container>
+                </DialogContentText>
+            </DialogContent>
+          <DialogActions>
+            <Button onClick={cancel}>Abbruch</Button>
+            <Button onClick={saveType}>Speichern</Button>
+          </DialogActions>
+        </Dialog>
+      </ThemeProvider>
+    )
+}
+
+function RowTypeDialog(props: any) {
+    const {
+      open,
+      cancel,
+      changeRowType,
+      addRow,
+    } = props;
+
+    function saveType() {
+        addRow();
+        cancel();
+    }
+  
+    const theme = createTheme(palette);
+
+    return (
+        <ThemeProvider theme={theme}>
+        <Dialog
+          open={open}
+          onClose={cancel}
+          scroll="paper"
+          aria-labelledby="scroll-dialog-title"
+          aria-describedby="scroll-dialog-description"
+          fullWidth={true}
+          maxWidth="sm"
+        >
+          <DialogTitle id="scroll-dialog-title">Seat Type</DialogTitle>
+            <DialogContent dividers={true}>
+                <DialogContentText id="scroll-dialog-description">
+                    <Container component="main" maxWidth="xs" sx={{
+                        bgcolor: "background.paper",
+                        pt: 8,
+                        pb: 6,
+                        position: "relative",
+                    }}>
+                        <CssBaseline/>
+                        <Box
+                            sx={{
+                                marginTop: 8,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Typography component="h1" variant="h5">
+                                Choose Row Type
+                            </Typography>
+                            <form noValidate>
+                                <Box component="form" noValidate sx={{mt: 3}}>
+                                    <RadioGroup
+                                        aria-label="seat"
+                                        defaultValue="parkett"
+                                        name="radio-buttons-seat"
+                                    >
+                                        <FormControlLabel value="parkett" control={<Radio onChange={() => changeRowType(0)}/>} label="Parkett" />
+                                        <FormControlLabel value="loge" control={<Radio onChange={() => changeRowType(1)}/>} label="Loge" />
+                                        <FormControlLabel value="premium" control={<Radio onChange={() => changeRowType(2)}/>} label="Premium" />
                                     </RadioGroup>
                                 </Box>
                             </form>
