@@ -173,14 +173,14 @@ export function SeatPlanPainter(props: any) {
                 <DialogContentText id="scroll-dialog-description">
                     <Container component="main" maxWidth="xl" sx={{
                         bgcolor: "background.paper",
-                        pt: 8,
-                        pb: 6,
+                        pt: 4,
+                        pb: 4,
                         position: "relative",
                     }}>
                         <CssBaseline/>
                         <Box
                             sx={{
-                                marginTop: 8,
+                                
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
@@ -191,7 +191,7 @@ export function SeatPlanPainter(props: any) {
                             </Typography>
                             <form noValidate>
                                 <Box component="form" noValidate sx={{mt: 3}}>
-                                    <Grid container spacing={2}>
+                                    <Grid container spacing={1}>
                                         <Grid item xs={12}>
                                             <TextField
                                                 name="numberOfSeats"
@@ -333,14 +333,13 @@ function SeatTypeDialog(props: any) {
                 <DialogContentText id="scroll-dialog-description">
                     <Container component="main" maxWidth="xs" sx={{
                         bgcolor: "background.paper",
-                        pt: 8,
-                        pb: 6,
+                        pt: 4,
+                        pb: 4,
                         position: "relative",
                     }}>
                         <CssBaseline/>
                         <Box
                             sx={{
-                                marginTop: 8,
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
@@ -406,14 +405,13 @@ function RowTypeDialog(props: any) {
                 <DialogContentText id="scroll-dialog-description">
                     <Container component="main" maxWidth="xs" sx={{
                         bgcolor: "background.paper",
-                        pt: 8,
-                        pb: 6,
+                        pt: 4,
+                        pb: 4,
                         position: "relative",
                     }}>
                         <CssBaseline/>
                         <Box
                             sx={{
-                                marginTop: 8,
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
