@@ -8,7 +8,6 @@ import {createTheme} from "@mui/material/styles";
 import palette from "../config/Colours";
 import MovieCard from "../components/MovieCard";
 import KinovationLogo from "../components/layouts/KinovationLogo.jpeg";
-import CookiesNotification from "../components/CookiesNotification";
 
 function Item(props: any)
 {
