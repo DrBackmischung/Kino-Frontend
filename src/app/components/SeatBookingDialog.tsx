@@ -29,10 +29,12 @@ function SeatBookingDialog(props: any) {
     selectedSeats,
     setSelectedSeats,
     priceQuery,
+    setPriceForSeats,
+    priceForSeats,
   } = props;
   const [seatsToRender, setSeatsToRender] = useState([]);
   const [widthForSeats, setWidthForSeats] = useState("5%"); //initial value
-  const cinemaRoom = selectedShow?.cinemaRoom?.cinemaRoomSeatingPlan;
+  const [trigger, setTrigger] = useState(1);
   const apiUrlSeats = `${APIUrl.apiUrl}/show/${selectedShow?.id}/seats`;
   const seatsQuery = useQuery(
     "seatsData",
@@ -46,16 +48,17 @@ function SeatBookingDialog(props: any) {
     if (selectedShow?.id !== undefined) {
       seatsQuery.refetch();
     }
-  }, [selectedShow?.id]);
-
-  const preparedSeatsForRender: any = (seats: any, numberOfRows: any) => {
+    setTrigger((val) => val + 1);
+  }, [selectedShow?.id, open]);
+  const preparedSeatsForRender: any = (seats: any) => {
     let mostSeatsInARow = 0;
     if (seatsQuery?.data === undefined) return;
     let SeatsArrayToBeReturned: any = [];
-    for (let index = 1; index <= numberOfRows; index++) {
+    for (let index = 1; index <= 100; index++) {
       const filterCurrentRow = seatsQuery?.data?.filter(
         (item: any) => parseInt(item.reihe) === index
       );
+      if (filterCurrentRow.length === 0) break;
       if (filterCurrentRow.length > mostSeatsInARow) {
         mostSeatsInARow = filterCurrentRow.length;
       }
@@ -71,23 +74,31 @@ function SeatBookingDialog(props: any) {
   };
 
   useEffect(() => {
-    setSeatsToRender(
-      preparedSeatsForRender(seatsQuery.data, cinemaRoom?.reihen)
-    );
-  }, [seatsQuery?.data]);
+    setSeatsToRender(preparedSeatsForRender(seatsQuery.data));
+  }, [trigger, seatsQuery?.dataUpdatedAt]);
 
-  const handleSeatChecked = (e: any, seatId: any) => {
+  const handleSeatChecked = (e: any, seatId: any, seat: any) => {
     if (e.target.checked) {
       setSelectedSeats((prevValues: any) => prevValues?.concat(seatId));
+      setPriceForSeats((prevVal: any) => {
+        let priceForSeat = priceQuery.data.filter((item: any) => {
+          return item.type === seat.type;
+        });
+        return prevVal + priceForSeat[0].price;
+      });
     } else {
       setSelectedSeats((prevValues: any) =>
         prevValues.filter((item: any) => item !== seatId)
       );
+      setPriceForSeats((prevVal: any) => {
+        let priceForSeat = priceQuery.data.filter((item: any) => {
+          return item.type === seat.type;
+        });
+        return prevVal - priceForSeat[0].price;
+      });
     }
   };
-
   const theme = createTheme(palette);
-
   return (
     <ThemeProvider theme={theme}>
       <Dialog
@@ -115,8 +126,7 @@ function SeatBookingDialog(props: any) {
                   {selectedShow?.movie?.language}
                 </p>
                 <strong>
-                  {selectedSeats?.length} Sitze{" "}
-                  {selectedSeats?.length * priceQuery?.data?.[0]?.price}€
+                  {selectedSeats?.length} Sitze {priceForSeats}€
                 </strong>
                 <div className="canvasContainer">
                   <strong>Leinwand</strong>
@@ -126,7 +136,8 @@ function SeatBookingDialog(props: any) {
                     <div key={index} className="rowContainer">
                       {row?.map((seat: any) => (
                         <Checkbox
-                          disabled={seat.blocked}
+                          data-type={seat.type}
+                          disabled={seat.state === "RESERVED" ? true : false}
                           key={`${seat.id}`}
                           className="seatCheckbox"
                           sx={{
@@ -137,7 +148,7 @@ function SeatBookingDialog(props: any) {
                           }}
                           icon={<Person />}
                           checkedIcon={<Person />}
-                          onChange={(e) => handleSeatChecked(e, seat.id)}
+                          onChange={(e) => handleSeatChecked(e, seat.id, seat)}
                         />
                       ))}
                     </div>

@@ -22,6 +22,7 @@ import APIUrl from "../config/APIUrl";
 import "./CheckoutDialog.css";
 import { createTheme } from "@mui/material/styles";
 import palette from "../config/Colours";
+import { useNavigate } from "react-router-dom";
 
 function CheckoutDialog(props: any) {
   const {
@@ -32,10 +33,12 @@ function CheckoutDialog(props: any) {
     selectedSeats,
     user,
     priceQuery,
+    priceForSeats,
   } = props;
   const [paymentMethod, setPaymentMethod] = useState("creditCard");
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleRadioChange = (e: any) => {
     setPaymentMethod(e.target.value);
@@ -43,47 +46,80 @@ function CheckoutDialog(props: any) {
 
   const blockSeat = () => {
     setIsLoading(true);
-    var ticketsToDownload: any = "";
-    const apiUrlBlockSeat = `${APIUrl.apiUrl}/ticket/add`;
+    const apiUrlBlockSeat = `${APIUrl.apiUrl}/booking/add`;
     // eslint-disable-next-line
-    selectedSeats?.map((item: any) => {
-      const requestOptions = {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userID: user.id,
-          seatID: item,
-          priceID: priceQuery?.data?.[0]?.id,
-          showID: selectedShow.id,
-        }),
-      };
-      fetch(apiUrlBlockSeat, requestOptions).then((response) => {
-        if (!response.ok) {
-          setError(true);
-          setIsLoading(false);
-          return;
-        }
-        return response.json().then((data) => {
-          console.log(data, data.toString());
-          ticketsToDownload = ticketsToDownload + " " + data.toString();
-          setIsLoading(false);
-        });
-      });
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userID: user.id,
+        seatIDs: selectedSeats,
+        // priceID: priceQuery?.data?.[0]?.id,
+        showID: selectedShow.id,
+        state: "Paid",
+        bookingDate: new Date(),
+      }),
+    };
+    fetch(apiUrlBlockSeat, requestOptions).then((response) => {
+      if (!response.ok) {
+        setError(true);
+        setIsLoading(false);
+        return;
+      }
+      setError(false);
+      setIsLoading(false);
     });
-    console.log(ticketsToDownload);
     finishTransaction();
-    /* TODO: Print tickets
-    var dataStr =
-      "data:text/json;charset=utf-8," +
-      encodeURIComponent(JSON.stringify(ticketsToDownload));
-    var dlAnchorElem: any = document.getElementById("downloadAnchorElem");
-    dlAnchorElem.setAttribute("href", dataStr);
-    dlAnchorElem.setAttribute("download", "scene.json");
-    dlAnchorElem.click(); */
   };
 
   const theme = createTheme(palette);
-
+  if (user.id === undefined) {
+    return (
+      <ThemeProvider theme={theme}>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          scroll="paper"
+          aria-labelledby="scroll-dialog-title"
+          aria-describedby="scroll-dialog-description"
+          fullWidth={true}
+          maxWidth="sm"
+        >
+          <DialogTitle id="scroll-dialog-title">
+            Bitte loggen Sie sich ein, um fortzufahren!
+          </DialogTitle>
+          <DialogContent dividers={true}>
+            <DialogContentText
+              id="scroll-dialog-description"
+              className="alignCenter"
+            >
+              Um bei uns Tickets buchen zu können, loggen Sie sich bitte ein
+              oder registrieren Sie sich kostenfrei!
+              <br />
+              <br />
+              <Button
+                variant="contained"
+                onClick={(e) => navigate("/SignInPage")}
+              >
+                Einloggen
+              </Button>
+              <strong>{` oder `}</strong>
+              <Button
+                className="smallButton"
+                variant="contained"
+                onClick={(e) => navigate("/SignUpPage")}
+              >
+                Registrieren
+              </Button>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Abbruch</Button>
+          </DialogActions>
+        </Dialog>
+      </ThemeProvider>
+    );
+  }
   return (
     <ThemeProvider theme={theme}>
       <Dialog
@@ -114,6 +150,8 @@ function CheckoutDialog(props: any) {
                   <Button className="addCateringButton" variant="outlined">
                     Verpflegung hinzufügen
                   </Button>
+                  <br />
+                  <br />
                   <Box className="outlinedBox">
                     <Grid container spacing={1}>
                       <Grid item xs={8}>
@@ -122,9 +160,7 @@ function CheckoutDialog(props: any) {
                         <p>2 Cola (0,5)</p>
                       </Grid>
                       <Grid item xs={4} className="textAlignRight">
-                        <p>
-                          {selectedSeats.length * priceQuery?.data?.[0]?.price}€
-                        </p>
+                        <p>{priceForSeats}€</p>
                         <p>10€</p>
                         <p>5€</p>
                       </Grid>
@@ -135,11 +171,7 @@ function CheckoutDialog(props: any) {
                       <p>Gesamt:</p>
                     </Grid>
                     <Grid item xs={4}>
-                      <p>
-                        {selectedSeats.length * priceQuery?.data?.[0]?.price +
-                          15}
-                        €
-                      </p>
+                      <p>{priceForSeats + 15}€</p>
                     </Grid>
                   </Grid>
                 </Grid>
@@ -147,26 +179,6 @@ function CheckoutDialog(props: any) {
                   <div className="lineOfDivision" />
                 </Grid>
                 <Grid item xs={6}>
-                  <TextField
-                    fullWidth
-                    id="nameInput"
-                    label="Name"
-                    variant="standard"
-                    defaultValue={`${user.firstName} ${user.name}`}
-                  />
-                  <TextField
-                    fullWidth
-                    id="adressInput"
-                    label="Adresse"
-                    variant="standard"
-                  />
-                  <TextField
-                    fullWidth
-                    id="emailInput"
-                    label="E-Mail"
-                    variant="standard"
-                    defaultValue={user.email}
-                  />
                   <FormControl className="marginTop1Rem" component="fieldset">
                     <FormLabel component="legend">
                       <strong>Zahlungsart</strong>
@@ -194,6 +206,7 @@ function CheckoutDialog(props: any) {
                             id="nameOfCardUserInput"
                             label="Name des Karteninhabers"
                             variant="standard"
+                            defaultValue={`${user?.firstName} ${user?.name}`}
                           />
                           <TextField
                             id="cardValidTo"
@@ -213,20 +226,10 @@ function CheckoutDialog(props: any) {
                         label="Paypal"
                       />
                       {paymentMethod === "paypal" ? (
-                        <div>
-                          <TextField
-                            fullWidth
-                            id="paypalEmailInput"
-                            label="E-Mail"
-                            variant="standard"
-                          />
-                          <TextField
-                            fullWidth
-                            id="paypalPasswordInput"
-                            label="Passwort"
-                            variant="standard"
-                          />
-                        </div>
+                        <p>
+                          Sie werden während des Checkouts zu Paypal
+                          weitergeleitet.
+                        </p>
                       ) : null}
                       <FormControlLabel
                         value="instantBankTransfer"
