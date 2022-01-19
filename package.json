@@ -24,6 +24,7 @@
     "md5": "^2.3.0",
     "react": "^17.0.2",
     "react-comments": "^0.0.0",
+    "react-cookie-consent": "^7.2.1",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.22.5",
     "react-loader-spinner": "^4.0.0",

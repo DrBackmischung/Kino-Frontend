@@ -8,6 +8,7 @@ import {createTheme} from "@mui/material/styles";
 import palette from "../config/Colours";
 import MovieCard from "../components/MovieCard";
 import KinovationLogo from "../components/layouts/KinovationLogo.jpeg";
+import CookiesNotification from "../components/CookiesNotification";
 
 function Item(props: any)
 {
@@ -39,7 +40,7 @@ function HomePage(){
     let items = [
         {
             name: "Our Top Movie of the Month",
-            description: "Probably the most random thing you have ever seen!",
+            description: "Spiderman: No Way Home - a must watch!",
             pictureLink: "https://i.blogs.es/cb2ce6/spiderman-no-way-home-cartel/1366_2000.jpeg",
         },
         {
@@ -79,6 +80,7 @@ function HomePage(){
                     moviesData={moviesData.data}
                 />
             </Box>
+            <CookiesNotification/>
         </Container>
     )
 }
