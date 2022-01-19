@@ -20,6 +20,7 @@ import { useQuery } from "react-query";
 import APIUrl from "../../config/APIUrl";
 import PricesPage from "../../pages/PricesPage";
 import HomePage from "../../pages/HomePage";
+import CookiesNotification from "../CookiesNotification";
 
 function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -192,6 +193,7 @@ function MenuBar() {
         />
         <Route path="/Impressum" element={<Impressum />} />
       </Routes>
+      <CookiesNotification/>
     </BrowserRouter>
   );
 }
