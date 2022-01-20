@@ -7,14 +7,19 @@ import {
     Box,
 } from "@mui/material";
 import { useState } from "react";
+import palette from "../config/Colours";
 import ManageAdminMovie from "../components/ManageAdminMovie";
 import ManageAdminShow from "../components/ManageAdminShow";
-import palette from "../config/Colours";
 import ManageAdminRoom from "../components/ManageAdminRoom";
+import ManageAdminNews from "../components/ManageAdminNews";
 
 const theme = createTheme(palette);
 
-function AdminPage() {
+function AdminPage(props: any) {
+
+  const {
+    userData
+  } = props;
   
   const [openAddMovie, setOpenAddMovie] = useState(false);
   const [openUpdateMovie, setUpdateMovie] = useState(false);
@@ -65,6 +70,23 @@ function AdminPage() {
   };
   const handleRoomClose = () => {
     setOpenRoom(false);
+  };
+  
+  const [openAddNews, setOpenAddNews] = useState(false);
+  const [openDeleteNews, setDeleteNews] = useState(false);
+
+  const handleAddNewsClickOpen = () => {
+    setOpenAddNews(true);
+  };
+  const handleAddNewsClose = () => {
+    setOpenAddNews(false);
+  };
+
+  const handleDeleteNewsClickOpen = () => {
+    setDeleteNews(true);
+  };
+  const handleDeleteNewsClose = () => {
+    setDeleteNews(false);
   };
 
   // only render site when user with userID cookie has admin role
@@ -192,6 +214,15 @@ function AdminPage() {
             isOpen={openRoom}
             open={handleRoomClickOpen}
             close={handleRoomClose}
+          />
+          <ManageAdminNews
+            userData={userData}
+            isOpenAdd={openAddNews}
+            openAdd={handleAddNewsClickOpen}
+            closeAdd={handleAddNewsClose}
+            isOpenDelete={openDeleteNews}
+            openDelete={handleDeleteNewsClickOpen}
+            closeDelete={handleDeleteNewsClose}
           />
         </Container>
       </main>

@@ -212,7 +212,7 @@ export function SeatPlanPainter(props: any) {
                                                 <Button
                                                     variant="outlined"
                                                     onClick={() => handleOpenSeatTypeDialog(seat.line, seat.place)}
-                                                    startIcon={<PersonIcon sx={{ color: convertType(seat.type)[500] }}/>}
+                                                    startIcon={<PersonIcon sx={{ color: convertType(seat.type)[500] }} />}
                                                 ></Button>
                                             ))}
                                             </div>

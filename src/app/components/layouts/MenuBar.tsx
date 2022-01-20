@@ -193,7 +193,7 @@ function MenuBar() {
           element={<UserRegistrationPage setUser={setUser} />}
         />
         <Route path="/Impressum" element={<Impressum />} />
-        <Route path="/Admin" element={<AdminPage />} />
+        <Route path="/Admin" element={<AdminPage userData={data} />} />
       </Routes>
       <CookiesNotification/>
     </BrowserRouter>
