@@ -12,6 +12,7 @@ import ManageAdminMovie from "../components/ManageAdminMovie";
 import ManageAdminShow from "../components/ManageAdminShow";
 import ManageAdminRoom from "../components/ManageAdminRoom";
 import ManageAdminNews from "../components/ManageAdminNews";
+import ManageAdminEvent from "../components/ManageAdminEvent";
 
 const theme = createTheme(palette);
 
@@ -87,6 +88,23 @@ function AdminPage(props: any) {
   };
   const handleDeleteNewsClose = () => {
     setDeleteNews(false);
+  };
+  
+  const [openAddEvent, setOpenAddEvent] = useState(false);
+  const [openDeleteEvent, setDeleteEvent] = useState(false);
+
+  const handleAddEventClickOpen = () => {
+    setOpenAddEvent(true);
+  };
+  const handleAddEventClose = () => {
+    setOpenAddEvent(false);
+  };
+
+  const handleDeleteEventClickOpen = () => {
+    setDeleteEvent(true);
+  };
+  const handleDeleteEventClose = () => {
+    setDeleteEvent(false);
   };
 
   // only render site when user with userID cookie has admin role
@@ -190,6 +208,60 @@ function AdminPage(props: any) {
                 Add Seatplan
               </Button>
             </Box>
+            <Box
+              sx={{
+                  marginTop: 8,
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+              }}
+            >
+              <Button
+                key={"addNews"}
+                onClick={() => {
+                  handleAddNewsClickOpen();
+                }}
+                variant="contained"
+              >
+                Add News
+              </Button>
+              <Button
+                key={"deleteNews"}
+                onClick={() => {
+                  handleDeleteNewsClickOpen();
+                }}
+                variant="contained"
+              >
+                Delete News
+              </Button>
+            </Box>
+            <Box
+              sx={{
+                  marginTop: 8,
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+              }}
+            >
+              <Button
+                key={"addEvent"}
+                onClick={() => {
+                  handleAddEventClickOpen();
+                }}
+                variant="contained"
+              >
+                Add Event
+              </Button>
+              <Button
+                key={"deleteEvent"}
+                onClick={() => {
+                  handleDeleteEventClickOpen();
+                }}
+                variant="contained"
+              >
+                Delete Event
+              </Button>
+            </Box>
           </Box>
           <ManageAdminMovie
             isOpenAdd={openAddMovie}
@@ -223,6 +295,14 @@ function AdminPage(props: any) {
             isOpenDelete={openDeleteNews}
             openDelete={handleDeleteNewsClickOpen}
             closeDelete={handleDeleteNewsClose}
+          />
+          <ManageAdminEvent
+            isOpenAdd={openAddEvent}
+            openAdd={handleAddEventClickOpen}
+            closeAdd={handleAddEventClose}
+            isOpenDelete={openDeleteEvent}
+            openDelete={handleDeleteEventClickOpen}
+            closeDelete={handleDeleteEventClose}
           />
         </Container>
       </main>
