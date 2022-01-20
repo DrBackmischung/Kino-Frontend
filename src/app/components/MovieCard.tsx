@@ -37,6 +37,7 @@ function MovieCard(props: any) {
                    /* if (selectedSort.value === "best") {
                         return b.rating - a.rating;
                     } */
+                    return preparedMovieData;
                 });
             }
             setSortBy(!sortBy)
