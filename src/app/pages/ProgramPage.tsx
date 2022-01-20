@@ -2,7 +2,6 @@ import * as React from "react";
 import Toolbar from "../components/Toolbar";
 import MovieCard from "../components/MovieCard";
 import { useState } from "react";
-import { SelectChangeEvent } from "@mui/material/Select";
 import { useQuery } from "react-query";
 import Container from "@mui/material/Container";
 import ErrorPage from "./ErrorPage";
@@ -11,15 +10,21 @@ import APIUrl from "../config/APIUrl";
 
 function ProgramPage() {
     const [filter, setFilter] = useState("");
+    const [selectedLanguage, setSelectedLanguage] = useState([]);
+    const [selectedFSK, setSelectedFSK] = useState([]);
+    const [selectedGenre, setSelectedGenre] = useState([]);
+    const [selectedLocation, setSelectedLocation] = useState([]);
 
     const handleSearchChange = (e: any) => {
         setFilter(e.target.value.toLowerCase());
     };
-    const [location, setLocation] = React.useState("");
 
-    const handleSelectChange = (event: SelectChangeEvent) => {
-        setLocation(event.target.value as string);
-    };
+    const apiUrlShow = `${APIUrl.apiUrl}/show/getAll`;
+
+    const showsData = useQuery("Shows", () =>
+        fetch(apiUrlShow).then((res) => res.json())
+    );
+
 
     const apiUrlCity = `${APIUrl.apiUrl}/city/getAll`;
 
@@ -69,14 +74,23 @@ function ProgramPage() {
         <div>
             <Toolbar
                 handleSearchChange={handleSearchChange}
-                handleSelectChange={handleSelectChange}
-                location={location}
-                cityData={cityData.data}
+                setSelectedLocation={setSelectedLocation}
+                setSelectedLanguage={setSelectedLanguage}
+                setSelectedFSK={setSelectedFSK}
+                setSelectedGenre={setSelectedGenre}
+                moviesData={moviesData.data}
+                showsData={showsData.data}
+                selectedGenre={selectedGenre}
             />
             <MovieCard
                 filter={filter}
-                location={location}
+                selectedLocation={selectedLocation}
                 moviesData={moviesData.data}
+                showsData={showsData.data}
+                selectedLanguage={selectedLanguage}
+                selectedFSK={selectedFSK}
+                selectedGenre={selectedGenre}
+
             />
         </div>
     );

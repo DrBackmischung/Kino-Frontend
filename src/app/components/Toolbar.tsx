@@ -9,7 +9,7 @@ import { createTheme } from "@mui/material/styles";
 
 function Toolbar(props: any) {
     const theme: any = createTheme();
-    const { handleSearchChange, handleSelectChange, cityData } = props;
+    const { handleSearchChange, setSelectedLocation, showsData, setSelectedLanguage, setSelectedFSK, setSelectedGenre, moviesData, selectedGenre} = props;
 
     return (
         <Container
@@ -24,11 +24,10 @@ function Toolbar(props: any) {
         >
             <Grid container spacing={4} sx={{ justifyContent: "space-evenly" }}>
                 <BasicSelect
-                    handleSelectChange={handleSelectChange}
-                    cityData={cityData}
+                    setSelectedLocation={setSelectedLocation} showsData={showsData} selectedGenre={selectedGenre}
                 />
                 <SearchField handleSearchChange={handleSearchChange} />
-                <Filter />
+                <Filter setSelectedLanguage={setSelectedLanguage} setSelectedFSK={setSelectedFSK} setSelectedGenre={setSelectedGenre} moviesData={moviesData} />
                 <Sort />
             </Grid>
         </Container>

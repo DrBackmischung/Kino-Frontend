@@ -1,0 +1,30 @@
+.filter__checkboxes {
+    margin-bottom: 10px;
+
+}
+.filter__checkboxes .filter__checkboxes-column .fieldset {
+    display: inline-block;
+    justify-content: space-between;
+}
+
+.genre-select {
+    width: 60%;
+    display:block;
+    margin-bottom: 10px;
+}
+
+#simple-select-genre-label{
+    margin-bottom: 10px;
+}
+
+.rating-select {
+    width: 60%;
+}
+
+.fsk-select {
+    margin-bottom: 20px;
+}
+
+.filter__checkboxes .filter__checkboxes-column .checkboxes .radio__button {
+    width: 20%;
+}
