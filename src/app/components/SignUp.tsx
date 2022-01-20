@@ -167,7 +167,7 @@ function SignUp(props: any) {
                       {...field}
                       required
                       fullWidth
-                      label="User Name"
+                      label="Username"
                       autoFocus
                       onChange={(e: any) => {
                         setUserName(e.target.value);
@@ -179,11 +179,6 @@ function SignUp(props: any) {
                     />
                   )}
                 />
-
-                {
-                  // errors.userName && (
-                  // <span>Bitte gebe einen gültigen Benutzernamen ein!</span>)
-                }
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Controller
@@ -292,6 +287,14 @@ function SignUp(props: any) {
                     />
                   )}
                 />
+
+                {errors.password && (
+                  <small>
+                    Bitte geben Sie eine gültiges Password ein! Anforderungen:
+                    mind. 7 Zeichen, ein Großbuchstabe, ein Kleinbuchstabe, eine
+                    Zahl und ein Sonderzeichen.
+                  </small>
+                )}
               </Grid>
               <Grid item xs={12}>
                 <Controller

@@ -137,11 +137,6 @@ export default function SignIn(props: any) {
               />
             )}
           />
-
-          {
-            // errors.userName && (
-            // <span>Bitte gebe einen gültigen Benutzernamen ein!</span>)
-          }
           <Controller
             name="userPassword"
             control={control}
@@ -171,6 +166,13 @@ export default function SignIn(props: any) {
               />
             )}
           />
+          {errors.userPassword && (
+            <small>
+              Bitte geben Sie eine gültiges Password ein! Anforderungen: mind. 7
+              Zeichen, ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein
+              Sonderzeichen.
+            </small>
+          )}
 
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
