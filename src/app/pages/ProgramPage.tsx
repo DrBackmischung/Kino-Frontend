@@ -11,6 +11,7 @@ import APIUrl from "../config/APIUrl";
 
 function ProgramPage() {
     const [filter, setFilter] = useState("");
+    const [selectedSort, setSelectedSort] = useState("");
 
     const handleSearchChange = (e: any) => {
         setFilter(e.target.value.toLowerCase());
@@ -70,6 +71,8 @@ function ProgramPage() {
             <Toolbar
                 handleSearchChange={handleSearchChange}
                 handleSelectChange={handleSelectChange}
+                setSelectedSort={setSelectedSort}
+                selectedSort={selectedSort}
                 location={location}
                 cityData={cityData.data}
             />
@@ -77,6 +80,7 @@ function ProgramPage() {
                 filter={filter}
                 location={location}
                 moviesData={moviesData.data}
+                selectedSort={selectedSort}
             />
         </div>
     );
