@@ -40,6 +40,8 @@ export function AddEventDialog(props: any) {
     const [isLoading, setIsLoading] = useState(false);
   
     const addEvent = () => {
+        setStartTime(startTime + ":00");
+        setEndTime(endTime + ":00");
         setIsLoading(true);
         const apiUrlAddEvent = `${APIUrl.apiUrl}/event/add`;
         // eslint-disable-next-line
@@ -49,8 +51,8 @@ export function AddEventDialog(props: any) {
             body: JSON.stringify({
                 startDate,
                 endDate,
-                startTime,
-                endTime,
+                startTime: startTime + ":00",
+                endTime: endTime + ":00",
                 header,
                 content,
                 pictureLink,
@@ -154,8 +156,8 @@ export function AddEventDialog(props: any) {
                                                 id="endDate"
                                                 label="End"
                                                 name="endDate"
-                                                onChange={(e: any) => setStartDate(e.target.value)}
-                                                value={startDate}
+                                                onChange={(e: any) => setEndDate(e.target.value)}
+                                                value={endDate}
                                             />
                                         </Grid>
                                         <Grid item xs={12}>

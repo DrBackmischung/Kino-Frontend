@@ -11,7 +11,7 @@ function ManageAdminNews(props: any) {
   return (
     <ThemeProvider theme={theme}>
       {isOpenAdd ? <AddNewsDialog
-        userData={userData}
+        userID={userData.id}
         open={openAdd}
         cancel={closeAdd}
       /> : null}

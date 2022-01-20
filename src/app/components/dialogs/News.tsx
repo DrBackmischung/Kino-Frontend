@@ -31,7 +31,7 @@ export function AddNewsDialog(props: any) {
     const [content, setContent ] = useState("");
     const [pictureLink, setPictureLink ] = useState("");
     const {
-        userData,
+        userID,
         open,
         cancel
     } = props;
@@ -47,14 +47,15 @@ export function AddNewsDialog(props: any) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 date,
-                time,
+                time: time + ":00",
                 header,
                 content,
                 pictureLink,
-                userID: userData.userId,
+                userID,
             }),
         };
         fetch(apiUrlAddNews, requestOptions).then((response) => {
+            console.log(response);
             if (!response.ok) {
                 setError(true);
                 setIsLoading(false);
