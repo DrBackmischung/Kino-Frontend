@@ -23,6 +23,7 @@ import "./CheckoutDialog.css";
 import { createTheme } from "@mui/material/styles";
 import palette from "../config/Colours";
 import { useNavigate } from "react-router-dom";
+import { useForm, Controller } from "react-hook-form";
 
 function CheckoutDialog(props: any) {
   const {
@@ -39,6 +40,17 @@ function CheckoutDialog(props: any) {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const [cardId, setCardId] = useState("");
+  const [cardName, setCardName] = useState(`${user?.firstName} ${user?.name}`);
+  const [cardExpiry, setCardExpiry] = useState("");
+  const [cardPin, setCardPin] = useState("");
+
+  const {
+    setValue,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm();
 
   const handleRadioChange = (e: any) => {
     setPaymentMethod(e.target.value);
@@ -195,28 +207,115 @@ function CheckoutDialog(props: any) {
                       />
                       {paymentMethod === "creditCard" ? (
                         <div>
-                          <TextField
-                            fullWidth
-                            id="cardIdInput"
-                            label="Kartennummer"
-                            variant="standard"
+                          <Controller
+                            name="cardIdInput"
+                            control={control}
+                            rules={{
+                              required: true,
+                              minLength: 16,
+                              maxLength: 16,
+                              pattern:
+                                /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/i,
+                            }}
+                            render={({ field }) => (
+                              <TextField
+                                {...field}
+                                required
+                                margin="normal"
+                                autoFocus
+                                error={errors.cardIdInput}
+                                value={cardId}
+                                onChange={(e: any) => {
+                                  setCardId(e.target.value);
+                                  setValue("cardIdInput", e.target.value);
+                                  return;
+                                }}
+                                fullWidth
+                                label="Kartennummer"
+                                variant="standard"
+                              />
+                            )}
                           />
-                          <TextField
-                            fullWidth
-                            id="nameOfCardUserInput"
-                            label="Name des Karteninhabers"
-                            variant="standard"
-                            defaultValue={`${user?.firstName} ${user?.name}`}
+                          <Controller
+                            name="cardName"
+                            control={control}
+                            rules={{
+                              required: true,
+                              minLength: 3,
+                            }}
+                            render={({ field }) => (
+                              <TextField
+                                {...field}
+                                required
+                                margin="normal"
+                                autoFocus
+                                error={errors.cardName}
+                                value={cardName}
+                                onChange={(e: any) => {
+                                  setCardName(e.target.value);
+                                  setValue("cardName", e.target.value);
+                                  return;
+                                }}
+                                fullWidth
+                                label="Name des Karteninhabers"
+                                variant="standard"
+                              />
+                            )}
                           />
-                          <TextField
-                            id="cardValidTo"
-                            label="Gültig bis (MM/JJ)"
-                            variant="standard"
+                          <Controller
+                            name="cardExpiry"
+                            control={control}
+                            rules={{
+                              required: true,
+                              minLength: 5,
+                              maxLength: 5,
+                              pattern:
+                                /^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/,
+                            }}
+                            render={({ field }) => (
+                              <TextField
+                                {...field}
+                                required
+                                margin="normal"
+                                autoFocus
+                                error={errors.cardExpiry}
+                                value={cardExpiry}
+                                onChange={(e: any) => {
+                                  setCardExpiry(e.target.value);
+                                  setValue("cardExpiry", e.target.value);
+                                  return;
+                                }}
+                                label="Gültig bis (MM/JJ)"
+                                variant="standard"
+                              />
+                            )}
                           />
-                          <TextField
-                            id="cardSafetyCode"
-                            label="Sicherheitscode"
-                            variant="standard"
+                          <Controller
+                            name="cardPin"
+                            control={control}
+                            rules={{
+                              required: true,
+                              minLength: 3,
+                              maxLength: 3,
+                              pattern: /[0-9]+/i,
+                            }}
+                            render={({ field }) => (
+                              <TextField
+                                {...field}
+                                required
+                                margin="normal"
+                                autoFocus
+                                error={errors.cardPin}
+                                value={cardPin}
+                                onChange={(e: any) => {
+                                  setCardPin(e.target.value);
+                                  setValue("cardPin", e.target.value);
+                                  return;
+                                }}
+                                label="Sicherheitscode"
+                                variant="standard"
+                              />
+                            )}
                           />
                         </div>
                       ) : null}
@@ -251,7 +350,7 @@ function CheckoutDialog(props: any) {
         )}
         <DialogActions>
           <Button onClick={handleClose}>Abbruch</Button>
-          <Button onClick={blockSeat}>Bezahlen</Button>
+          <Button onClick={handleSubmit(blockSeat)}>Bezahlen</Button>
         </DialogActions>
       </Dialog>
     </ThemeProvider>

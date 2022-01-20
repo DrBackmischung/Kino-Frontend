@@ -22,15 +22,11 @@
   margin-right: auto;
 }
 .rowContainer {
-  flex: 1;
-  flex-direction: row;
+  width: 100%;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
 .seatCheckbox {
-  flex: 1;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
   height: 2rem;
 }

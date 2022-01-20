@@ -19,6 +19,7 @@ import colours from "../config/Colours";
 import { setCookie } from "../components/CookieHandler";
 import { useNavigate } from "react-router-dom";
 import APIUrl from "../config/APIUrl";
+import { useForm, Controller } from "react-hook-form";
 
 const theme = createTheme();
 
@@ -50,6 +51,13 @@ export default function SignIn(props: any) {
   const [userPassword, setUserPassword] = useState("");
   const apiUlr = `${APIUrl.apiUrl}/login`;
 
+  const {
+    setValue,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm();
+
   let navigate = useNavigate();
 
   const redirectToHome = () => {
@@ -61,14 +69,9 @@ export default function SignIn(props: any) {
     return hashPassword;
   };
 
-  const handleSubmitClick = (e: any, isHashPassword: boolean) => {
-    e.preventDefault();
+  const handleSubmitClick = () => {
     let passwordToSend: string;
-    if (isHashPassword) {
-      passwordToSend = userPassword;
-    } else {
-      passwordToSend = passwordMd5(userPassword);
-    }
+    passwordToSend = passwordMd5(userPassword);
     const requestOptions = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -88,8 +91,8 @@ export default function SignIn(props: any) {
       .then((data) => {
         if (data.id !== "undefined") {
           setCookie("userId", data.id, 7);
+          setUser();
         }
-        setUser();
         redirectToHome();
       });
   };
@@ -111,29 +114,64 @@ export default function SignIn(props: any) {
           Sign in
         </Typography>
         <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoFocus
-            onChange={(e) => setUserName(e.target.value)}
+          <Controller
+            name="userName"
+            control={control}
+            rules={{ required: true, minLength: 3 }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="Username"
+                autoFocus
+                onChange={(e: any) => {
+                  setUserName(e.target.value);
+                  setValue("userName", e.target.value);
+                  return;
+                }}
+                value={userName}
+                error={errors.userName}
+              />
+            )}
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="passwort"
-            label="Passwort"
-            type="password"
-            id="passwort"
-            autoComplete="current-password"
-            onChange={(e) => setUserPassword(e.target.value)}
+
+          {
+            // errors.userName && (
+            // <span>Bitte gebe einen gültigen Benutzernamen ein!</span>)
+          }
+          <Controller
+            name="userPassword"
+            control={control}
+            rules={{
+              required: true,
+              minLength: 7,
+              maxLength: 32,
+              pattern:
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="Passwort"
+                type="password"
+                autoComplete="current-password"
+                onChange={(e: any) => {
+                  setUserPassword(e.target.value);
+                  setValue("userPassword", e.target.value);
+                  return;
+                }}
+                error={errors.userPassword}
+              />
+            )}
           />
+
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me" // in German?
@@ -144,7 +182,7 @@ export default function SignIn(props: any) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={(e) => handleSubmitClick(e, false)}
+            onClick={handleSubmit(handleSubmitClick)}
           >
             Anmelden
           </Button>
