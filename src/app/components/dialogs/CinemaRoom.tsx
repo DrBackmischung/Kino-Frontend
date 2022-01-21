@@ -12,9 +12,7 @@ import {
     Container,
     Typography,
     CssBaseline,
-    RadioGroup,
     FormControlLabel,
-    Radio,
     FormGroup,
     Checkbox,
 } from "@mui/material";
@@ -42,7 +40,7 @@ export function AddCinemaRoomDialog(props: any) {
 
     const apiUrlGetAllCinemas = `${APIUrl.apiUrl}/cinema/getAll`;
   
-    const {isLoading, error, data} : any = useQuery("Movies", () =>
+    const {isLoading, error} : any = useQuery("Movies", () =>
       fetch(apiUrlGetAllCinemas).then((res) => res.json())
     );
 

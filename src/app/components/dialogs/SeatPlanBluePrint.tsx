@@ -22,7 +22,6 @@ import LoadingAnimation from "../layouts/LoadingAnimation";
 import APIUrl from "../../config/APIUrl";
 import { createTheme } from "@mui/material/styles";
 import palette from "../../config/Colours";
-import { useQuery } from "react-query";
 import PersonIcon from '@mui/icons-material/Person';
 import "./SeatPlanBluePrint.css";
 import { grey, blue, orange } from '@mui/material/colors';
@@ -107,8 +106,11 @@ export function SeatPlanPainter(props: any) {
 
     const convertRenderToPlainList: any = (data: any) => {
         let list: any = [];
+        // eslint-disable-next-line
         data?.map((row: any) => {
+            // eslint-disable-next-line
             row?.map((seat: any) => {
+                // eslint-disable-next-line
                 list.push({
                     line: seat.line,
                     place: seat.place,
@@ -124,7 +126,9 @@ export function SeatPlanPainter(props: any) {
         let list : any = [];
         for(let i : number = 1; i <= numberOfRows; i++) {
             let row : any = [];
+            // eslint-disable-next-line
             seats?.map((seat: any) => {
+                // eslint-disable-next-line
                 if(seat.line === i) {
                     row.push({
                         line: seat.line,
@@ -273,7 +277,7 @@ function SeatTypeDialog(props: any) {
             list.push({
                 line: e.line,
                 place: e.place,
-                type: ((row == e.line) && (nr == e.place) ? type : e.type),
+                type: ((row === e.line) && (nr === e.place) ? type : e.type),
                 cinemaRoomID: e.cinemaRoomID
             });
         }
@@ -287,7 +291,9 @@ function SeatTypeDialog(props: any) {
         let list : any = [];
         for(let i : number = 1; i <= numberOfRows; i++) {
             let row : any = [];
+            // eslint-disable-next-line
             seats?.map((seat: any) => {
+                // eslint-disable-next-line
                 if(seat.line === i) {
                     row.push({
                         line: seat.line,
@@ -304,8 +310,11 @@ function SeatTypeDialog(props: any) {
 
     const convertRenderToPlainList: any = (data: any) => {
         let list: any = [];
+        // eslint-disable-next-line
         data?.map((row: any) => {
+            // eslint-disable-next-line
             row?.map((seat: any) => {
+                // eslint-disable-next-line
                 list.push({
                     line: seat.line,
                     place: seat.place,
