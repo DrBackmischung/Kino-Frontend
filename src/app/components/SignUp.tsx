@@ -16,6 +16,7 @@ import {
   Typography,
   Container,
 } from "@mui/material";
+import LoadingAnimation from "./layouts/LoadingAnimation";
 import { useForm, Controller } from "react-hook-form";
 
 function Copyright(props: any) {
@@ -56,6 +57,8 @@ function SignUp(props: any) {
   const [number, setNumber] = useState("");
   const [plz, setPlz] = useState("");
   const [city, setCity] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState({ isError: false, msg: "No Error" });
   const {
     setValue,
     handleSubmit,
@@ -87,7 +90,9 @@ function SignUp(props: any) {
     return hashConfirmPassword;
   };
 
-  const handleSubmitClick = (e: any) => {
+  const handleSubmitClick = async () => {
+    let redirectHome: boolean = false;
+    setIsLoading(true);
     let hashPassword = passwordMd5(password);
     let hashConfirmPassword = confirmPasswordMd5(confirmPassword);
 
@@ -108,26 +113,44 @@ function SignUp(props: any) {
           city: city,
         }),
       };
-      fetch(apiUrlAll, requestOptions)
-        .then((response) => {
-          if (!response.ok) {
-            return response.json();
-          } else if (response.ok) {
-            return response.json();
-          }
-        })
-        .then((data) => {
-          postMessage("Registration successfull! Redirecting to Homepage!");
-          if (data.id !== "undefined") {
-            setCookie("userId", data.id, 7);
-          }
-          setUser();
-          redirectToHome();
-        });
+      const response = await fetch(apiUrlAll, requestOptions);
+      if (!response.ok) {
+        setError({ isError: true, msg: `Fehler: ${response.statusText}` });
+      } else if (response.ok) {
+        postMessage("Registration successfull! Redirecting to Homepage!");
+        const data: any = await response.json();
+        setError({ isError: false, msg: "No error" });
+        setCookie("userId", data.id, 7);
+        setUser();
+        redirectHome = true;
+      }
+      setIsLoading(false);
+      if (redirectHome) {
+        redirectToHome();
+      }
     } else {
-      // TODO Error Handling
+      setError({
+        isError: true,
+        msg: "Fehler: Das eingegebene Passwort stimmt nicht mit dem zur Überprüfung überein!",
+      });
     }
+    setIsLoading(false);
   };
+  if (isLoading)
+    return (
+      <Container
+        sx={{
+          bgcolor: "background.paper",
+          pt: 8,
+          pb: 6,
+          position: "relative",
+          marginTop: "15rem",
+        }}
+        maxWidth="md"
+      >
+        <LoadingAnimation />
+      </Container>
+    );
   return (
     <Container
       component="main"
@@ -424,8 +447,16 @@ function SignUp(props: any) {
                       error={errors.city}
                     />
                   )}
-                />
+                />{" "}
+                {error.isError && (
+                  <small style={{ color: "red" }}>
+                    Ein Fehler ist aufgetreten. Bitte überprüfen Sie ihre
+                    Eingaben. Bei technischen Problemen wenden Sie sich bitte an
+                    den Admin dieser Website. {error.msg}
+                  </small>
+                )}
               </Grid>
+
               <Grid item xs={12}>
                 <FormControlLabel
                   control={
