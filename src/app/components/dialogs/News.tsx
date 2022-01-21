@@ -121,7 +121,7 @@ export function AddNewsDialog(props: any) {
                                                 value={header}
                                             />
                                         </Grid>
-                                        <Grid item xs={12} sm={6}>
+                                        <Grid item xs={12}>
                                             <TextField
                                                 name="content"
                                                 required
@@ -139,19 +139,17 @@ export function AddNewsDialog(props: any) {
                                                 fullWidth
                                                 type="date"
                                                 id="date"
-                                                label="Date"
                                                 name="date"
                                                 onChange={(e: any) => setDate(e.target.value)}
                                                 value={date}
                                             />
                                         </Grid>
-                                        <Grid item xs={12}>
+                                        <Grid item xs={12} sm={6}>
                                             <TextField
                                                 required
                                                 fullWidth
                                                 type="time"
                                                 id="time"
-                                                label="Time"
                                                 name="time"
                                                 onChange={(e: any) => setTime(e.target.value)}
                                                 value={time}

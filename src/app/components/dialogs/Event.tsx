@@ -124,7 +124,7 @@ export function AddEventDialog(props: any) {
                                                 value={header}
                                             />
                                         </Grid>
-                                        <Grid item xs={12} sm={6}>
+                                        <Grid item xs={12}>
                                             <TextField
                                                 name="content"
                                                 required
@@ -142,7 +142,6 @@ export function AddEventDialog(props: any) {
                                                 fullWidth
                                                 type="date"
                                                 id="startDate"
-                                                label="Start"
                                                 name="startDate"
                                                 onChange={(e: any) => setStartDate(e.target.value)}
                                                 value={startDate}
@@ -154,31 +153,28 @@ export function AddEventDialog(props: any) {
                                                 fullWidth
                                                 type="date"
                                                 id="endDate"
-                                                label="End"
                                                 name="endDate"
                                                 onChange={(e: any) => setEndDate(e.target.value)}
                                                 value={endDate}
                                             />
                                         </Grid>
-                                        <Grid item xs={12}>
+                                        <Grid item xs={12} sm={6}>
                                             <TextField
                                                 required
                                                 fullWidth
                                                 type="time"
                                                 id="startTime"
-                                                label="Start"
                                                 name="startTime"
                                                 onChange={(e: any) => setStartTime(e.target.value)}
                                                 value={startTime}
                                             />
                                         </Grid>
-                                        <Grid item xs={12}>
+                                        <Grid item xs={12} sm={6}>
                                             <TextField
                                                 required
                                                 fullWidth
                                                 type="time"
                                                 id="endTime"
-                                                label="End"
                                                 name="endTime"
                                                 onChange={(e: any) => setEndTime(e.target.value)}
                                                 value={endTime}
