@@ -53,7 +53,6 @@ export default function SignIn(props: any) {
   const apiUlr = `${APIUrl.apiUrl}/login`;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ isError: false, msg: "No Error" });
-
   const {
     setValue,
     handleSubmit,

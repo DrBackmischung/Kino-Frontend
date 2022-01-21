@@ -39,10 +39,10 @@ function PriceCard(pricesData: any){
                     <TableBody>
                         {pricesData.pricesData?.map((price : any) => (
                             <TableRow key={price.id}>
-                                <TableCell align="left">{FormatType(price.type)}</TableCell>
-                                <TableCell align="left">{price.price}</TableCell>
-                                <TableCell align="left">{CalculateNewPrice(price.price, 0.85)}</TableCell>
-                                <TableCell align="left">{CalculateNewPrice(price.price, 0.9)}</TableCell>
+                                <TableCell align="left">{FormatType(price.type)} €</TableCell>
+                                <TableCell align="left">{price.price} €</TableCell>
+                                <TableCell align="left">{CalculateNewPrice(price.price, 0.85)} €</TableCell>
+                                <TableCell align="left">{CalculateNewPrice(price.price, 0.9)} €</TableCell>
                             </TableRow>
 
                         ))}
