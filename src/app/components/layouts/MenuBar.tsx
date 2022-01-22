@@ -71,7 +71,6 @@ function MenuBar() {
         <Container fixed>
           <Toolbar>
             <IconButton
-              style={{ backgroundColor: "white" }}
               sx={{ height: "40px", width: "40px" }}
               size="large"
               edge="start"
@@ -79,7 +78,11 @@ function MenuBar() {
               component={Link}
               to={"/"}
             >
-              <HomeIcon />
+              <img
+                  src="https://raw.githubusercontent.com/DrBackmischung/Kino-Dokumentation/main/KV.png"
+                  alt="Kinovation Logo"
+                  height={40}
+              />
             </IconButton>
             <Box
               sx={{
