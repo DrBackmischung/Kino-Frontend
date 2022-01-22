@@ -6,8 +6,6 @@ import Box from "@mui/material/Box";
 import ErrorPage from "../pages/ErrorPage";
 import LoadingAnimation from "./layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
-import {start} from "repl";
-import {Debugger} from "inspector";
 
 function ShowPicker(props: any) {
     const {setOpenSeatBooking, movieId, setSelectedShow} = props;
@@ -27,38 +25,34 @@ function ShowPicker(props: any) {
         if (data === undefined) return;
 
         const sortedShows = data?.sort((itemA: any, itemB: any) => {
-
             return (
                 new Date(itemA.showDate).getTime() -
                 new Date(itemB.showDate).getTime()
             )
         });
 
-        const sortedAll = sortedShows?.sort((itemC: any, itemD: any) => {
-            if (itemC.showDate == itemD.showDate) {
+        // eslint-disable-next-line array-callback-return
+        return sortedShows?.sort((itemC: any, itemD: any) => {
+            if (itemC.showDate === itemD.showDate) {
                 return (
                     new Date('1970/01/01 ' + itemC.startTime).getTime() -
                     new Date('1970/01/01 ' + itemD.startTime).getTime()
                 );
             }
         });
-
-        return sortedAll;
     };
 
     let formattedDate: any = (showDate: any) => {
-        const showDateFormatted = new Date(showDate).toLocaleDateString(undefined, {
+        return new Date(showDate).toLocaleDateString(undefined, {
             weekday: "long",
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
         });
-        return showDateFormatted;
     };
 
     let formattedTime: any = (item: any) => {
-        const showTimeFormatted = item.startTime.substring(0, 5);
-        return showTimeFormatted;
+        return item.startTime.substring(0, 5);
     };
 
     if (isLoading) {
@@ -107,7 +101,7 @@ function ShowPicker(props: any) {
                                         variant="contained"
                                     >
                                         <Typography>
-                                            <Box sx={{fontFamily: "Monospace", fontSize: 30}}>
+                                            <Box sx={{fontFamily: "Monospace", fontSize: 20}}>
                                                 {formattedTime(item)}
                                             </Box>
                                         </Typography>
