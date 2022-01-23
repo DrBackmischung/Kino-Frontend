@@ -17,6 +17,7 @@ import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Ratings from "../components/Ratings";
+import ReviewsCard from "../components/ReviewsCard";
 
 function DetailsPage(props: any) {
   const { userData } = props;
@@ -26,6 +27,7 @@ function DetailsPage(props: any) {
   const { state }: any = useLocation();
   let navigate = useNavigate();
   const apiUrlAll = `${APIUrl.apiUrl}/movie/${movieId}`;
+
   const { isLoading, data, refetch, error } = useQuery(
     "movie",
     () => fetch(apiUrlAll).then((res) => res.json()),
@@ -34,6 +36,8 @@ function DetailsPage(props: any) {
       enabled: false,
     }
   );
+
+
   useEffect(() => {
     setMovieId(state.movieId);
   }, [state?.movieId]);
@@ -96,6 +100,13 @@ function DetailsPage(props: any) {
                   movieId={movieId}
                   setSelectedShow={setSelectedShow}
                   data={data}
+                />
+              </Box>
+            </Grid>
+            <Grid>
+              <Box>
+                <ReviewsCard
+                    reviewData={movieId}
                 />
               </Box>
             </Grid>
