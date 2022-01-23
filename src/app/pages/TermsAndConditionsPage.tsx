@@ -41,8 +41,8 @@ function TermsAndConditionsPage(props: any) {
                     <p/>
                     <h2>§2 Zustandekommen eines Vertrages, Speicherung des Vertragstextes</h2>
                     <p/>
-                    <p>(1) Die folgenden Regelungen über den Vertragsabschluss gelten für Bestellungen über unseren
-                        Internetshop https://www.google.de.</p>
+                    <p>(1) Die folgenden Regelungen über den Vertragsabschluss gelten für Bestellungen über unseren online
+                        Kinoticketreservierungssystem "Kinovation" unter folgender Domain: "https://kino-frontend.vercel.app/".</p>
                     <p/>
                     <p>(2) Im Falle des Vertragsschlusses kommt der Vertrag mit</p>
                     <p/>
@@ -73,7 +73,7 @@ function TermsAndConditionsPage(props: any) {
                     <p>Wir behalten uns das Eigentum an der Ware bis zur vollständigen Bezahlung des Kaufpreises
                         vor.</p>
                     <p/>
-                    <p>****************************************************************************************************</p>
+                    <p>*********************************************************************************************************************************************************************</p>
                     <h2>§6 Widerrufsrecht des Kunden als Verbraucher</h2>
                     <p/>
                     <h3>Widerrufsrecht für Verbraucher</h3>
@@ -124,7 +124,7 @@ function TermsAndConditionsPage(props: any) {
                     <p/>
                     <p>Ende der Widerrufsbelehrung</p>
                     <p/>
-                    <p>****************************************************************************************************</p>
+                    <p>*********************************************************************************************************************************************************************</p>
                     <h2>§7 Widerrufsformular</h2>
                     <p/>
                     <p>(Wenn Sie den Vertrag widerrufen wollen, dann füllen Sie bitte dieses Formular aus und senden Sie
@@ -164,6 +164,18 @@ function TermsAndConditionsPage(props: any) {
                     <p>_____________________________________________________</p>
                     <p/>
                     <p>(*) Unzutreffendes streichen.</p>
+                </Box>
+                <Box>
+                    <p>*********************************************************************************************************************************************************************</p>
+                    <h4>Wichtige Anmerkung:</h4>
+                    <p>Die oben angegebenen Allgemeinen Geschäftsbedingungen haben keine Rechtsgültigkeit im Bezug auf den Verkauf eines
+                        Kinotickets, o.Ä. auf der Webseite angebotene Produkt und dienen nur der Anschaulichkeit sowie realitätsnahen
+                        Nachahmung einer realen Kino-Webseite. Jegliche Zahlungen auf dieser Webseite werden als eine Spende
+                        für unser Team und unser Projekt angesehen und dementsprechend nicht zurückerstattet. Eine Spende ist komplett
+                        freiwillig und der Spender erhält keinerlei Gegenleistung dafür. Wenn Sie die Bezahlen-Transaktion abschließen,
+                        bestätigen Sie, dass Sie der Eigentümer der bei dieser Transaktion gespendeten Gelder sind und diese nicht abgehoben
+                        / zurückgebucht werden können. Spenden sind nicht erstattungsfähig.
+                    </p>
                 </Box>
             </Container>
         </Container>
