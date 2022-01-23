@@ -7,7 +7,6 @@ import {useQuery} from "react-query";
 import {createTheme} from "@mui/material/styles";
 import palette from "../config/Colours";
 import MovieCard from "../components/MovieCard";
-import KinovationLogo from "../components/layouts/KinovationLogo.jpeg";
 
 function Item(props: any)
 {
@@ -56,7 +55,7 @@ function HomePage(){
             position: "relative",
             marginTop: theme.spacing(12)
         }}>
-            <img src={KinovationLogo} alt="Kinovation Logo" height={100}/>
+            <img src="https://raw.githubusercontent.com/DrBackmischung/Kino-Dokumentation/main/Kinovation.png" alt="Kinovation Logo" height={100}/>
             <Box>
                 <Carousel>
                     {

@@ -19,6 +19,8 @@ import colours from "../config/Colours";
 import { setCookie } from "../components/CookieHandler";
 import { useNavigate } from "react-router-dom";
 import APIUrl from "../config/APIUrl";
+import { useForm, Controller } from "react-hook-form";
+import LoadingAnimation from "../components/layouts/LoadingAnimation";
 
 const theme = createTheme();
 
@@ -49,6 +51,14 @@ export default function SignIn(props: any) {
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const apiUlr = `${APIUrl.apiUrl}/login`;
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState({ isError: false, msg: "No Error" });
+  const {
+    setValue,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm();
 
   let navigate = useNavigate();
 
@@ -61,14 +71,11 @@ export default function SignIn(props: any) {
     return hashPassword;
   };
 
-  const handleSubmitClick = (e: any, isHashPassword: boolean) => {
-    e.preventDefault();
+  const handleSubmitClick = async () => {
+    let redirectHome: boolean = false;
+    setIsLoading(true);
     let passwordToSend: string;
-    if (isHashPassword) {
-      passwordToSend = userPassword;
-    } else {
-      passwordToSend = passwordMd5(userPassword);
-    }
+    passwordToSend = passwordMd5(userPassword);
     const requestOptions = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -77,24 +84,38 @@ export default function SignIn(props: any) {
         passwordHash: passwordToSend,
       }),
     };
-    fetch(apiUlr, requestOptions)
-      .then((response) => {
-        if (!response.ok) {
-          return response.json();
-        } else if (response.ok) {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        if (data.id !== "undefined") {
-          setCookie("userId", data.id, 7);
-          setCookie("role", data.role.autorization, 7);
-        }
-        setUser();
-        redirectToHome();
-      });
+    const response = await fetch(apiUlr, requestOptions);
+    if (!response.ok) {
+      setError({ isError: true, msg: `Fehler: ${response.statusText}` });
+    } else if (response.ok) {
+      const data: any = await response.json();
+      setError({ isError: false, msg: "No error" });
+      setCookie("userId", data.id, 7);
+      setCookie("role", data.role.autorization, 7);
+      setUser();
+      redirectHome = true;
+    }
+    setIsLoading(false);
+    if (redirectHome) {
+      redirectToHome();
+    }
   };
 
+  if (isLoading)
+    return (
+      <Container
+        sx={{
+          bgcolor: "background.paper",
+          pt: 8,
+          pb: 6,
+          position: "relative",
+          marginTop: "15rem",
+        }}
+        maxWidth="md"
+      >
+        <LoadingAnimation />
+      </Container>
+    );
   return (
     <Container
       component="main"
@@ -112,40 +133,86 @@ export default function SignIn(props: any) {
           Sign in
         </Typography>
         <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoFocus
-            onChange={(e) => setUserName(e.target.value)}
+          <Controller
+            name="userName"
+            control={control}
+            rules={{ required: true, minLength: 3 }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="Username"
+                autoFocus
+                onChange={(e: any) => {
+                  setUserName(e.target.value);
+                  setValue("userName", e.target.value);
+                  return;
+                }}
+                value={userName}
+                error={errors.userName}
+              />
+            )}
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="passwort"
-            label="Passwort"
-            type="password"
-            id="passwort"
-            autoComplete="current-password"
-            onChange={(e) => setUserPassword(e.target.value)}
+          <Controller
+            name="userPassword"
+            control={control}
+            rules={{
+              required: true,
+              minLength: 7,
+              maxLength: 32,
+              pattern:
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="Passwort"
+                type="password"
+                autoComplete="current-password"
+                onChange={(e: any) => {
+                  setUserPassword(e.target.value);
+                  setValue("userPassword", e.target.value);
+                  return;
+                }}
+                error={errors.userPassword}
+              />
+            )}
           />
+          {errors.userPassword && (
+            <small>
+              Bitte geben Sie eine gültiges Password ein! Anforderungen: mind. 7
+              Zeichen, ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein
+              Sonderzeichen.
+            </small>
+          )}
+
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me" // in German?
           />
+          <br />
+          {error.isError && (
+            <small style={{ color: "red" }}>
+              Ein Fehler ist aufgetreten. Bitte überprüfen Sie ihren
+              eingegebenen Benutzernamen und das Passwort. Bei technischen
+              Problemen wenden Sie sich bitte an den Admin dieser Website.
+              {error.msg}
+            </small>
+          )}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={(e) => handleSubmitClick(e, false)}
+            onClick={handleSubmit(handleSubmitClick)}
           >
             Anmelden
           </Button>

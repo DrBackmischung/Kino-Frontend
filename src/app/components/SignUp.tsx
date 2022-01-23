@@ -8,14 +8,14 @@ import {
   Button,
   CssBaseline,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Link,
   Grid,
   Box,
   Typography,
   Container,
 } from "@mui/material";
+import LoadingAnimation from "./layouts/LoadingAnimation";
+import { useForm, Controller } from "react-hook-form";
 
 function Copyright(props: any) {
   let navigate = useNavigate();
@@ -55,6 +55,16 @@ function SignUp(props: any) {
   const [number, setNumber] = useState("");
   const [plz, setPlz] = useState("");
   const [city, setCity] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState({ isError: false, msg: "No Error" });
+  const [agree, setAgree] = useState(false);
+
+    const {
+    setValue,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm();
 
   let navigate = useNavigate();
 
@@ -80,9 +90,9 @@ function SignUp(props: any) {
     return hashConfirmPassword;
   };
 
-  const handleSubmitClick = (e: any) => {
-    e.preventDefault();
-
+  const handleSubmitClick = async () => {
+    let redirectHome: boolean = false;
+    setIsLoading(true);
     let hashPassword = passwordMd5(password);
     let hashConfirmPassword = confirmPasswordMd5(confirmPassword);
 
@@ -103,28 +113,55 @@ function SignUp(props: any) {
           city: city,
         }),
       };
-      fetch(apiUrlAll, requestOptions)
-        .then((response) => {
-          if (!response.ok) {
-            return response.json();
-          } else if (response.ok) {
-            return response.json();
-          }
-        })
-        .then((data) => {
-          postMessage("Registration successfull! Redirecting to Homepage!");
-          if (data.id !== "undefined") {
-            setCookie("userId", data.id, 7);
-            setCookie("role", data.role.authorization, 7);
-          }
-          setUser();
-          redirectToHome();
-        });
+      const response = await fetch(apiUrlAll, requestOptions);
+      if (!response.ok) {
+        setError({ isError: true, msg: `Fehler: ${response.statusText}` });
+      } else if (response.ok) {
+        postMessage("Registration successfull! Redirecting to Homepage!");
+        const data: any = await response.json();
+        setError({ isError: false, msg: "No error" });
+        setCookie("userId", data.id, 7);
+        setCookie("role", data.role.authorization, 7);
+        setUser();
+        redirectHome = true;
+      }
+      setIsLoading(false);
+      if (redirectHome) {
+        redirectToHome();
+      }
     } else {
-      // TODO Error Handling
+      setError({
+        isError: true,
+        msg: "Fehler: Das eingegebene Passwort stimmt nicht mit dem zur Überprüfung überein!",
+      });
     }
+    setIsLoading(false);
   };
-  return (
+  if (isLoading)
+    return (
+      <Container
+        sx={{
+          bgcolor: "background.paper",
+          pt: 8,
+          pb: 6,
+          position: "relative",
+          marginTop: "15rem",
+        }}
+        maxWidth="md"
+      >
+        <LoadingAnimation />
+      </Container>
+    );
+
+    function checkboxHandler() {
+        setAgree(!agree);
+    }
+
+    function redirectToTerms() {
+        navigate("/TermsAndConditionsPage");
+    }
+
+    return (
     <Container
       component="main"
       maxWidth="xs"
@@ -154,78 +191,171 @@ function SignUp(props: any) {
           <Box component="form" noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField
+                <Controller
                   name="userName"
-                  required
-                  fullWidth
-                  id="userName"
-                  label="User Name"
-                  autoFocus
-                  onChange={(e: any) => setUserName(e.target.value)}
-                  value={userName}
+                  control={control}
+                  rules={{ required: true, minLength: 3 }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      required
+                      fullWidth
+                      label="Username"
+                      autoFocus
+                      onChange={(e: any) => {
+                        setUserName(e.target.value);
+                        setValue("userName", e.target.value);
+                        return;
+                      }}
+                      value={userName}
+                      error={errors.userName}
+                    />
+                  )}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
+                <Controller
                   name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                  onChange={(e: any) => setFirstName(e.target.value)}
-                  value={firstName}
+                  control={control}
+                  rules={{ required: true, minLength: 2 }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      autoComplete="given-name"
+                      required
+                      fullWidth
+                      label="First Name"
+                      autoFocus
+                      onChange={(e: any) => {
+                        setFirstName(e.target.value);
+                        setValue("firstName", e.target.value);
+                        return;
+                      }}
+                      value={firstName}
+                      error={errors.firstName}
+                    />
+                  )}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
+                <Controller
                   name="lastName"
-                  autoComplete="family-name"
-                  onChange={(e: any) => setLastName(e.target.value)}
-                  value={lastName}
+                  control={control}
+                  rules={{ required: true, minLength: 2 }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      required
+                      fullWidth
+                      label="Last Name"
+                      autoComplete="family-name"
+                      onChange={(e: any) => {
+                        setLastName(e.target.value);
+                        setValue("lastName", e.target.value);
+                        return;
+                      }}
+                      value={lastName}
+                      error={errors.lastName}
+                    />
+                  )}
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="E-mail Address"
+                <Controller
                   name="email"
-                  autoComplete="email"
-                  onChange={(e: any) => setEmail(e.target.value)}
-                  value={email}
+                  control={control}
+                  rules={{
+                    required: true,
+                    minLength: 2,
+                    // => RFC 2822 Email
+                    pattern:
+                      /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i, // eslint-disable-line no-useless-escape
+                  }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      required
+                      fullWidth
+                      label="E-mail Address"
+                      autoComplete="email"
+                      onChange={(e: any) => {
+                        setEmail(e.target.value);
+                        setValue("email", e.target.value);
+                        return;
+                      }}
+                      value={email}
+                      error={errors.email}
+                    />
+                  )}
                 />
+
                 <small>We won't share your e-mail with anyone else!</small>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
+                <Controller
                   name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  onChange={(e: any) => setPassword(e.target.value)}
-                  value={password}
+                  control={control}
+                  rules={{
+                    required: true,
+                    minLength: 7,
+                    maxLength: 32,
+                    pattern:
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
+                  }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      required
+                      fullWidth
+                      label="Password"
+                      type="password"
+                      autoComplete="new-password"
+                      onChange={(e: any) => {
+                        setPassword(e.target.value);
+                        setValue("password", e.target.value);
+                        return;
+                      }}
+                      value={password}
+                      error={errors.password}
+                    />
+                  )}
                 />
+
+                {errors.password && (
+                  <small>
+                    Bitte geben Sie eine gültiges Password ein! Anforderungen:
+                    mind. 7 Zeichen, ein Großbuchstabe, ein Kleinbuchstabe, eine
+                    Zahl und ein Sonderzeichen.
+                  </small>
+                )}
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
+                <Controller
                   name="confirmPassword"
-                  label="Confirm Password"
-                  type="password"
-                  id="confirmPassword"
-                  value={confirmPassword}
-                  onChange={(e: any) => setConfirmPassword(e.target.value)}
+                  control={control}
+                  rules={{
+                    required: true,
+                    minLength: 7,
+                    maxLength: 32,
+                    pattern:
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
+                  }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      required
+                      fullWidth
+                      label="Confirm Password"
+                      type="password"
+                      value={confirmPassword}
+                      onChange={(e: any) => {
+                        setConfirmPassword(e.target.value);
+                        setValue("confirmPassword", e.target.value);
+                        return;
+                      }}
+                      error={errors.confirmPassword}
+                    />
+                  )}
                 />
               </Grid>
               <Grid
@@ -237,64 +367,121 @@ function SignUp(props: any) {
                 pt={2.2}
               >
                 <Grid item xs={7.55}>
-                  <TextField
-                    required
-                    fullWidth
+                  <Controller
                     name="street"
-                    label="Street"
-                    id="street"
-                    value={street}
-                    onChange={(e: any) => setStreet(e.target.value)}
+                    control={control}
+                    rules={{ required: true, minLength: 3 }}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        required
+                        fullWidth
+                        label="Street"
+                        value={street}
+                        onChange={(e: any) => {
+                          setStreet(e.target.value);
+                          setValue("street", e.target.value);
+                          return;
+                        }}
+                        error={errors.street}
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid item xs={4}>
-                  <TextField
-                    required
-                    fullWidth
+                  <Controller
                     name="number"
-                    label="Number"
-                    id="number"
-                    value={number}
-                    onChange={(e: any) => setNumber(e.target.value)}
+                    control={control}
+                    rules={{ required: true, minLength: 1 }}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        required
+                        fullWidth
+                        label="Number"
+                        value={number}
+                        onChange={(e: any) => {
+                          setNumber(e.target.value);
+                          setValue("number", e.target.value);
+                          return;
+                        }}
+                        error={errors.number}
+                      />
+                    )}
                   />
                 </Grid>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
+                <Controller
                   name="PLZ"
-                  label="PLZ"
-                  id="plz"
-                  value={plz}
-                  onChange={(e: any) => setPlz(e.target.value)}
+                  control={control}
+                  rules={{
+                    required: true,
+                    minLength: 5,
+                    maxLength: 5,
+                  }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      required
+                      fullWidth
+                      label="PLZ"
+                      value={plz}
+                      onChange={(e: any) => {
+                        setPlz(e.target.value);
+                        setValue("PLZ", e.target.value);
+                        return;
+                      }}
+                      error={errors.PLZ}
+                    />
+                  )}
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
+                <Controller
                   name="city"
-                  label="City"
-                  id="city"
-                  value={city}
-                  onChange={(e: any) => setCity(e.target.value)}
-                />
+                  control={control}
+                  rules={{ required: true, minLength: 3 }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      required
+                      fullWidth
+                      label="City"
+                      value={city}
+                      onChange={(e: any) => {
+                        setCity(e.target.value);
+                        setValue("city", e.target.value);
+                        return;
+                      }}
+                      error={errors.city}
+                    />
+                  )}
+                />{" "}
+                {error.isError && (
+                  <small style={{ color: "red" }}>
+                    Ein Fehler ist aufgetreten. Bitte überprüfen Sie ihre
+                    Eingaben. Bei technischen Problemen wenden Sie sich bitte an
+                    den Admin dieser Website. {error.msg}
+                  </small>
+                )}
+              </Grid>
+
+              <Grid item xs={12}>
+                  <input type="checkbox" value="allowExtraEmails" color="primary" />
+                  <label> I want to receive inspiration, marketing promotions and updates via e-mail.</label>
               </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via e-mail."
-                />
+                <input type="checkbox" id="agree" onChange={checkboxHandler} />
+                  <label htmlFor="agree"> I agree to </label><Link onClick={redirectToTerms}>terms and conditions</Link><label>.</label>
               </Grid>
             </Grid>
             <Button
+              disabled={!agree}
               type="submit"
               fullWidth
               variant="contained"
-              onClick={handleSubmitClick}
+              onClick={handleSubmit(handleSubmitClick)}
               sx={{ mt: 3, mb: 2 }}
             >
               Sign Up
