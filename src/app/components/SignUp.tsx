@@ -121,6 +121,7 @@ function SignUp(props: any) {
         const data: any = await response.json();
         setError({ isError: false, msg: "No error" });
         setCookie("userId", data.id, 7);
+        setCookie("role", data.role.authorization, 7);
         setUser();
         redirectHome = true;
       }

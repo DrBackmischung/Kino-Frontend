@@ -15,6 +15,7 @@ import DetailsPage from "../../pages/DetailsPage";
 import SignInPage from "../../pages/SignInPage";
 import UserRegistrationPage from "../../pages/UserRegistrationPage";
 import Impressum from "../../pages/Impressum";
+import AdminPage from "../../pages/AdminPage";
 import { getCookie, setCookie } from "../CookieHandler";
 import { useQuery } from "react-query";
 import APIUrl from "../../config/APIUrl";
@@ -123,6 +124,7 @@ function MenuBar() {
                         variant="outlined"
                         onClick={(e) => {
                           setCookie("userId", "null", 7);
+                          setCookie("role", "null", 7);
                           setCurrentUser({
                             userId: "null",
                           });
@@ -197,6 +199,7 @@ function MenuBar() {
           element={<UserRegistrationPage setUser={setUser} />}
         />
         <Route path="/Impressum" element={<Impressum />} />
+        <Route path="/Admin" element={<AdminPage userData={data} />} />
       </Routes>
       <CookiesNotification/>
     </BrowserRouter>
