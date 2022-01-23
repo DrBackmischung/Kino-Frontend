@@ -13,6 +13,10 @@ import ManageAdminShow from "../components/ManageAdminShow";
 import ManageAdminRoom from "../components/ManageAdminRoom";
 import ManageAdminNews from "../components/ManageAdminNews";
 import ManageAdminEvent from "../components/ManageAdminEvent";
+import APIUrl from "../config/APIUrl";
+import { useQuery } from "react-query";
+import ErrorPage from "./ErrorPage";
+import LoadingAnimation from "../components/layouts/LoadingAnimation";
 
 const theme = createTheme(palette);
 
@@ -21,6 +25,25 @@ function AdminPage(props: any) {
   const {
     userData
   } = props;
+  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  function isAdmin() {
+    if(userData === undefined) {
+      return false;
+    } else {
+      const userID = userData.id;
+
+      const apiUrlGetRole = `${APIUrl.apiUrl}/role/user/`+userID;
+      
+      const {isLoading: isLoadingRole, error: errorRole, data: dataRole} : any = useQuery("Movies", () =>
+        fetch(apiUrlGetRole).then((res) => res.json())
+      );
+      setError(errorRole);
+      setIsLoading(isLoadingRole);
+      return dataRole === "ADMIN";
+    }
+  }
   
   const [openAddMovie, setOpenAddMovie] = useState(false);
   const [openUpdateMovie, setUpdateMovie] = useState(false);
@@ -112,199 +135,205 @@ function AdminPage(props: any) {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <main>
-        <Container className="wholeContainer" sx={{
-          bgcolor: "background.paper",
-          pt: 8,
-          pb: 6,
-          position: "relative",
-          marginTop: theme.spacing(12),
-        }}>
-          <Box
-            sx={{
-                marginTop: 8,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-            }}
-          >
+        {error ? (
+          <ErrorPage />
+        ) : isLoading ? (
+          <LoadingAnimation />
+        ) : isAdmin() ? (
+          <Container className="wholeContainer" sx={{
+            bgcolor: "background.paper",
+            pt: 8,
+            pb: 6,
+            position: "relative",
+            marginTop: theme.spacing(12),
+          }}>
             <Box
               sx={{
                   marginTop: 8,
                   display: 'flex',
-                  flexDirection: 'row',
+                  flexDirection: 'column',
                   alignItems: 'center',
               }}
             >
-              <Button
-                key={"addMovie"}
-                onClick={() => {
-                  handleAddMovieClickOpen();
+              <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
                 }}
-                variant="contained"
               >
-                Add Movie
-              </Button>
-              <Button
-                key={"updateMovie"}
-                onClick={() => {
-                  handleUpdateMovieClickOpen();
+                <Button
+                  key={"addMovie"}
+                  onClick={() => {
+                    handleAddMovieClickOpen();
+                  }}
+                  variant="contained"
+                >
+                  Add Movie
+                </Button>
+                <Button
+                  key={"updateMovie"}
+                  onClick={() => {
+                    handleUpdateMovieClickOpen();
+                  }}
+                  variant="contained"
+                >
+                  Update Movie
+                </Button>
+                <Button
+                  key={"deleteMovie"}
+                  onClick={() => {
+                    handleDeleteMovieClickOpen();
+                  }}
+                  variant="contained"
+                >
+                  Delete Movie
+                </Button>
+              </Box>
+              <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
                 }}
-                variant="contained"
               >
-                Update Movie
-              </Button>
-              <Button
-                key={"deleteMovie"}
-                onClick={() => {
-                  handleDeleteMovieClickOpen();
+                <Button
+                  key={"addShow"}
+                  onClick={() => {
+                    handleAddShowClickOpen();
+                  }}
+                  variant="contained"
+                >
+                  Add Show
+                </Button>
+                <Button
+                  key={"deleteMovie"}
+                  onClick={() => {
+                    handleDeleteShowClickOpen();
+                  }}
+                  variant="contained"
+                >
+                  Delete Show
+                </Button>
+              </Box>
+              <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
                 }}
-                variant="contained"
               >
-                Delete Movie
-              </Button>
+                <Button
+                  key={"createRoom"}
+                  onClick={() => {
+                    handleRoomClickOpen();
+                  }}
+                  variant="contained"
+                >
+                  Add Seatplan
+                </Button>
+              </Box>
+              <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                }}
+              >
+                <Button
+                  key={"addNews"}
+                  onClick={() => {
+                    handleAddNewsClickOpen();
+                  }}
+                  variant="contained"
+                >
+                  Add News
+                </Button>
+                <Button
+                  key={"deleteNews"}
+                  onClick={() => {
+                    handleDeleteNewsClickOpen();
+                  }}
+                  variant="contained"
+                >
+                  Delete News
+                </Button>
+              </Box>
+              <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                }}
+              >
+                <Button
+                  key={"addEvent"}
+                  onClick={() => {
+                    handleAddEventClickOpen();
+                  }}
+                  variant="contained"
+                >
+                  Add Event
+                </Button>
+                <Button
+                  key={"deleteEvent"}
+                  onClick={() => {
+                    handleDeleteEventClickOpen();
+                  }}
+                  variant="contained"
+                >
+                  Delete Event
+                </Button>
+              </Box>
             </Box>
-            <Box
-              sx={{
-                  marginTop: 8,
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-              }}
-            >
-              <Button
-                key={"addShow"}
-                onClick={() => {
-                  handleAddShowClickOpen();
-                }}
-                variant="contained"
-              >
-                Add Show
-              </Button>
-              <Button
-                key={"deleteMovie"}
-                onClick={() => {
-                  handleDeleteShowClickOpen();
-                }}
-                variant="contained"
-              >
-                Delete Show
-              </Button>
-            </Box>
-            <Box
-              sx={{
-                  marginTop: 8,
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-              }}
-            >
-              <Button
-                key={"createRoom"}
-                onClick={() => {
-                  handleRoomClickOpen();
-                }}
-                variant="contained"
-              >
-                Add Seatplan
-              </Button>
-            </Box>
-            <Box
-              sx={{
-                  marginTop: 8,
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-              }}
-            >
-              <Button
-                key={"addNews"}
-                onClick={() => {
-                  handleAddNewsClickOpen();
-                }}
-                variant="contained"
-              >
-                Add News
-              </Button>
-              <Button
-                key={"deleteNews"}
-                onClick={() => {
-                  handleDeleteNewsClickOpen();
-                }}
-                variant="contained"
-              >
-                Delete News
-              </Button>
-            </Box>
-            <Box
-              sx={{
-                  marginTop: 8,
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-              }}
-            >
-              <Button
-                key={"addEvent"}
-                onClick={() => {
-                  handleAddEventClickOpen();
-                }}
-                variant="contained"
-              >
-                Add Event
-              </Button>
-              <Button
-                key={"deleteEvent"}
-                onClick={() => {
-                  handleDeleteEventClickOpen();
-                }}
-                variant="contained"
-              >
-                Delete Event
-              </Button>
-            </Box>
-          </Box>
-          <ManageAdminMovie
-            isOpenAdd={openAddMovie}
-            openAdd={handleAddMovieClickOpen}
-            closeAdd={handleAddMovieClose}
-            isOpenUpdate={openUpdateMovie}
-            openUpdate={handleUpdateMovieClickOpen}
-            closeUpdate={handleUpdateMovieClose}
-            isOpenDelete={openDeleteMovie}
-            openDelete={handleDeleteMovieClickOpen}
-            closeDelete={handleDeleteMovieClose}
-          />
-          <ManageAdminShow 
-            isOpenAdd={openAddShow}
-            openAdd={handleAddShowClickOpen}
-            closeAdd={handleAddShowClose}
-            isOpenDelete={openDeleteShow}
-            openDelete={handleDeleteShowClickOpen}
-            closeDelete={handleDeleteShowClose}
-          />
-          <ManageAdminRoom
-            isOpen={openRoom}
-            open={handleRoomClickOpen}
-            close={handleRoomClose}
-          />
-          <ManageAdminNews
-            userData={userData}
-            isOpenAdd={openAddNews}
-            openAdd={handleAddNewsClickOpen}
-            closeAdd={handleAddNewsClose}
-            isOpenDelete={openDeleteNews}
-            openDelete={handleDeleteNewsClickOpen}
-            closeDelete={handleDeleteNewsClose}
-          />
-          <ManageAdminEvent
-            isOpenAdd={openAddEvent}
-            openAdd={handleAddEventClickOpen}
-            closeAdd={handleAddEventClose}
-            isOpenDelete={openDeleteEvent}
-            openDelete={handleDeleteEventClickOpen}
-            closeDelete={handleDeleteEventClose}
-          />
-        </Container>
+            <ManageAdminMovie
+              isOpenAdd={openAddMovie}
+              openAdd={handleAddMovieClickOpen}
+              closeAdd={handleAddMovieClose}
+              isOpenUpdate={openUpdateMovie}
+              openUpdate={handleUpdateMovieClickOpen}
+              closeUpdate={handleUpdateMovieClose}
+              isOpenDelete={openDeleteMovie}
+              openDelete={handleDeleteMovieClickOpen}
+              closeDelete={handleDeleteMovieClose}
+            />
+            <ManageAdminShow 
+              isOpenAdd={openAddShow}
+              openAdd={handleAddShowClickOpen}
+              closeAdd={handleAddShowClose}
+              isOpenDelete={openDeleteShow}
+              openDelete={handleDeleteShowClickOpen}
+              closeDelete={handleDeleteShowClose}
+            />
+            <ManageAdminRoom
+              isOpen={openRoom}
+              open={handleRoomClickOpen}
+              close={handleRoomClose}
+            />
+            <ManageAdminNews
+              userData={userData}
+              isOpenAdd={openAddNews}
+              openAdd={handleAddNewsClickOpen}
+              closeAdd={handleAddNewsClose}
+              isOpenDelete={openDeleteNews}
+              openDelete={handleDeleteNewsClickOpen}
+              closeDelete={handleDeleteNewsClose}
+            />
+            <ManageAdminEvent
+              isOpenAdd={openAddEvent}
+              openAdd={handleAddEventClickOpen}
+              closeAdd={handleAddEventClose}
+              isOpenDelete={openDeleteEvent}
+              openDelete={handleDeleteEventClickOpen}
+              closeDelete={handleDeleteEventClose}
+            />
+          </Container>
+        ) : <ErrorPage />}
       </main>
     </ThemeProvider>
   );
