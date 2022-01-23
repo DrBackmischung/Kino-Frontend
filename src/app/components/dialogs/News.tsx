@@ -55,7 +55,6 @@ export function AddNewsDialog(props: any) {
             }),
         };
         fetch(apiUrlAddNews, requestOptions).then((response) => {
-            console.log(response);
             if (!response.ok) {
                 setError(true);
                 setIsLoading(false);
@@ -190,16 +189,18 @@ export function DeleteNewsDialog(props: any) {
       open,
       cancel
     } = props;
+    const [error, setError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const apiUrlGetAllMovies = `${APIUrl.apiUrl}/news/getAll`;
   
-    const {isLoading, error, data} : any = useQuery("Movies", () =>
+    const {isLoading: isLoadingNews, error: errorNews, data: dataNews} : any = useQuery("News", () =>
       fetch(apiUrlGetAllMovies).then((res) => res.json())
     );
   
     const deleteNews = () => {
 
-        // setIsLoading(true);
+        setIsLoading(true);
         const apiUrlAddMovie = `${APIUrl.apiUrl}/news/${id}`;
         // eslint-disable-next-line
         const requestOptions = {
@@ -207,12 +208,12 @@ export function DeleteNewsDialog(props: any) {
         };
         fetch(apiUrlAddMovie, requestOptions).then((response) => {
             if (!response.ok) {
-                // setError(true);
-                // setIsLoading(false);
+                setError(true);
+                setIsLoading(false);
                 return;
             }
             return response.json().then((data) => {
-                // setIsLoading(false);
+                setIsLoading(false);
             });
         });
         cancel();
@@ -232,9 +233,9 @@ export function DeleteNewsDialog(props: any) {
           maxWidth="sm"
         >
           <DialogTitle id="scroll-dialog-title">News</DialogTitle>
-          {error ? (
+          {error || errorNews ? (
             <ErrorPage />
-          ) : isLoading ? (
+          ) : isLoading || isLoadingNews ? (
             <LoadingAnimation />
           ) : (
             <DialogContent dividers={true}>
@@ -260,7 +261,7 @@ export function DeleteNewsDialog(props: any) {
                                 <Box component="form" noValidate sx={{mt: 3}}>
                                     <Grid container spacing={2}>
                                         <List>
-                                            {data?.map( 
+                                            {dataNews?.map( 
                                                 (news: any) => 
                                                     <ListItem>
                                                         <ListItemText

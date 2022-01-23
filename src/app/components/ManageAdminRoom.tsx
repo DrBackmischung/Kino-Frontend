@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AddCinemaRoomDialog } from "./dialogs/CinemaRoom";
 

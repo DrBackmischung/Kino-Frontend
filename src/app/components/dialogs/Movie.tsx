@@ -36,7 +36,7 @@ export function AddMovieDialog(props: any) {
     const [pictureLink, setPictureLink ] = useState("");
     const [trailerLink, setTrailerLink ] = useState("");
     const [genre, setGenre ] = useState("");
-    const [FSK, setFSK ] = useState("");
+    const [FSK, setFSK ] = useState(0);
     const {
       open,
       cancel
@@ -253,6 +253,7 @@ export function AddMovieDialog(props: any) {
                                             <TextField
                                                 required
                                                 fullWidth
+                                                type="number"
                                                 name="FSK"
                                                 label="FSK"
                                                 id="FSK"
@@ -295,16 +296,18 @@ export function UpdateMovieDialog(props: any) {
       open,
       cancel
     } = props;
+    const [error, setError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const apiUrlGetAllMovies = `${APIUrl.apiUrl}/movie/getAll`;
   
-    const {isLoading, error, data} : any = useQuery("Movies", () =>
+    const {isLoading: isLoadingMovie, error: errorMovie, data: dataMovie} : any = useQuery("Movies", () =>
       fetch(apiUrlGetAllMovies).then((res) => res.json())
     );
   
     const updateMovie = () => {
 
-        // setIsLoading(true);
+        setIsLoading(true);
         const apiUrlAddMovie = `${APIUrl.apiUrl}/movie/update/${id}`;
         // eslint-disable-next-line
         const requestOptions = {
@@ -327,12 +330,12 @@ export function UpdateMovieDialog(props: any) {
         };
         fetch(apiUrlAddMovie, requestOptions).then((response) => {
             if (!response.ok) {
-                // setError(true);
-                // setIsLoading(false);
+                setError(true);
+                setIsLoading(false);
                 return;
             }
             return response.json().then((data) => {
-                // setIsLoading(false);
+                setIsLoading(false);
             });
         });
         cancel();
@@ -352,9 +355,9 @@ export function UpdateMovieDialog(props: any) {
           maxWidth="sm"
         >
           <DialogTitle id="scroll-dialog-title">Movie</DialogTitle>
-          {error ? (
+          {error || errorMovie ? (
             <ErrorPage />
-          ) : isLoading ? (
+          ) : isLoading || isLoadingMovie ? (
             <LoadingAnimation />
           ) : (
             <DialogContent dividers={true}>
@@ -381,7 +384,7 @@ export function UpdateMovieDialog(props: any) {
                                 <Box component="form" noValidate sx={{mt: 3}}>
                                     <Grid container spacing={2}>
                                         <List>
-                                            {data?.map( 
+                                            {dataMovie?.map( 
                                                 (movie: any) => 
                                                     <ListItem>
                                                         <ListItemText
@@ -566,16 +569,18 @@ export function DeleteMovieDialog(props: any) {
       open,
       cancel
     } = props;
+    const [error, setError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const apiUrlGetAllMovies = `${APIUrl.apiUrl}/movie/getAll`;
   
-    const {isLoading, error, data} : any = useQuery("Movies", () =>
+    const {isLoading: isLoadingMovie, error: errorMovie, data: dataMovie} : any = useQuery("Movies", () =>
       fetch(apiUrlGetAllMovies).then((res) => res.json())
     );
   
     const deleteMovie = () => {
 
-        // setIsLoading(true);
+        setIsLoading(true);
         const apiUrlAddMovie = `${APIUrl.apiUrl}/movie/${id}`;
         // eslint-disable-next-line
         const requestOptions = {
@@ -583,12 +588,12 @@ export function DeleteMovieDialog(props: any) {
         };
         fetch(apiUrlAddMovie, requestOptions).then((response) => {
             if (!response.ok) {
-                // setError(true);
-                // setIsLoading(false);
+                setError(true);
+                setIsLoading(false);
                 return;
             }
             return response.json().then((data) => {
-                // setIsLoading(false);
+                setIsLoading(false);
             });
         });
         cancel();
@@ -608,9 +613,9 @@ export function DeleteMovieDialog(props: any) {
           maxWidth="sm"
         >
           <DialogTitle id="scroll-dialog-title">Movie</DialogTitle>
-          {error ? (
+          {error || errorMovie ? (
             <ErrorPage />
-          ) : isLoading ? (
+          ) : isLoading || isLoadingMovie ? (
             <LoadingAnimation />
           ) : (
             <DialogContent dividers={true}>
@@ -637,7 +642,7 @@ export function DeleteMovieDialog(props: any) {
                                 <Box component="form" noValidate sx={{mt: 3}}>
                                     <Grid container spacing={2}>
                                         <List>
-                                            {data?.map( 
+                                            {dataMovie?.map( 
                                                 (movie: any) => 
                                                     <ListItem>
                                                         <ListItemText

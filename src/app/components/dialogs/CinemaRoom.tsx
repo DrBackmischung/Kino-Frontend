@@ -15,6 +15,9 @@ import {
     FormControlLabel,
     FormGroup,
     Checkbox,
+    List,
+    ListItem,
+    ListItemText
 } from "@mui/material";
 import React, { useState } from "react";
 import ErrorPage from "../../pages/ErrorPage";
@@ -36,11 +39,13 @@ export function AddCinemaRoomDialog(props: any) {
       open,
       cancel,
     } = props;
+    const [error, setError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
 
     const apiUrlGetAllCinemas = `${APIUrl.apiUrl}/cinema/getAll`;
   
-    const {isLoading, error} : any = useQuery("Movies", () =>
+    const {isLoading: isLoadingCinema, error: errorCinema, data: dataCinema} : any = useQuery("Cinemas", () =>
       fetch(apiUrlGetAllCinemas).then((res) => res.json())
     );
 
@@ -60,7 +65,7 @@ export function AddCinemaRoomDialog(props: any) {
     }
   
     const addRoom = () => {
-        //setIsLoading(true);
+        setIsLoading(true);
         const apiURLRoom = `${APIUrl.apiUrl}/cinemaRoom/add`;
         const requestOptions = {
             method: "PUT",
@@ -74,13 +79,13 @@ export function AddCinemaRoomDialog(props: any) {
         };
         fetch(apiURLRoom, requestOptions).then((response) => {
             if (!response.ok) {
-                //setError(true);
-                //setIsLoading(false);
+                setError(true);
+                setIsLoading(false);
                 return;
             }
             return response.json().then((data) => {
                 setCinemaRoomID(data.id);
-                //setIsLoading(false);
+                setIsLoading(false);
             });
         });
 
@@ -102,23 +107,22 @@ export function AddCinemaRoomDialog(props: any) {
           maxWidth="sm"
         >
           <DialogTitle id="scroll-dialog-title">Cinema Room</DialogTitle>
-          {error ? (
+          {error || errorCinema ? (
             <ErrorPage />
-          ) : isLoading ? (
+          ) : isLoading || isLoadingCinema ? (
             <LoadingAnimation />
           ) : (
             <DialogContent dividers={true}>
                 <DialogContentText id="scroll-dialog-description">
                     <Container component="main" maxWidth="xs" sx={{
                         bgcolor: "background.paper",
-                        pt: 8,
-                        pb: 6,
+                        pt: 4,
+                        pb: 4,
                         position: "relative",
                     }}>
                         <CssBaseline/>
                         <Box
                             sx={{
-                                marginTop: 8,
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
@@ -130,6 +134,21 @@ export function AddCinemaRoomDialog(props: any) {
                             <form noValidate>
                                 <Box component="form" noValidate sx={{mt: 3}}>
                                     <Grid container spacing={2}>
+                                        <Typography component="h1" variant="h5">
+                                            Cinema list
+                                        </Typography>
+                                        <List>
+                                            {dataCinema?.map( 
+                                                (cinema: any) => 
+                                                    <ListItem>
+                                                        <ListItemText
+                                                            primary={cinema.name}
+                                                            secondary={cinema.id}
+                                                        />
+                                                    </ListItem>
+                                                )    
+                                            }
+                                        </List>
                                         <Grid item xs={12}>
                                             <TextField
                                                 name="story"

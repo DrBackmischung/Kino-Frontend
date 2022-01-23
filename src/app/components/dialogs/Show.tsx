@@ -35,21 +35,31 @@ export function AddShowDialog(props: any) {
       open,
       cancel
     } = props;
+    const [error, setError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const apiUrlGetAllShow = `${APIUrl.apiUrl}/cinema/getAll`;
+    const apiUrlGetAllCinemas = `${APIUrl.apiUrl}/cinema/getAll`;
   
-    const {isLoading, error, data} : any = useQuery("Cinemas", () =>
-      fetch(apiUrlGetAllShow).then((res) => res.json())
+    const {isLoading: isLoadingCinema, error: errorCinema, data: dataCinema} : any = useQuery("Cinemas", () =>
+      fetch(apiUrlGetAllCinemas).then((res) => res.json())
     );
 
-    const apiUrlGetAllCinema = `${APIUrl.apiUrl}/cinemaRoom/getAll`;
+    const apiUrlGetAllCinemaRooms = `${APIUrl.apiUrl}/cinemaRoom/getAll`;
   
-    const {isLoading2, error2, data2} : any = useQuery("Cinema Rooms", () =>
-      fetch(apiUrlGetAllCinema).then((res) => res.json())
+    const {isLoading: isLoadingCinemaRoom, error: errorCinemaRoom, data: dataCinemaRoom} = useQuery("CinemaRooms", () =>
+      fetch(apiUrlGetAllCinemaRooms).then((res) => res.json())
+    );
+
+    const apiUrlGetAllMovies = `${APIUrl.apiUrl}/movie/getAll`;
+  
+    const {isLoading: isLoadingMovie, error: errorMovie, data: dataMovie} = useQuery("Movies", () =>
+      fetch(apiUrlGetAllMovies).then((res) => res.json())
     );
   
     const addShow = () => {
-        // setIsLoading(true);
+        setStart(start + ":00");
+        setEnd(end + ":00");
+        setIsLoading(true);
         const apiUrlAddShow = `${APIUrl.apiUrl}/show/add`;
         // eslint-disable-next-line
         const requestOptions = {
@@ -57,8 +67,8 @@ export function AddShowDialog(props: any) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 date,
-                start,
-                end,
+                start: start + ":00",
+                end: end + ":00",
                 movieID,
                 cinemaID,
                 cinemaRoomID,
@@ -66,12 +76,12 @@ export function AddShowDialog(props: any) {
         };
         fetch(apiUrlAddShow, requestOptions).then((response) => {
             if (!response.ok) {
-        //        setError(true);
-        //        setIsLoading(false);
+                setError(true);
+                setIsLoading(false);
                 return;
             }
             return response.json().then((data) => {
-        //        setIsLoading(false);
+                setIsLoading(false);
             });
         });
         cancel();
@@ -91,23 +101,22 @@ export function AddShowDialog(props: any) {
           maxWidth="sm"
         >
           <DialogTitle id="scroll-dialog-title">Show</DialogTitle>
-          {error || error2 ? (
+          {error || errorCinema || errorCinemaRoom || errorMovie ? (
             <ErrorPage />
-          ) : isLoading || isLoading2 ? (
+          ) : isLoading || isLoadingCinema || isLoadingCinemaRoom || isLoadingMovie ? (
             <LoadingAnimation />
           ) : (
             <DialogContent dividers={true}>
                 <DialogContentText id="scroll-dialog-description">
                     <Container component="main" maxWidth="xs" sx={{
                         bgcolor: "background.paper",
-                        pt: 8,
-                        pb: 6,
+                        pt: 4,
+                        pb: 4,
                         position: "relative",
                     }}>
                         <CssBaseline/>
                         <Box
                             sx={{
-                                marginTop: 8,
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
@@ -120,14 +129,29 @@ export function AddShowDialog(props: any) {
                                 <Box component="form" noValidate sx={{mt: 3}}>
                                     <Grid container spacing={2}>
                                         <Typography component="h1" variant="h5">
+                                            Movie list
+                                        </Typography>
+                                        <List>
+                                            {dataMovie?.map( 
+                                                (movie: any) => 
+                                                    <ListItem>
+                                                        <ListItemText
+                                                            primary={movie.title}
+                                                            secondary={movie.id}
+                                                        />
+                                                    </ListItem>
+                                                )    
+                                            }
+                                        </List>
+                                        <Typography component="h1" variant="h5">
                                             Cinema list
                                         </Typography>
                                         <List>
-                                            {data?.map( 
+                                            {dataCinema?.map( 
                                                 (cinema: any) => 
                                                     <ListItem>
                                                         <ListItemText
-                                                            primary={cinema.title}
+                                                            primary={cinema.name}
                                                             secondary={cinema.id}
                                                         />
                                                     </ListItem>
@@ -138,11 +162,11 @@ export function AddShowDialog(props: any) {
                                             CinemaRoom list
                                         </Typography>
                                         <List>
-                                            {data2?.map( 
+                                            {dataCinemaRoom?.map( 
                                                 (cr: any) => 
                                                     <ListItem>
                                                         <ListItemText
-                                                            primary={cr.title}
+                                                            primary={cr.roomName}
                                                             secondary={cr.id}
                                                         />
                                                     </ListItem>
@@ -247,16 +271,18 @@ export function DeleteShowDialog(props: any) {
       open,
       cancel
     } = props;
+    const [error, setError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const apiUrlGetAllShows = `${APIUrl.apiUrl}/show/getAll`;
   
-    const {isLoading, error, data} : any = useQuery("Movies", () =>
+    const {isLoading: isLoadingShow, error: errorShow, data: dataShow} : any = useQuery("Shows", () =>
       fetch(apiUrlGetAllShows).then((res) => res.json())
     );
   
     const deleteShow = () => {
 
-        // setIsLoading(true);
+        setIsLoading(true);
         const apiUrlDeleteShow = `${APIUrl.apiUrl}/show/${id}`;
         // eslint-disable-next-line
         const requestOptions = {
@@ -264,18 +290,38 @@ export function DeleteShowDialog(props: any) {
         };
         fetch(apiUrlDeleteShow, requestOptions).then((response) => {
             if (!response.ok) {
-                // setError(true);
-                // setIsLoading(false);
+                setError(true);
+                setIsLoading(false);
                 return;
             }
             return response.json().then((data) => {
-                // setIsLoading(false);
+                setIsLoading(false);
             });
         });
         cancel();
     };
   
     const theme = createTheme(palette);
+
+    function isFuture(date: String) {
+        const now = new Date();
+        const today = now.toISOString().substring(0, 10);
+        const todayYear = today.substring(0, 4);
+        const todayMonth = today.substring(5, 7);
+        const todayDay = today.substring(8, 10);
+        const showYear = date.substring(0, 4);
+        const showMonth = date.substring(5, 7);
+        const showDay = date.substring(8, 10);
+        if(todayYear < showYear) {
+            return true;
+        } else if(todayYear === showYear && todayMonth < showMonth) {
+            return true;
+        } else if(todayYear === showYear && todayMonth === showMonth && todayDay <= showDay) {
+            return true;
+        } else {
+            return false;
+        }
+    }
   
     return (
       <ThemeProvider theme={theme}>
@@ -289,23 +335,22 @@ export function DeleteShowDialog(props: any) {
           maxWidth="sm"
         >
           <DialogTitle id="scroll-dialog-title">Show</DialogTitle>
-          {error ? (
+          {error || errorShow ? (
             <ErrorPage />
-          ) : isLoading ? (
+          ) : isLoading || isLoadingShow ? (
             <LoadingAnimation />
           ) : (
             <DialogContent dividers={true}>
                 <DialogContentText id="scroll-dialog-description">
                     <Container component="main" maxWidth="xs" sx={{
                         bgcolor: "background.paper",
-                        pt: 8,
-                        pb: 6,
+                        pt: 4,
+                        pb: 4,
                         position: "relative",
                     }}>
                         <CssBaseline/>
                         <Box
                             sx={{
-                                marginTop: 8,
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
@@ -318,16 +363,16 @@ export function DeleteShowDialog(props: any) {
                                 <Box component="form" noValidate sx={{mt: 3}}>
                                     <Grid container spacing={2}>
                                         <List>
-                                            {data?.map( 
-                                                (movie: any) => 
+                                            {dataShow?.map( 
+                                                (show: any) => (isFuture(show.showDate) ?
                                                     <ListItem>
                                                         <ListItemText
-                                                            primary={movie.title}
-                                                            secondary={movie.id}
+                                                            primary={show.movie.title + " " + show.showDate + " "+ show.startTime}
+                                                            secondary={show.id}
                                                         />
                                                     </ListItem>
-                                                )    
-                                            }
+                                                : null )
+                                            )}
                                         </List>
                                         <Grid item xs={12}>
                                             <TextField

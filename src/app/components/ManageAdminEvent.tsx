@@ -1,7 +1,5 @@
-/* eslint-disable */
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
 import { AddEventDialog, DeleteEventDialog } from "./dialogs/Event";
 
 const theme = createTheme();

@@ -215,16 +215,18 @@ export function DeleteEventDialog(props: any) {
       open,
       cancel
     } = props;
+    const [error, setError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const apiUrlGetAllEvents = `${APIUrl.apiUrl}/event/getAll`;
   
-    const {isLoading, error, data} : any = useQuery("Movies", () =>
+    const {isLoading: isLoadingEvent, error: errorEvent, data: dataEvent} : any = useQuery("Movies", () =>
       fetch(apiUrlGetAllEvents).then((res) => res.json())
     );
   
     const deleteEvents = () => {
 
-        // setIsLoading(true);
+        setIsLoading(true);
         const apiUrlAddMovie = `${APIUrl.apiUrl}/news/${id}`;
         // eslint-disable-next-line
         const requestOptions = {
@@ -232,12 +234,12 @@ export function DeleteEventDialog(props: any) {
         };
         fetch(apiUrlAddMovie, requestOptions).then((response) => {
             if (!response.ok) {
-                // setError(true);
-                // setIsLoading(false);
+                setError(true);
+                setIsLoading(false);
                 return;
             }
             return response.json().then((data) => {
-                // setIsLoading(false);
+                setIsLoading(false);
             });
         });
         cancel();
@@ -257,9 +259,9 @@ export function DeleteEventDialog(props: any) {
           maxWidth="sm"
         >
           <DialogTitle id="scroll-dialog-title">Event</DialogTitle>
-          {error ? (
+          {error || errorEvent ? (
             <ErrorPage />
-          ) : isLoading ? (
+          ) : isLoading || isLoadingEvent ? (
             <LoadingAnimation />
           ) : (
             <DialogContent dividers={true}>
@@ -285,7 +287,7 @@ export function DeleteEventDialog(props: any) {
                                 <Box component="form" noValidate sx={{mt: 3}}>
                                     <Grid container spacing={2}>
                                         <List>
-                                            {data?.map( 
+                                            {dataEvent?.map( 
                                                 (event: any) => 
                                                     <ListItem>
                                                         <ListItemText

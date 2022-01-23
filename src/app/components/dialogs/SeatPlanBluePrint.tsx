@@ -23,11 +23,13 @@ import APIUrl from "../../config/APIUrl";
 import { createTheme } from "@mui/material/styles";
 import palette from "../../config/Colours";
 import PersonIcon from '@mui/icons-material/Person';
+import WeekendIcon from '@mui/icons-material/Weekend';
+import AccessibleIcon from '@mui/icons-material/Accessible';
 import "./SeatPlanBluePrint.css";
-import { grey, blue, orange } from '@mui/material/colors';
+import { grey, blue, orange, green, purple } from '@mui/material/colors';
 
 export function SeatPlanPainter(props: any) {
-    const [numberOfSeats, setNumberOfSeats ] = useState(0);
+    const [numberOfSeats, setNumberOfSeats ] = useState(10);
     const [rowToAdd, setRowToAdd ] = useState(1);
     const [seatsToRender, setSeatsToRender] = useState<any[]>([]);
     const [openSeatTypeDialog, setOpenSeatTypeDialog] = useState(false);
@@ -68,6 +70,8 @@ export function SeatPlanPainter(props: any) {
         const apiURLSeats = `${APIUrl.apiUrl}/seatsBlueprint/massAdd`;
         // eslint-disable-next-line
         const seatData = convertRenderToPlainList(seatsToRender);
+        console.log(seatsToRender);
+        console.log(seatData);
         const requestOptions = {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -151,6 +155,10 @@ export function SeatPlanPainter(props: any) {
                 return blue;
             case 2:
                 return orange;
+            case 3:
+                return green;
+            case 4:
+                return purple;
           }
     }
   
@@ -196,19 +204,6 @@ export function SeatPlanPainter(props: any) {
                             <form noValidate>
                                 <Box component="form" noValidate sx={{mt: 3}}>
                                     <Grid container spacing={1}>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                name="numberOfSeats"
-                                                required
-                                                type="number"
-                                                fullWidth
-                                                id="numberOfSeats"
-                                                label="Number of Seats"
-                                                autoFocus
-                                                onChange={(e: any) => setNumberOfSeats(e.target.value)}
-                                                value={numberOfSeats}
-                                            />
-                                        </Grid>
                                         <Box className="cinemaBox">
                                         {seatsToRender?.map((row: any, index) => (
                                             <div key={index} className="rowContainer" >
@@ -216,8 +211,14 @@ export function SeatPlanPainter(props: any) {
                                                 <Button
                                                     variant="outlined"
                                                     onClick={() => handleOpenSeatTypeDialog(seat.line, seat.place)}
-                                                    startIcon={<PersonIcon sx={{ color: convertType(seat.type)[500] }} />}
-                                                ></Button>
+                                                >
+                                                    {
+                                                    (seat.type === 3 ?
+                                                    <AccessibleIcon sx={{ color: convertType(seat.type)[500] }}/>
+                                                    : (seat.type === 4) ?
+                                                    <WeekendIcon sx={{ color: convertType(seat.type)[500] }}/>
+                                                    : <PersonIcon sx={{ color: convertType(seat.type)[500] }}/>)}
+                                                </Button>
                                             ))}
                                             </div>
                                         ))}
@@ -235,6 +236,8 @@ export function SeatPlanPainter(props: any) {
                                             cancel={handleCloseRowTypeDialog}
                                             changeRowType={setRowType}
                                             addRow={addRow}
+                                            row={numberOfSeats}
+                                            setRow={setNumberOfSeats}
                                         /> : null}
                                         </Box>
                                     </Grid>
@@ -367,6 +370,8 @@ function SeatTypeDialog(props: any) {
                                         <FormControlLabel value="parkett" control={<Radio onChange={() => setType(0)}/>} label="Parkett" />
                                         <FormControlLabel value="loge" control={<Radio onChange={() => setType(1)}/>} label="Loge" />
                                         <FormControlLabel value="premium" control={<Radio onChange={() => setType(2)}/>} label="Premium" />
+                                        <FormControlLabel value="rollstuhl" control={<Radio onChange={() => setType(3)}/>} label="Rollstuhl" />
+                                        <FormControlLabel value="sofa" control={<Radio onChange={() => setType(4)}/>} label="Doppelsitz" />
                                     </RadioGroup>
                                 </Box>
                             </form>
@@ -389,6 +394,8 @@ function RowTypeDialog(props: any) {
       cancel,
       changeRowType,
       addRow,
+      row,
+      setRow
     } = props;
 
     function saveType() {
@@ -429,6 +436,19 @@ function RowTypeDialog(props: any) {
                             <Typography component="h1" variant="h5">
                                 Choose Row Type
                             </Typography>
+                            <Grid item xs={12}>
+                                <TextField
+                                    name="numberOfSeats"
+                                    required
+                                    type="number"
+                                    fullWidth
+                                    id="numberOfSeats"
+                                    label="Number of Seats"
+                                    autoFocus
+                                    onChange={(e: any) => setRow(e.target.value)}
+                                    value={row}
+                                />
+                            </Grid>
                             <form noValidate>
                                 <Box component="form" noValidate sx={{mt: 3}}>
                                     <RadioGroup
@@ -439,6 +459,8 @@ function RowTypeDialog(props: any) {
                                         <FormControlLabel value="parkett" control={<Radio onChange={() => changeRowType(0)}/>} label="Parkett" />
                                         <FormControlLabel value="loge" control={<Radio onChange={() => changeRowType(1)}/>} label="Loge" />
                                         <FormControlLabel value="premium" control={<Radio onChange={() => changeRowType(2)}/>} label="Premium" />
+                                        <FormControlLabel value="rollstuhl" control={<Radio onChange={() => changeRowType(3)}/>} label="Rollstuhl" />
+                                        <FormControlLabel value="sofa" control={<Radio onChange={() => changeRowType(4)}/>} label="Doppelsitz" />
                                     </RadioGroup>
                                 </Box>
                             </form>
