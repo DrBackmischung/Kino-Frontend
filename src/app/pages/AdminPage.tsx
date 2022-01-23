@@ -28,21 +28,18 @@ function AdminPage(props: any) {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  function isAdmin() {
-    if(userData === undefined) {
-      return false;
-    } else {
-      const userID = userData.id;
+  let userID = "";
+  userData === undefined ? userID = "" : userID = userData.id;
+  const apiUrlGetRole = `${APIUrl.apiUrl}/role/user/`+userID;
+  
+  const {isLoading: isLoadingRole, error: errorRole, data: dataRole} : any = useQuery("Role", () =>
+    fetch(apiUrlGetRole).then((res) => res.json())
+  );
+  setError(errorRole);
+  setIsLoading(isLoadingRole);
 
-      const apiUrlGetRole = `${APIUrl.apiUrl}/role/user/`+userID;
-      
-      const {isLoading: isLoadingRole, error: errorRole, data: dataRole} : any = useQuery("Movies", () =>
-        fetch(apiUrlGetRole).then((res) => res.json())
-      );
-      setError(errorRole);
-      setIsLoading(isLoadingRole);
-      return dataRole === "ADMIN";
-    }
+  function isAdmin() {
+    return dataRole === "ADMIN";
   }
   
   const [openAddMovie, setOpenAddMovie] = useState(false);
