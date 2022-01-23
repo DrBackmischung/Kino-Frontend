@@ -15,12 +15,14 @@ import DetailsPage from "../../pages/DetailsPage";
 import SignInPage from "../../pages/SignInPage";
 import UserRegistrationPage from "../../pages/UserRegistrationPage";
 import Impressum from "../../pages/Impressum";
+import AdminPage from "../../pages/AdminPage";
 import { getCookie, setCookie } from "../CookieHandler";
 import { useQuery } from "react-query";
 import APIUrl from "../../config/APIUrl";
 import PricesPage from "../../pages/PricesPage";
 import HomePage from "../../pages/HomePage";
 import CookiesNotification from "../CookiesNotification";
+import TermsAndConditionsPage from "../../pages/TermsAndConditionsPage";
 
 function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -71,7 +73,6 @@ function MenuBar() {
         <Container fixed>
           <Toolbar>
             <IconButton
-              style={{ backgroundColor: "white" }}
               sx={{ height: "40px", width: "40px" }}
               size="large"
               edge="start"
@@ -79,7 +80,11 @@ function MenuBar() {
               component={Link}
               to={"/"}
             >
-              <HomeIcon />
+              <img
+                  src="https://raw.githubusercontent.com/DrBackmischung/Kino-Dokumentation/main/KV.png"
+                  alt="Kinovation Logo"
+                  height={40}
+              />
             </IconButton>
             <Box
               sx={{
@@ -119,6 +124,7 @@ function MenuBar() {
                         variant="outlined"
                         onClick={(e) => {
                           setCookie("userId", "null", 7);
+                          setCookie("role", "null", 7);
                           setCurrentUser({
                             userId: "null",
                           });
@@ -176,6 +182,7 @@ function MenuBar() {
         <Route path="/eventsPage" element={<ComingSoon />} />
         <Route path="/pricesOverviewPage" element={<PricesPage />} />
         <Route path="/newsPage" element={<ComingSoon />} />
+        <Route path="/TermsAndConditionsPage" element={<TermsAndConditionsPage />} />
         <Route
           path="/DetailsPage"
           // @ts-ignore
@@ -192,6 +199,7 @@ function MenuBar() {
           element={<UserRegistrationPage setUser={setUser} />}
         />
         <Route path="/Impressum" element={<Impressum />} />
+        <Route path="/Admin" element={<AdminPage userData={data} />} />
       </Routes>
       <CookiesNotification/>
     </BrowserRouter>

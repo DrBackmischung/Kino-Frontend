@@ -8,8 +8,6 @@ import {
   Button,
   CssBaseline,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Link,
   Grid,
   Box,
@@ -59,6 +57,8 @@ function SignUp(props: any) {
   const [city, setCity] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ isError: false, msg: "No Error" });
+  const [agree, setAgree] = useState(false);
+
   const {
     setValue,
     handleSubmit,
@@ -121,6 +121,7 @@ function SignUp(props: any) {
         const data: any = await response.json();
         setError({ isError: false, msg: "No error" });
         setCookie("userId", data.id, 7);
+        setCookie("role", data.role.authorization, 7);
         setUser();
         redirectHome = true;
       }
@@ -151,6 +152,15 @@ function SignUp(props: any) {
         <LoadingAnimation />
       </Container>
     );
+
+  function checkboxHandler() {
+    setAgree(!agree);
+  }
+
+  function redirectToTerms() {
+    navigate("/TermsAndConditionsPage");
+  }
+
   return (
     <Container
       component="main"
@@ -458,15 +468,27 @@ function SignUp(props: any) {
               </Grid>
 
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via e-mail."
+                <input
+                  type="checkbox"
+                  value="allowExtraEmails"
+                  color="primary"
                 />
+                <label>
+                  {" "}
+                  I want to receive inspiration, marketing promotions and
+                  updates via e-mail.
+                </label>
+              </Grid>
+
+              <Grid item xs={12}>
+                <input type="checkbox" id="agree" onChange={checkboxHandler} />
+                <label htmlFor="agree"> I agree to </label>
+                <Link onClick={redirectToTerms}>terms and conditions</Link>
+                <label>.</label>
               </Grid>
             </Grid>
             <Button
+              disabled={!agree}
               type="submit"
               fullWidth
               variant="contained"

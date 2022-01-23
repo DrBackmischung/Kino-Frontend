@@ -11,7 +11,7 @@ to do
 ## Jira
 https://dhbw-ma-wwi2020seb.atlassian.net/jira/software/c/projects/KINO/boards/1
 
-# Design-Forntend
+# Design-Frontend
 Sprache: englische Begriffe, aber deutsche Sprachdatei hinterlegt (Language Switch Button)
 
 Example: https://yorck.de/
