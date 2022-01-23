@@ -2,13 +2,8 @@
 import React, { useState, useEffect } from "react";
 import MovieDetails from "../components/MovieDetails";
 import ShowPicker from "../components/ShowPicker";
-import {
-  CardMedia,
-  CircularProgress,
-  Container,
-  Grid,
-  ThemeProvider,
-} from "@mui/material";
+import Slider from "../components/Slider";
+import { Box, Container, Grid, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { useQuery } from "react-query";
 import palette from "../config/Colours";
@@ -20,8 +15,11 @@ import ManageCheckout from "../components/ManageCheckout";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Ratings from "../components/Ratings";
 
 function DetailsPage(props: any) {
+  const { userData } = props;
   const [movieId, setMovieId] = useState();
   const [openSeatBooking, setOpenSeatBooking] = useState(0);
   const [selectedShow, setSelectedShow] = useState();
@@ -61,7 +59,16 @@ function DetailsPage(props: any) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container className="wholeContainer">
+      <Container
+        className="wholeContainer"
+        sx={{
+          bgcolor: "background.paper",
+          pt: 4,
+          pb: 6,
+          position: "relative",
+          marginTop: theme.spacing(12),
+        }}
+      >
         <IconButton onClick={goBack}>
           <ArrowBackIosIcon />
         </IconButton>
@@ -70,38 +77,36 @@ function DetailsPage(props: any) {
             sx={{
               display: "grid",
               gap: 5,
-              gridTemplateColumns: "repeat(2, 1fr)",
+              gridTemplateColumns: "repeat(2, 5fr)",
             }}
           >
-            <div className="imageContainer">
-              <CardMedia
-                component="img"
-                sx={{
-                  pt: "6%",
-                }}
-                src={data?.pictureLink}
-                alt="poster"
-              />
-            </div>
+            <Slider selectedMovie={data} />
             <Grid
               className="detailsContainer"
               sx={{
                 display: "grid",
-                gridTemplateRows: "repeat(2,1fr)",
+                gridTemplateRows: "repeat(1,1fr)",
               }}
             >
-              <MovieDetails selectedMovie={data} />
-              <ShowPicker
-                setOpenSeatBooking={setOpenSeatBooking}
-                movieId={movieId}
-                setSelectedShow={setSelectedShow}
-                data={data}
-              />
+              <Box>
+                <MovieDetails selectedMovie={data} />
+                <Ratings ratingValue={2} />
+                <ShowPicker
+                  setOpenSeatBooking={setOpenSeatBooking}
+                  movieId={movieId}
+                  setSelectedShow={setSelectedShow}
+                  data={data}
+                />
+              </Box>
             </Grid>
             <br />
           </Grid>
         </Container>
-        <ManageCheckout show={selectedShow} open={openSeatBooking} />
+        <ManageCheckout
+          show={selectedShow}
+          open={openSeatBooking}
+          userData={userData}
+        />
       </Container>
     </ThemeProvider>
   );

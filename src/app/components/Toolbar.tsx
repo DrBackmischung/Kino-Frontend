@@ -13,11 +13,16 @@ function Toolbar(props: any) {
   const { handleSearchChange, handleSelectChange, cityData } = props;
 
   const theme = createTheme(palette)
+  const theme2: any = createTheme();
   
   return (
     <ThemeProvider theme={theme}>
       <Container
         className="toolbar-container"
+        sx={{
+          bgcolor: "background.paper",
+          marginTop: theme.spacing(12),
+        }}
       >
         <Grid container spacing={4} sx={{ justifyContent: "space-evenly" }}>
           <BasicSelect

@@ -14,20 +14,18 @@ import { ThemeProvider } from "@mui/styles";
 import "./ProgramPage.css";
 
 function ProgramPage() {
-  const [filter, setFilter] = useState("");
+    const [filter, setFilter] = useState("");
 
-  const handleSearchChange = (e: any) => {
-    setFilter(e.target.value.toLowerCase());
-  };
-  const [location, setLocation] = React.useState("");
+    const handleSearchChange = (e: any) => {
+        setFilter(e.target.value.toLowerCase());
+    };
+    const [location, setLocation] = React.useState("");
 
-  const handleSelectChange = (event: SelectChangeEvent) => {
-    setLocation(event.target.value as string);
-  };
+    const handleSelectChange = (event: SelectChangeEvent) => {
+        setLocation(event.target.value as string);
+    };
 
-  const apiUrlCity = `${APIUrl.apiUrl}/city/getAll`;
-
-  console.log(apiUrlCity);
+    const apiUrlCity = `${APIUrl.apiUrl}/city/getAll`;
 
   const cityData = useQuery("Cities", () =>
     fetch(apiUrlCity).then((res) => res.json())

@@ -8,7 +8,7 @@ function MovieDetails(props: any) {
   const theme = createTheme(palette)
   
   return (
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>  
       <div className="detailsContainer">
         <div className="movieDetails">
           <h1>{selectedMovie?.titel}</h1>
