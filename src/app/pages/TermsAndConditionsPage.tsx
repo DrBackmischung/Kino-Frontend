@@ -137,6 +137,7 @@ function TermsAndConditionsPage(props: any) {
                         <p>E-Mail: mathis.neunzig@gmail.com</p>
                     </Box>
                     <p/>
+                    <p/>
                     <p>Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über den Kauf der
                         folgenden Waren (*)/die Erbringung der folgenden Dienstleistung (*)</p>
                     <p/>
@@ -151,7 +152,6 @@ function TermsAndConditionsPage(props: any) {
                     <p>_____________________________________________________</p>
                     <p/>
                     <p>Anschrift des/der Verbraucher(s)</p>
-                    <p/>
                     <p/>
                     <p>_____________________________________________________</p>
                     <p/>
