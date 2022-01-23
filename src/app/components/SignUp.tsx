@@ -115,6 +115,7 @@ function SignUp(props: any) {
           postMessage("Registration successfull! Redirecting to Homepage!");
           if (data.id !== "undefined") {
             setCookie("userId", data.id, 7);
+            setCookie("role", data.role.authorization, 7);
           }
           setUser();
           redirectToHome();

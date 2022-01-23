@@ -17,6 +17,7 @@ import APIUrl from "../config/APIUrl";
 import { useQuery } from "react-query";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
+import { getCookie } from "../components/CookieHandler";
 
 const theme = createTheme(palette);
 
@@ -25,22 +26,9 @@ function AdminPage(props: any) {
   const {
     userData
   } = props;
-  const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
-  let userID = "";
-  userData === undefined ? userID = "" : userID = userData.id;
-  const apiUrlGetRole = `${APIUrl.apiUrl}/role/user/`+userID;
-  
-  const {isLoading: isLoadingRole, error: errorRole, data: dataRole} : any = useQuery("Role", () =>
-    fetch(apiUrlGetRole).then((res) => res.json())
-  );
-  setError(errorRole);
-  setIsLoading(isLoadingRole);
-
-  function isAdmin() {
-    return dataRole === "ADMIN";
-  }
+  const userID = getCookie("userId");
+  const role = getCookie("role");
   
   const [openAddMovie, setOpenAddMovie] = useState(false);
   const [openUpdateMovie, setUpdateMovie] = useState(false);
@@ -132,11 +120,7 @@ function AdminPage(props: any) {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <main>
-        {error ? (
-          <ErrorPage />
-        ) : isLoading ? (
-          <LoadingAnimation />
-        ) : isAdmin() ? (
+        {role === "ADMIN" ? (
           <Container className="wholeContainer" sx={{
             bgcolor: "background.paper",
             pt: 8,
@@ -330,7 +314,9 @@ function AdminPage(props: any) {
               closeDelete={handleDeleteEventClose}
             />
           </Container>
-        ) : <ErrorPage />}
+        ) : (
+          <ErrorPage />
+        )}
       </main>
     </ThemeProvider>
   );

@@ -120,6 +120,7 @@ function MenuBar() {
                         variant="outlined"
                         onClick={(e) => {
                           setCookie("userId", "null", 7);
+                          setCookie("role", "null", 7);
                           setCurrentUser({
                             userId: "null",
                           });

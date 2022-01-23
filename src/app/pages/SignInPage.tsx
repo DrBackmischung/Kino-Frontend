@@ -88,6 +88,7 @@ export default function SignIn(props: any) {
       .then((data) => {
         if (data.id !== "undefined") {
           setCookie("userId", data.id, 7);
+          setCookie("role", data.role.autorization, 7);
         }
         setUser();
         redirectToHome();
