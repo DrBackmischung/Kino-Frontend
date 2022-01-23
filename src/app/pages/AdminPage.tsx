@@ -13,10 +13,7 @@ import ManageAdminShow from "../components/ManageAdminShow";
 import ManageAdminRoom from "../components/ManageAdminRoom";
 import ManageAdminNews from "../components/ManageAdminNews";
 import ManageAdminEvent from "../components/ManageAdminEvent";
-import APIUrl from "../config/APIUrl";
-import { useQuery } from "react-query";
 import ErrorPage from "./ErrorPage";
-import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import { getCookie } from "../components/CookieHandler";
 
 const theme = createTheme(palette);
@@ -27,7 +24,6 @@ function AdminPage(props: any) {
     userData
   } = props;
 
-  const userID = getCookie("userId");
   const role = getCookie("role");
   
   const [openAddMovie, setOpenAddMovie] = useState(false);
