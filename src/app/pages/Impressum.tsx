@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "@mui/material";
+import {Container, Link} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,10 @@ function Impressum() {
   };
 
   const theme = createTheme(palette);
+
+  function redirectToTerms() {
+    navigate("/TermsAndConditionsPage");
+  }
 
   return (
     <Container className="wholeContainer" sx={{
@@ -58,6 +62,8 @@ function Impressum() {
             <p>Marcel Mildenberger</p>
             <p>Nathalie Möck</p>
           </Box>
+          <br/>
+              <span>Die Allgemeinen Geschäftsbedingungen können </span><Link onClick={redirectToTerms}>hier</Link><span> gefunden werden.</span>
         </Box>
       </Container>
     </Container>

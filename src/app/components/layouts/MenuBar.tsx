@@ -21,6 +21,7 @@ import APIUrl from "../../config/APIUrl";
 import PricesPage from "../../pages/PricesPage";
 import HomePage from "../../pages/HomePage";
 import CookiesNotification from "../CookiesNotification";
+import TermsAndConditionsPage from "../../pages/TermsAndConditionsPage";
 
 function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -179,6 +180,7 @@ function MenuBar() {
         <Route path="/eventsPage" element={<ComingSoon />} />
         <Route path="/pricesOverviewPage" element={<PricesPage />} />
         <Route path="/newsPage" element={<ComingSoon />} />
+        <Route path="/TermsAndConditionsPage" element={<TermsAndConditionsPage />} />
         <Route
           path="/DetailsPage"
           // @ts-ignore
