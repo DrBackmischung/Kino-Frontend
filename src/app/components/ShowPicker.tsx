@@ -17,6 +17,8 @@ import Box from "@mui/material/Box";
 import ErrorPage from "../pages/ErrorPage";
 import LoadingAnimation from "./layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import palette from "../config/Colours";
 
 function ShowPicker(props: any) {
   const { setOpenSeatBooking, movieId, setSelectedShow } = props;
@@ -73,56 +75,60 @@ function ShowPicker(props: any) {
     setSelectedShow(show);
   }
 
+  const theme = createTheme(palette)
+
   return (
-    <Container className="overallContainer" maxWidth="sm">
-      <h3>Shows:</h3>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <div>
-          <DesktopDatePicker
-            className="DatePicker"
-            label="Date Picker"
-            inputFormat="MM/dd/yyyy"
-            value={date}
-            onChange={handleChange}
-            renderInput={(params: any) => <TextField {...params} />}
-          />
-        </div>
-      </LocalizationProvider>
-      <Box className="showTimeContainer" sx={{ mt: 5 }}>
-        <h3>Start Time:</h3>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 4, sm: 8, md: 12 }}
-        >
-          {error ? (
-            <ErrorPage />
-          ) : isLoading ? (
-            <LoadingAnimation />
-          ) : (
-            filteredData?.map((item: any) => (
-              <Grid item xs={2} sm={4} md={4} key={`${item.id}`}>
-                <Tooltip
-                  TransitionComponent={Zoom}
-                  title="Click to book a seat!"
-                  arrow
-                >
-                  <Button
-                    key={`${item.id}`}
-                    onClick={() => {
-                      openDialog(item);
-                    }}
-                    variant="contained"
+    <ThemeProvider theme={theme}>
+      <Container className="overallContainer" maxWidth="sm">
+        <h3>Shows:</h3>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <div>
+            <DesktopDatePicker
+              className="DatePicker"
+              label="Date Picker"
+              inputFormat="MM/dd/yyyy"
+              value={date}
+              onChange={handleChange}
+              renderInput={(params: any) => <TextField {...params} />}
+            />
+          </div>
+        </LocalizationProvider>
+        <Box className="showTimeContainer" sx={{ mt: 5 }}>
+          <h3>Start Time:</h3>
+          <Grid
+            container
+            spacing={{ xs: 2, md: 3 }}
+            columns={{ xs: 4, sm: 8, md: 12 }}
+          >
+            {error ? (
+              <ErrorPage />
+            ) : isLoading ? (
+              <LoadingAnimation />
+            ) : (
+              filteredData?.map((item: any) => (
+                <Grid item xs={2} sm={4} md={4} key={`${item.id}`}>
+                  <Tooltip
+                    TransitionComponent={Zoom}
+                    title="Click to book a seat!"
+                    arrow
                   >
-                    {item.startTime}
-                  </Button>
-                </Tooltip>
-              </Grid>
-            ))
-          )}
-        </Grid>
-      </Box>
-    </Container>
+                    <Button
+                      key={`${item.id}`}
+                      onClick={() => {
+                        openDialog(item);
+                      }}
+                      variant="contained"
+                    >
+                      {item.startTime}
+                    </Button>
+                  </Tooltip>
+                </Grid>
+              ))
+            )}
+          </Grid>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
 }
 

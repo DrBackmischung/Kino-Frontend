@@ -2,6 +2,8 @@ import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import palette from "../config/Colours";
 
 const Search = styled("div")(({ theme }: { theme: any }) => ({
   position: "relative",
@@ -45,17 +47,21 @@ const StyledInputBase = styled(InputBase)(({ theme }: { theme: any }) => ({
 function SearchField(props: any) {
   const {handleSearchChange} = props;
 
+const theme = createTheme(palette)
+
   return (
-    <Search>
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
-      <StyledInputBase
-          onChange={handleSearchChange}
-        placeholder="Suche…"
-        inputProps={{ "aria-label": "search" }}
-      />
-    </Search>
+    <ThemeProvider theme={theme}>
+      <Search>
+        <SearchIconWrapper>
+          <SearchIcon />
+        </SearchIconWrapper>
+        <StyledInputBase
+            onChange={handleSearchChange}
+          placeholder="Suche…"
+          inputProps={{ "aria-label": "search" }}
+        />
+      </Search>
+    </ThemeProvider>
   );
 }
 

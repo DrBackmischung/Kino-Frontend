@@ -5,33 +5,31 @@ import BasicSelect from "./BasicSelect";
 import SearchField from "./SearchField";
 import Filter from "./Filter";
 import Sort from "./Sort";
-import { createTheme } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import palette from "../config/Colours";
+import "./Toolbar.css";
 
 function Toolbar(props: any) {
-  const theme: any = createTheme();
   const { handleSearchChange, handleSelectChange, cityData } = props;
 
+  const theme = createTheme(palette)
+  
   return (
-    <Container
-      sx={{
-        bgcolor: "background.paper",
-        pt: 8,
-        pb: 6,
-        position: "relative",
-        marginTop: theme.spacing(12),
-      }}
-      maxWidth="md"
-    >
-      <Grid container spacing={4} sx={{ justifyContent: "space-evenly" }}>
-        <BasicSelect
-          handleSelectChange={handleSelectChange}
-          cityData={cityData}
-        />
-        <SearchField handleSearchChange={handleSearchChange} />
-        <Filter />
-        <Sort />
-      </Grid>
-    </Container>
+    <ThemeProvider theme={theme}>
+      <Container
+        className="toolbar-container"
+      >
+        <Grid container spacing={4} sx={{ justifyContent: "space-evenly" }}>
+          <BasicSelect
+            handleSelectChange={handleSelectChange}
+            cityData={cityData}
+          />
+          <SearchField handleSearchChange={handleSearchChange} />
+          <Filter />
+          <Sort />
+        </Grid>
+      </Container>
+    </ThemeProvider>
   );
 }
 

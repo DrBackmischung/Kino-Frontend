@@ -8,6 +8,10 @@ import Container from "@mui/material/Container";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
+import { createTheme } from "@mui/material/styles";
+import palette from "../config/Colours";
+import { ThemeProvider } from "@mui/styles";
+import "./ProgramPage.css";
 
 function ProgramPage() {
   const [filter, setFilter] = useState("");
@@ -35,52 +39,42 @@ function ProgramPage() {
     fetch(apiUrlMovies).then((res) => res.json())
   );
 
+  const theme = createTheme(palette)
+
   if (cityData.error || moviesData.error) {
     return (
-      <Container
-        sx={{
-          bgcolor: "background.paper",
-          pt: 8,
-          pb: 6,
-          position: "relative",
-          marginTop: "15rem",
-        }}
-        maxWidth="md"
-      >
-        <ErrorPage />
-      </Container>
+        <Container
+          className="programPage-container"
+        >
+          <ErrorPage />
+        </Container>
     );
   }
   if (cityData.isLoading || moviesData.isLoading)
     return (
-      <Container
-        sx={{
-          bgcolor: "background.paper",
-          pt: 8,
-          pb: 6,
-          position: "relative",
-          marginTop: "15rem",
-        }}
-        maxWidth="md"
-      >
-        <LoadingAnimation />
-      </Container>
+        <Container 
+          className="programPage-container"
+        >
+          <LoadingAnimation />
+        </Container>
     );
 
   return (
-    <div>
-      <Toolbar
-        handleSearchChange={handleSearchChange}
-        handleSelectChange={handleSelectChange}
-        location={location}
-        cityData={cityData.data}
-      />
-      <MovieCard
-        filter={filter}
-        location={location}
-        moviesData={moviesData.data}
-      />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div>
+        <Toolbar
+          handleSearchChange={handleSearchChange}
+          handleSelectChange={handleSelectChange}
+          location={location}
+          cityData={cityData.data}
+        />
+        <MovieCard
+          filter={filter}
+          location={location}
+          moviesData={moviesData.data}
+        />
+      </div>
+    </ThemeProvider>
   );
 }
 

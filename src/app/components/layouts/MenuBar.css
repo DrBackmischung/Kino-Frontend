@@ -1,0 +1,17 @@
+.menu-icon{
+    size: 40px 40px;
+}
+
+.menu-appBar{
+    opacity: 0.95;
+    position: fixed;
+}
+
+#menu-button{
+    background-color: #ba8434 ;
+    color: #000000;
+    opacity: 0.95;
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}

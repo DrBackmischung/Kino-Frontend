@@ -13,6 +13,10 @@ import ProgramPage from "../../pages/ProgramPage";
 import ComingSoon from "../../pages/ComingSoon";
 import DetailsPage from "../../pages/DetailsPage";
 import SignInPage from "../../pages/SignInPage";
+import Impressum from "../../pages/Impressum";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import palette from "../../config/Colours";
+import "./MenuBar.css";
 
 function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -31,82 +35,85 @@ function MenuBar() {
     { name: "News", link: "/newsPage" },
   ]);
 
+  const theme = createTheme(palette)
+  
   return (
     <BrowserRouter>
-      <AppBar
-        style={{ backgroundColor: "#393E41", opacity: 0.95 }}
-        position="fixed"
-      >
-        <Container fixed>
-          <Toolbar>
-            <IconButton
-              style={{ backgroundColor: "white" }}
-              sx={{ height: "40px", width: "40px" }}
-              size="large"
-              edge="start"
-              aria-label="menu"
-              component={Link}
-              to={"/"}
-            >
-              <HomeIcon />
-            </IconButton>
-            <Box
-              sx={{
-                justifyContent: "space-evenly",
-                flexGrow: 1,
-                display: { xs: "flex" },
-              }}
-            >
-              {pages.map((page) => (
-                <Button
-                  style={{ backgroundColor: "white", opacity: 0.95 }}
-                  key={page.name}
-                  //onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "black", display: "block" }}
-                  variant="contained"
-                  component={Link}
-                  to={page.link}
-                >
-                  {page.name}
-                </Button>
-              ))}
-            </Box>
-            <Box>
-              <IconButton
+      <ThemeProvider theme={theme}>
+        <AppBar 
+          className="menu-appBar"
+        >
+          <Container fixed>
+            <Toolbar>
+              <IconButton 
+                className="menu-icon"
+                sx={{ height: "40px", width: "40px" }}
                 size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
+                edge="start"
+                aria-label="menu"
+                component={Link}
+                to={"/"}
               >
-                <AccountCircle />
+                <HomeIcon />
               </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+              <Box
+                sx={{
+                  justifyContent: "space-evenly",
+                  flexGrow: 1,
+                  display: { xs: "flex" },
                 }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
               >
-                <MenuItem component={Link} to="/SignInPage">
-                  Profile
-                </MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-              </Menu>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-
+                {pages.map((page) => (
+                  <Button 
+                    id="menu-button"
+                    key={page.name}
+                    //onClick={handleCloseNavMenu}
+                    variant="contained"
+                    component={Link}
+                    to={page.link}
+                  >
+                    {page.name}
+                  </Button>
+                ))}
+              </Box>
+              <Box>
+                <IconButton
+                  className="menu-icon" 
+                  sx={{ height: "40px", width: "40px" }}
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem component={Link} to="/SignInPage">
+                    Profile
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                </Menu>
+              </Box>
+            </Toolbar>
+          </Container>
+        </AppBar>
+      </ThemeProvider>
       <Routes>
         <Route path="/" element={<ComingSoon />} />
         <Route path="/programPage" element={<ProgramPage />} />
@@ -115,6 +122,7 @@ function MenuBar() {
         <Route path="/newsPage" element={<ComingSoon />} />
         <Route path="/DetailsPage" element={<DetailsPage />} />
         <Route path="/SignInPage" element={<SignInPage />} />
+        <Route path="/Impressum" element={<Impressum/>}/>
       </Routes>
     </BrowserRouter>
   );
