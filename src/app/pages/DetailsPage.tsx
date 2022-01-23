@@ -104,15 +104,16 @@ function DetailsPage(props: any) {
               </Box>
             </Grid>
             <Grid>
-              <Box>
-                <ReviewsCard
-                    reviewData={movieId}
-                />
-              </Box>
+              
             </Grid>
             <br />
           </Grid>
         </Container>
+        <Box>
+          <ReviewsCard
+            movieId={movieId}
+          />
+        </Box>
         <ManageCheckout
           show={selectedShow}
           open={openSeatBooking}
