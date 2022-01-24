@@ -163,8 +163,6 @@ export default function SignIn(props: any) {
               required: true,
               minLength: 7,
               maxLength: 32,
-              pattern:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
             }}
             render={({ field }) => (
               <TextField

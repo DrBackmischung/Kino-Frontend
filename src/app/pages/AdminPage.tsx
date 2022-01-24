@@ -1,11 +1,8 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Container from "@mui/material/Container";
-import {
-    Button,
-    Box,
-} from "@mui/material";
+import { Button, Box } from "@mui/material";
 import { useState } from "react";
 import palette from "../config/Colours";
 import ManageAdminMovie from "../components/ManageAdminMovie";
@@ -14,21 +11,20 @@ import ManageAdminRoom from "../components/ManageAdminRoom";
 import ManageAdminNews from "../components/ManageAdminNews";
 import ManageAdminEvent from "../components/ManageAdminEvent";
 import ErrorPage from "./ErrorPage";
-import { getCookie } from "../components/CookieHandler";
 
 const theme = createTheme(palette);
 
 function AdminPage(props: any) {
+  const { userData } = props;
 
-  const {
-    userData
-  } = props;
-
-  const role = getCookie("role");
-  
   const [openAddMovie, setOpenAddMovie] = useState(false);
   const [openUpdateMovie, setUpdateMovie] = useState(false);
   const [openDeleteMovie, setDeleteMovie] = useState(false);
+  const [userRole, setUserRole] = useState(userData?.data?.role?.autorization);
+
+  useEffect(() => {
+    setUserRole(userData?.data?.role?.autorization);
+  }, [userData?.dataUpdatedAt, userData?.data?.role?.autorization]);
 
   const handleAddMovieClickOpen = () => {
     setOpenAddMovie(true);
@@ -50,7 +46,7 @@ function AdminPage(props: any) {
   const handleDeleteMovieClose = () => {
     setDeleteMovie(false);
   };
-  
+
   const [openAddShow, setOpenAddShow] = useState(false);
   const [openDeleteShow, setDeleteShow] = useState(false);
 
@@ -76,7 +72,7 @@ function AdminPage(props: any) {
   const handleRoomClose = () => {
     setOpenRoom(false);
   };
-  
+
   const [openAddNews, setOpenAddNews] = useState(false);
   const [openDeleteNews, setDeleteNews] = useState(false);
 
@@ -93,7 +89,7 @@ function AdminPage(props: any) {
   const handleDeleteNewsClose = () => {
     setDeleteNews(false);
   };
-  
+
   const [openAddEvent, setOpenAddEvent] = useState(false);
   const [openDeleteEvent, setDeleteEvent] = useState(false);
 
@@ -116,28 +112,31 @@ function AdminPage(props: any) {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <main>
-        {role === "ADMIN" ? (
-          <Container className="wholeContainer" sx={{
-            bgcolor: "background.paper",
-            pt: 8,
-            pb: 6,
-            position: "relative",
-            marginTop: theme.spacing(12),
-          }}>
+        {userRole === "ADMIN" ? (
+          <Container
+            className="wholeContainer"
+            sx={{
+              bgcolor: "background.paper",
+              pt: 8,
+              pb: 6,
+              position: "relative",
+              marginTop: theme.spacing(12),
+            }}
+          >
             <Box
               sx={{
-                  marginTop: 8,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
+                marginTop: 8,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
               }}
             >
               <Box
                 sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
+                  marginTop: 8,
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
                 <Button
@@ -170,10 +169,10 @@ function AdminPage(props: any) {
               </Box>
               <Box
                 sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
+                  marginTop: 8,
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
                 <Button
@@ -197,10 +196,10 @@ function AdminPage(props: any) {
               </Box>
               <Box
                 sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
+                  marginTop: 8,
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
                 <Button
@@ -215,10 +214,10 @@ function AdminPage(props: any) {
               </Box>
               <Box
                 sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
+                  marginTop: 8,
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
                 <Button
@@ -242,10 +241,10 @@ function AdminPage(props: any) {
               </Box>
               <Box
                 sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
+                  marginTop: 8,
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
                 <Button
@@ -279,7 +278,7 @@ function AdminPage(props: any) {
               openDelete={handleDeleteMovieClickOpen}
               closeDelete={handleDeleteMovieClose}
             />
-            <ManageAdminShow 
+            <ManageAdminShow
               isOpenAdd={openAddShow}
               openAdd={handleAddShowClickOpen}
               closeAdd={handleAddShowClose}

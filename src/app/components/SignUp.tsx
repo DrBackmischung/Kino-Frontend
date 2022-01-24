@@ -116,6 +116,7 @@ function SignUp(props: any) {
       const response = await fetch(apiUrlAll, requestOptions);
       if (!response.ok) {
         setError({ isError: true, msg: `Fehler: ${response.statusText}` });
+        setAgree(false);
       } else if (response.ok) {
         const data: any = await response.json();
         setError({ isError: false, msg: "No error" });
