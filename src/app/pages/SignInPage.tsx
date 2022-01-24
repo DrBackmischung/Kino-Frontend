@@ -91,7 +91,6 @@ export default function SignIn(props: any) {
       const data: any = await response.json();
       setError({ isError: false, msg: "No error" });
       setCookie("userId", data.id, 7);
-      setCookie("role", data.role.autorization, 7);
       setUser();
       redirectHome = true;
     }
@@ -156,21 +155,36 @@ export default function SignIn(props: any) {
               />
             )}
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="passwort"
-            label="Passwort"
-            type="password"
-            id="passwort"
-            autoComplete="current-password"
-            onChange={(e) => setUserPassword(e.target.value)}
+          <Controller
+            name="userPassword"
+            control={control}
+            rules={{
+              required: true,
+              minLength: 7,
+              maxLength: 32,
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="Passwort"
+                type="password"
+                autoComplete="current-password"
+                onChange={(e: any) => {
+                  setUserPassword(e.target.value);
+                  setValue("userPassword", e.target.value);
+                  return;
+                }}
+                error={errors.userPassword}
+              />
+            )}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
-            label="Remember me" 
+            label="Remember me"
           />
           <br />
           {error.isError && (
@@ -181,6 +195,7 @@ export default function SignIn(props: any) {
               {error.msg}
             </small>
           )}
+          <br />
           <Button
             type="submit"
             fullWidth
