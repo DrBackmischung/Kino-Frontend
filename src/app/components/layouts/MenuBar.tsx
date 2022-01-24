@@ -80,7 +80,7 @@ function MenuBar() {
               to={"/"}
             >
               <img
-                src="https://raw.githubusercontent.com/DrBackmischung/Kino-Dokumentation/main/KV.png"
+                src="https://raw.githubusercontent.com/DrBackmischung/Kino-Dokumentation/main/Kinovation.png"
                 alt="Kinovation Logo"
                 height={40}
               />
