@@ -24,7 +24,7 @@ function ReviewsCard(props: any){
         if(data === undefined){
             return;
         }else{
-            const sortedShows = data.sort((itemA : any, itemB : any) => {
+            data.sort((itemA : any, itemB : any) => {
                 return(
                     new Date(itemB.date).getTime() -
                     new Date(itemA.date).getTime()

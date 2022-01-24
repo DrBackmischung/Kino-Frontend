@@ -25,7 +25,7 @@ function AddCommentCard(props : any){
                 userID: userId.id
             }),
         };
-        const response = await fetch(apiUrl, requestOptions).then(() => {
+        await fetch(apiUrl, requestOptions).then(() => {
             setReviewTitle("");
             setReviewBody("");
         });
