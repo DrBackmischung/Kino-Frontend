@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Container, CssBaseline, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid} from "@mui/material";
 import APIUrl from '../config/APIUrl';
 import { useQuery } from 'react-query';
 import ErrorPage from '../pages/ErrorPage';
@@ -24,10 +24,24 @@ function ReviewsCard(props: any){
         if(data === undefined){
             return;
         }else{
+            const sortedShows = data.sort((itemA : any, itemB : any) => {
+                return(
+                    new Date(itemB.date).getTime() -
+                    new Date(itemA.date).getTime()
+                )
+            })
             return reviews;
-        }
+        };
 
-    }
+    };
+
+    let formatDate : any = (reviewDate : any) => {
+        return new Date(reviewDate).toLocaleDateString(undefined, {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+        });
+    };
 
     if(isLoading){
         return <LoadingAnimation/>
@@ -42,14 +56,10 @@ function ReviewsCard(props: any){
 
         <Container sx={{
             bgcolor: "background.paper",
-            pt: 8,
-            pb: 6,
             position: "relative"
         }}
         maxWidth="md"
         >
-            <h1>Reviews</h1>
-
             {prepareReviews(data)?.map((review : any) => (
                 <Box key={review.id} sx={{m: 1.5}}>
                     <Grid container>
@@ -66,7 +76,7 @@ function ReviewsCard(props: any){
                             <Box>{review.content}</Box>
                         </Grid>
                         <Grid item xs={12}>
-                            <Box sx={{fontWeight: "italic"}}>{review.date}</Box>
+                            <Box sx={{fontWeight: "italic"}}>{formatDate(review.date)}</Box>
                         </Grid>
                     </Grid>
                 </Box>

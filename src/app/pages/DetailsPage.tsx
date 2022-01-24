@@ -18,6 +18,7 @@ import APIUrl from "../config/APIUrl";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Ratings from "../components/Ratings";
 import ReviewsCard from "../components/ReviewsCard";
+import AddCommentCard from "../components/AddCommentCard";
 
 function DetailsPage(props: any) {
   const { userData } = props;
@@ -54,6 +55,14 @@ function DetailsPage(props: any) {
   if (error) {
     return <ErrorPage />;
   }
+
+  function submitReview() {
+    if(userData != undefined){
+      return <AddCommentCard movieId={movieId} userId={userData.id} />
+    }else{
+      return;
+    }
+  };
 
   const theme = createTheme(palette);
 
@@ -110,10 +119,16 @@ function DetailsPage(props: any) {
           </Grid>
         </Container>
         <Box>
+          <Box>
+            <AddCommentCard 
+              movieId={movieId} 
+              userId={userData} />
+          </Box>
           <ReviewsCard
             movieId={movieId}
           />
         </Box>
+        
         <ManageCheckout
           show={selectedShow}
           open={openSeatBooking}
