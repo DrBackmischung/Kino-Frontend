@@ -1,6 +1,5 @@
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import APIUrl from "../config/APIUrl";
@@ -8,8 +7,6 @@ import {useQuery} from "react-query";
 import {useState} from "react";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
-import Toolbar from "../components/Toolbar";
-import MovieCard from "../components/MovieCard";
 import SearchField from "../components/SearchField";
 import MainNewsCard from "../components/MainNewsCard";
 import NewsCard from "../components/NewsCard";
