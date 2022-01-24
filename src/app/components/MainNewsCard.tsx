@@ -8,11 +8,7 @@ import Box from '@mui/material/Box';
 
 export default function MainNewsCard(props: any) {
     const { data } = props;
-
-
     const mainNews = data[0];
-
-
 
     return (
         <Paper
@@ -54,7 +50,6 @@ export default function MainNewsCard(props: any) {
                         <Typography variant="h5" color="inherit" align="justify">
                             {mainNews.content}
                         </Typography>
-
                     </Box>
                 </Grid>
             </Grid>

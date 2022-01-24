@@ -9,7 +9,7 @@ import CardMedia from '@mui/material/CardMedia';
 
 function NewsCard(props: any) {
     const { filter, data } = props;
-
+    
     let formattedDate: any = (newsDate: any) => {
         const newsDateFormatted = new Date(newsDate).toLocaleDateString(undefined, {
             weekday: "long",
@@ -19,8 +19,6 @@ function NewsCard(props: any) {
         });
         return newsDateFormatted;
     };
-
-
 
     return (
         <Grid container spacing={4} sx={{

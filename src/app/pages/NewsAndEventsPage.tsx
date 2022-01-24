@@ -11,9 +11,6 @@ import SearchField from "../components/SearchField";
 import MainNewsCard from "../components/MainNewsCard";
 import NewsCard from "../components/NewsCard";
 
-
-
-
 const theme = createTheme();
 
 function NewsAndEventsPage() {
@@ -49,7 +46,7 @@ function NewsAndEventsPage() {
         return sortedData;
     };
 
-
+    
     if (newsData.error) {
         return (
             <Container
@@ -87,7 +84,6 @@ function NewsAndEventsPage() {
             <CssBaseline />
             <Container maxWidth="lg"
                        sx={{marginTop: "7rem"}} >
-
                 <main>
                     <MainNewsCard data={prepareData(newsData.data)}/>
                     <SearchField handleSearchChange={handleSearchChange}/>
