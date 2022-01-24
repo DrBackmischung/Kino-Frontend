@@ -17,8 +17,7 @@ import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Ratings from "../components/Ratings";
-import ReviewsCard from "../components/ReviewsCard";
-import AddCommentCard from "../components/AddCommentCard";
+import ManageComments from "../components/ManageComments";
 
 function DetailsPage(props: any) {
   const { userData } = props;
@@ -38,7 +37,6 @@ function DetailsPage(props: any) {
     }
   );
 
-
   useEffect(() => {
     setMovieId(state.movieId);
   }, [state?.movieId]);
@@ -55,14 +53,6 @@ function DetailsPage(props: any) {
   if (error) {
     return <ErrorPage />;
   }
-
-  function submitReview() {
-    if(userData != undefined){
-      return <AddCommentCard movieId={movieId} userId={userData.id} />
-    }else{
-      return;
-    }
-  };
 
   const theme = createTheme(palette);
 
@@ -112,23 +102,14 @@ function DetailsPage(props: any) {
                 />
               </Box>
             </Grid>
-            <Grid>
-              
-            </Grid>
+            <Grid></Grid>
             <br />
           </Grid>
         </Container>
         <Box>
-          <Box>
-            <AddCommentCard 
-              movieId={movieId} 
-              userId={userData} />
-          </Box>
-          <ReviewsCard
-            movieId={movieId}
-          />
+          <ManageComments userData={userData} movieId={movieId} />
         </Box>
-        
+
         <ManageCheckout
           show={selectedShow}
           open={openSeatBooking}
