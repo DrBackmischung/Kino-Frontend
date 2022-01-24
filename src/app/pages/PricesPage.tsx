@@ -1,6 +1,5 @@
 import React from 'react';
-
-import {Box, Container, IconButton} from "@mui/material";
+import {Container, IconButton} from "@mui/material";
 import APIUrl from "../config/APIUrl";
 import LoadingAnimation from "../components/layouts/LoadingAnimation"
 import { useQuery } from 'react-query';
