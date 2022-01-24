@@ -166,7 +166,6 @@ function SignUp(props: any) {
       maxWidth="xs"
       sx={{
         bgcolor: "background.paper",
-        pt: 8,
         pb: 6,
         position: "relative",
       }}
@@ -174,7 +173,6 @@ function SignUp(props: any) {
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",

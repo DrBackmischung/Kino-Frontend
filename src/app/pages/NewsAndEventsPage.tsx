@@ -10,10 +10,14 @@ import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import SearchField from "../components/SearchField";
 import MainNewsCard from "../components/MainNewsCard";
 import NewsCard from "../components/NewsCard";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import {IconButton} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 const theme = createTheme();
 
 function NewsAndEventsPage() {
+    let navigate = useNavigate();
 
     const apiUrlNews = `${APIUrl.apiUrl}/news/getAll`;
 
@@ -79,11 +83,18 @@ function NewsAndEventsPage() {
             </Container>
         );
 
+    function goBack() {
+        navigate(-1);
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Container maxWidth="lg"
                        sx={{marginTop: "7rem"}} >
+                <IconButton onClick={goBack}>
+                    <ArrowBackIosIcon />
+                </IconButton>
                 <main>
                     <MainNewsCard data={prepareData(newsData.data)}/>
                     <SearchField handleSearchChange={handleSearchChange}/>
