@@ -6,7 +6,7 @@ import {
   Checkbox,
   Container,
   CssBaseline,
-  FormControlLabel,
+  FormControlLabel, IconButton,
   TextField,
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import APIUrl from "../config/APIUrl";
 import { useForm, Controller } from "react-hook-form";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 const theme = createTheme();
 
@@ -115,6 +116,11 @@ export default function SignIn(props: any) {
         <LoadingAnimation />
       </Container>
     );
+
+  function goBack() {
+    navigate(-1);
+  }
+
   return (
     <Container
       component="main"
@@ -123,6 +129,9 @@ export default function SignIn(props: any) {
         marginTop: theme.spacing(12),
       }}
     >
+      <IconButton sx={{marginLeft: -47}} onClick={goBack}>
+        <ArrowBackIosIcon />
+      </IconButton>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>

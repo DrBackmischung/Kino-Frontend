@@ -8,8 +8,13 @@ import Container from "@mui/material/Container";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import {IconButton} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 function ProgramPage() {
+    let navigate = useNavigate();
+
     const [filter, setFilter] = useState("");
 
     const handleSearchChange = (e: any) => {
@@ -32,6 +37,10 @@ function ProgramPage() {
     const moviesData = useQuery("Movies", () =>
         fetch(apiUrlMovies).then((res) => res.json())
     );
+
+    function goBack() {
+        navigate(-1);
+    }
 
     if (cityData.error || moviesData.error) {
         return (
@@ -67,6 +76,9 @@ function ProgramPage() {
 
     return (
         <div>
+            <IconButton sx={{marginTop: 12, marginBottom: -12, marginLeft: 48}} onClick={goBack}>
+                <ArrowBackIosIcon />
+            </IconButton>
             <Toolbar
                 handleSearchChange={handleSearchChange}
                 handleSelectChange={handleSelectChange}
