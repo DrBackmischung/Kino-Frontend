@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
@@ -10,13 +10,38 @@ import Container from "@mui/material/Container";
 import { useNavigate } from "react-router-dom";
 
 function MovieCard(props: any) {
-  const { filter, moviesData } = props;
+  const { filter, moviesData, selectedSort } = props;
+  const [moviesToRender, setMoviesToRender] = useState(moviesData);
+  const [sortBy, setSortBy] = useState(true);
 
   let navigate = useNavigate();
 
   function navigateToDetails(movieId: any) {
     navigate("/DetailsPage", { state: { movieId } });
   }
+
+  useEffect(()=>{
+      let preparedMovieData = moviesData;
+
+      if (selectedSort !== undefined) {
+          if (selectedSort?.length !== 0) {
+              preparedMovieData = preparedMovieData.sort((a: any, b: any) => {
+                  if (selectedSort === "longest") {
+                      return b.duration - a.duration;
+                  }
+                  else if (selectedSort === "shortest") {
+                      return a.duration - b.duration;
+                  }
+                  //TODO Sort by Rating
+                  return preparedMovieData;
+              });
+          }
+          setSortBy(!sortBy);
+      }
+
+      setMoviesToRender(preparedMovieData);
+
+  },[selectedSort, sortBy, moviesData, moviesToRender]);
 
   return (
     <Container
@@ -58,6 +83,7 @@ function MovieCard(props: any) {
                   </CardContent>
                   <CardActions>
                     <Button
+                      fullWidth
                       size="small"
                       onClick={() => {
                         navigateToDetails(`${movie.id}`);
