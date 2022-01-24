@@ -117,7 +117,6 @@ function SignUp(props: any) {
       if (!response.ok) {
         setError({ isError: true, msg: `Fehler: ${response.statusText}` });
       } else if (response.ok) {
-        postMessage("Registration successfull! Redirecting to Homepage!");
         const data: any = await response.json();
         setError({ isError: false, msg: "No error" });
         setCookie("userId", data.id, 7);
@@ -300,7 +299,7 @@ function SignUp(props: any) {
                     minLength: 7,
                     maxLength: 32,
                     pattern:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
                   }}
                   render={({ field }) => (
                     <TextField
@@ -338,7 +337,7 @@ function SignUp(props: any) {
                     minLength: 7,
                     maxLength: 32,
                     pattern:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
                   }}
                   render={({ field }) => (
                     <TextField

@@ -92,7 +92,7 @@ function CheckoutDialog(props: any) {
   }
 
   const theme = createTheme(palette);
-  if (user.id === undefined) {
+  if (user?.id === undefined) {
     return (
       <ThemeProvider theme={theme}>
         <Dialog

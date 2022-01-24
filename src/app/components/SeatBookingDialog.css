@@ -28,9 +28,5 @@
   align-items: center;
 }
 .seatCheckbox {
-  flex: 1;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
   height: 2rem;
 }

@@ -34,23 +34,22 @@ function MenuBar() {
   });
 
   const apiUrl = `${APIUrl.apiUrl}/user/${currentUser.userId}`;
-  const { data, refetch } = useQuery(
+  const userData = useQuery(
     "userData",
     () => fetch(apiUrl).then((res) => res.json()),
     {
-      refetchOnWindowFocus: false,
-      enabled: false,
+      refetchOnWindowFocus: true,
+      enabled: true,
     }
   );
 
   useEffect(() => {
-    refetch();
+    userData.refetch();
   }, [currentUser.userId]);
 
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   const [pages, setPages] = useState([
     { name: "Programm", link: "/programPage" },
     { name: "Events", link: "/eventsPage" },
@@ -81,9 +80,9 @@ function MenuBar() {
               to={"/"}
             >
               <img
-                  src="https://raw.githubusercontent.com/DrBackmischung/Kino-Dokumentation/main/KV.png"
-                  alt="Kinovation Logo"
-                  height={40}
+                src="https://raw.githubusercontent.com/DrBackmischung/Kino-Dokumentation/main/KV.png"
+                alt="Kinovation Logo"
+                height={40}
               />
             </IconButton>
             <Box
@@ -108,13 +107,14 @@ function MenuBar() {
               ))}
             </Box>
             <Box>
-              {currentUser.userId !== "null" ? (
+              {currentUser?.userId !== "null" &&
+              currentUser?.userId !== undefined ? (
                 <>
                   <Grid container spacing={2}>
                     <Grid item xs={8}>
                       <p
                         style={{ marginTop: "1.35rem" }}
-                      >{`Willkommen ${data?.userName}!`}</p>
+                      >{`Willkommen ${userData?.data?.userName}!`}</p>
                     </Grid>
                     <Grid item xs={4}>
                       <Button
@@ -182,11 +182,14 @@ function MenuBar() {
         <Route path="/eventsPage" element={<ComingSoon />} />
         <Route path="/pricesOverviewPage" element={<PricesPage />} />
         <Route path="/newsPage" element={<ComingSoon />} />
-        <Route path="/TermsAndConditionsPage" element={<TermsAndConditionsPage />} />
+        <Route
+          path="/TermsAndConditionsPage"
+          element={<TermsAndConditionsPage />}
+        />
         <Route
           path="/DetailsPage"
           // @ts-ignore
-          element={<DetailsPage userData={data} />}
+          element={<DetailsPage userData={userData?.data} />}
         />
         <Route
           path="/SignInPage"
@@ -199,9 +202,13 @@ function MenuBar() {
           element={<UserRegistrationPage setUser={setUser} />}
         />
         <Route path="/Impressum" element={<Impressum />} />
-        <Route path="/Admin" element={<AdminPage userData={data} />} />
+        <Route
+          path="/Admin"
+          // @ts-ignore
+          element={<AdminPage userData={userData} />}
+        />
       </Routes>
-      <CookiesNotification/>
+      <CookiesNotification />
     </BrowserRouter>
   );
 }

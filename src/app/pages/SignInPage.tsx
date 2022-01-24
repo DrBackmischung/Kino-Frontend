@@ -164,7 +164,7 @@ export default function SignIn(props: any) {
               minLength: 7,
               maxLength: 32,
               pattern:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
             }}
             render={({ field }) => (
               <TextField
@@ -206,6 +206,7 @@ export default function SignIn(props: any) {
               {error.msg}
             </small>
           )}
+          <br />
           <Button
             type="submit"
             fullWidth

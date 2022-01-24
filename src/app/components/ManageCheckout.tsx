@@ -74,7 +74,7 @@ function ManageCheckout(props: any) {
         handleClose={handleCloseBooking}
         selectedShow={selectedShow}
         proceedToCheckout={handleClickOpenCheckout}
-        userId={userData.id}
+        userId={userData?.id}
         selectedSeats={selectedSeats}
         setSelectedSeats={setSelectedSeats}
         priceQuery={priceQuery}
