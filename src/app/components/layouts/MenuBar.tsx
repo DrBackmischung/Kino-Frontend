@@ -12,6 +12,7 @@ import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import ProgramPage from "../../pages/ProgramPage";
 import ComingSoon from "../../pages/ComingSoon";
 import DetailsPage from "../../pages/DetailsPage";
+import NewsAndEventsPage from "../../pages/NewsAndEventsPage";
 import SignInPage from "../../pages/SignInPage";
 import UserRegistrationPage from "../../pages/UserRegistrationPage";
 import Impressum from "../../pages/Impressum";
@@ -52,9 +53,8 @@ function MenuBar() {
   };
   const [pages, setPages] = useState([
     { name: "Programm", link: "/programPage" },
-    { name: "Events", link: "/eventsPage" },
+    { name: "News & Events", link: "/newsAndEventsPage" },
     { name: "Preisübersicht", link: "/pricesOverviewPage" },
-    { name: "News", link: "/newsPage" },
   ]);
 
   const setUser = () => {
@@ -179,9 +179,8 @@ function MenuBar() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/programPage" element={<ProgramPage />} />
-        <Route path="/eventsPage" element={<ComingSoon />} />
+        <Route path="/newsAndEventsPage" element={<NewsAndEventsPage />} />
         <Route path="/pricesOverviewPage" element={<PricesPage />} />
-        <Route path="/newsPage" element={<ComingSoon />} />
         <Route
           path="/TermsAndConditionsPage"
           element={<TermsAndConditionsPage />}
