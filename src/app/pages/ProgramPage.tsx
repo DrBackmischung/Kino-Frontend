@@ -7,8 +7,15 @@ import Container from "@mui/material/Container";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
+import {useNavigate} from "react-router-dom";
+import {IconButton} from "@mui/material";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+
+
 
 function ProgramPage() {
+    let navigate = useNavigate();
+
     const [filter, setFilter] = useState("");
     const [selectedSort, setSelectedSort] = useState("");
 
@@ -21,6 +28,10 @@ function ProgramPage() {
     const moviesData = useQuery("Movies", () =>
         fetch(apiUrlMovies).then((res) => res.json())
     );
+
+    function goBack() {
+        navigate(-1);
+    }
 
     if (moviesData.error) {
         return (
@@ -56,6 +67,9 @@ function ProgramPage() {
 
     return (
         <div>
+            <IconButton sx={{marginTop: 12, marginBottom: -12, marginLeft: 48}} onClick={goBack}>
+                <ArrowBackIosIcon />
+            </IconButton>
             <Toolbar
                 handleSearchChange={handleSearchChange}
                 setSelectedSort={setSelectedSort}
