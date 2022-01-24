@@ -156,46 +156,21 @@ export default function SignIn(props: any) {
               />
             )}
           />
-          <Controller
-            name="userPassword"
-            control={control}
-            rules={{
-              required: true,
-              minLength: 7,
-              maxLength: 32,
-              pattern:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
-            }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                label="Passwort"
-                type="password"
-                autoComplete="current-password"
-                onChange={(e: any) => {
-                  setUserPassword(e.target.value);
-                  setValue("userPassword", e.target.value);
-                  return;
-                }}
-                error={errors.userPassword}
-              />
-            )}
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="passwort"
+            label="Passwort"
+            type="password"
+            id="passwort"
+            autoComplete="current-password"
+            onChange={(e) => setUserPassword(e.target.value)}
           />
-          {errors.userPassword && (
-            <small>
-              Bitte geben Sie eine gültiges Password ein! Anforderungen: mind. 7
-              Zeichen, ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein
-              Sonderzeichen.
-            </small>
-          )}
-
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
-            label="Remember me" // in German?
+            label="Remember me" 
           />
           <br />
           {error.isError && (
