@@ -7,10 +7,9 @@ import Container from "@mui/material/Container";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
-import {useNavigate} from "react-router-dom";
-import {IconButton} from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-
+import {IconButton} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 
 function ProgramPage() {
@@ -32,6 +31,7 @@ function ProgramPage() {
     function goBack() {
         navigate(-1);
     }
+
 
     if (moviesData.error) {
         return (
