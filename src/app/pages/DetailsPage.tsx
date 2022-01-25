@@ -17,6 +17,7 @@ import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Ratings from "../components/Ratings";
+import "./DetailsPage.css";
 
 function DetailsPage(props: any) {
   const { userData } = props;
@@ -60,9 +61,9 @@ function DetailsPage(props: any) {
   return (
     <ThemeProvider theme={theme}>
       <Container
+        id="detailsPage-container"
         className="wholeContainer"
         sx={{
-          bgcolor: "background.paper",
           pt: 4,
           pb: 6,
           position: "relative",
@@ -70,7 +71,9 @@ function DetailsPage(props: any) {
         }}
       >
         <IconButton onClick={goBack}>
-          <ArrowBackIosIcon />
+          <ArrowBackIosIcon 
+            color="secondary"  
+          />
         </IconButton>
         <Container className="movieContainer">
           <Grid

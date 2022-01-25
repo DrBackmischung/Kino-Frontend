@@ -19,12 +19,11 @@ function Toolbar(props: any) {
     <ThemeProvider theme={theme}>
       <Container
         className="toolbar-container"
-        sx={{
-          bgcolor: "background.paper",
-          marginTop: theme.spacing(12),
-        }}
       >
-        <Grid container spacing={4} sx={{ justifyContent: "space-evenly" }}>
+        <Grid 
+          container spacing={4} 
+          className="toolbar-grid"
+        >
           <BasicSelect
             handleSelectChange={handleSelectChange}
             cityData={cityData}

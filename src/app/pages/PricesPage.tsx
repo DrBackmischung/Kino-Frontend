@@ -1,10 +1,10 @@
 import React from 'react';
-
 import {Container} from "@mui/material";
 import APIUrl from "../config/APIUrl";
 import LoadingAnimation from "../components/layouts/LoadingAnimation"
 import { useQuery } from 'react-query';
 import PriceCard from '../components/PriceCard';
+import "./PricePage.css";
 
 function PricesPage(){
 
@@ -17,12 +17,11 @@ function PricesPage(){
     while(priceData.isLoading)
        return(
             <Container
-             sx={{
+                className='PricePage-Container'
+                sx={{
                     bgcolor: "background.paper",
                     pt: 8,
                     pb: 6,
-                    position: "relative",
-                    marginTop: "15rem",
                 }}
                 maxWidth="md"
             >
@@ -32,7 +31,8 @@ function PricesPage(){
     );
 
     return(
-        <div>
+        <div
+            className='PricePage-div'>
             <PriceCard
                 pricesData={priceData.data}
             />

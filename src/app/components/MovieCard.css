@@ -3,4 +3,17 @@
     padding-top: 0.5rem;
     padding-bottom: 1rem;
     max-width: md;
+    background-color: #212121;
+}
+
+#movieCard-card{
+    background-color: #6d6d6d;
+}
+
+#movieCard-button{
+    background-color: #ba8434;
+}
+
+#movieCard-button:hover{
+    background-color: #865700;
 }

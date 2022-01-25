@@ -6,3 +6,10 @@
 #singInPage-formControlLabel{
     color: #ba8434;
 }
+
+#singInPage-container{
+    background-color: white;
+    margin-top: 4.5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}

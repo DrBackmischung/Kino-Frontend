@@ -1,0 +1,22 @@
+.BasicSelect-Box{
+    background-color: #212121;
+    min-width: 120px;
+}
+
+#simpleSelect-formControl{
+    background-color: #212121;
+}
+
+#simple-select-label{
+    background-color: #212121;
+    color: #ba8434;
+}
+
+#simple-select{
+    background-color: #212121;
+}
+
+#basicSelect-menuItem{
+    background-color: #212121;
+    color: white;
+}

@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import LoadingAnimation from "./layouts/LoadingAnimation";
 import { useForm, Controller } from "react-hook-form";
+import "./SignUp.css";
 
 function Copyright(props: any) {
   let navigate = useNavigate();
@@ -151,13 +152,14 @@ function SignUp(props: any) {
         <LoadingAnimation />
       </Container>
     );
+
   return (
-    <Container
+    <Container 
+      id ="signUp-container"
       component="main"
       maxWidth="xs"
       sx={{
         bgcolor: "background.paper",
-        pt: 8,
         pb: 6,
         position: "relative",
       }}
@@ -165,7 +167,6 @@ function SignUp(props: any) {
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -467,6 +468,7 @@ function SignUp(props: any) {
               </Grid>
             </Grid>
             <Button
+              id="signUp-button"
               type="submit"
               fullWidth
               variant="contained"

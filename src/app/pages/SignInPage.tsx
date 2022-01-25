@@ -27,14 +27,13 @@ const theme = createTheme();
 
 const useStyles = makeStyles({
   paper: {
-    marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: colours.palette.primary.dark,
+    backgroundColor: colours.palette.secondary.main,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -116,13 +115,12 @@ export default function SignIn(props: any) {
         <LoadingAnimation />
       </Container>
     );
+
   return (
     <Container
+      id="singInPage-container"
       component="main"
       maxWidth="xs"
-      sx={{
-        marginTop: theme.spacing(12),
-      }}
     >
       <CssBaseline />
       <div className={classes.paper}>

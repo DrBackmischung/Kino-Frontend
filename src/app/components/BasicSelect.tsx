@@ -7,6 +7,7 @@ import Select from "@mui/material/Select";
 import { createTheme } from "@mui/material/styles";
 import palette from "../config/Colours";
 import { ThemeProvider } from "@mui/styles";
+import "./BasicSelect.css";
 
 export default function BasicSelect(props: any) {
   const { handleSelectChange, cityData } = props;
@@ -16,8 +17,13 @@ export default function BasicSelect(props: any) {
   
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ minWidth: 120 }}>
-        <FormControl fullWidth>
+      <Box 
+        className = "BasicSelect-Box"
+      >
+        <FormControl 
+          id="simpleSelcet-formControl"
+          fullWidth
+        >
           <InputLabel id="simple-select-label">Location</InputLabel>
           <Select
             labelId="simple-select-label"
@@ -27,7 +33,7 @@ export default function BasicSelect(props: any) {
             onChange={handleSelectChange}
           >
             {cityData?.map((location: any) => (
-              <MenuItem value={location}> {location.city}</MenuItem>
+              <MenuItem id="basicSelect-menuItem" value={location}> {location.city}</MenuItem>
             ))}
           </Select>
         </FormControl>

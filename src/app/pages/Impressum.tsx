@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import palette from "../config/Colours";
+import "./Impressum.css";
 
 function Impressum() {
   let navigate = useNavigate();
@@ -19,20 +20,22 @@ function Impressum() {
   return (
     <ThemeProvider theme={theme}>
       <Container className="wholeContainer" sx={{
-        bgcolor: "background.paper",
         pt: 8,
         pb: 6,
         position: "relative",
         marginTop: theme.spacing(2),
       }}>
-        <IconButton onClick={goBack}>
-          <ArrowBackIosIcon />
+        <IconButton 
+          onClick={goBack}
+        >
+          <ArrowBackIosIcon color="secondary" />
         </IconButton>
         <Container className="AGBContainer">
           <Box>
             <h1>Impressum</h1>
             <h2>Verantwortliche für den Inhalt der Webseite:</h2>
-            <Box className="mainNameBox" sx={{ fontStyle: "italic" }}>
+            <br/>
+            <Box className="mainNameBox">
               <p>Mathis Neunzig</p>
               <p>Parkring 21</p>
               <p>68159 Mannheim</p>
@@ -51,6 +54,7 @@ function Impressum() {
               Hauptverantwortlichen gehören des Weiteren folgende Personen zu der
               Gruppe dieses Projekts:
             </p>
+            <br/>
             <Box className="nameBox" sx={{ fontStyle: "italic" }}>
               <p>Anna Khristolyubova</p>
               <p>Babett Müller</p>

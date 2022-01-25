@@ -1,0 +1,18 @@
+.wholeContainer {
+    color: white;
+    font-style: italic;
+}
+
+.AGBContainer{
+   text-align: justify;
+}
+
+.mainNameBox{
+    line-height: 0.5rem;
+    text-indent: 1.5rem;
+}
+
+.nameBox{
+    text-indent: 1.5rem;
+    line-height: 0.75rem;
+}

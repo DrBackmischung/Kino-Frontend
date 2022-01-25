@@ -7,11 +7,13 @@ import {useQuery} from "react-query";
 import {createTheme} from "@mui/material/styles";
 import palette from "../config/Colours";
 import MovieCard from "../components/MovieCard";
+import { ThemeProvider } from '@mui/styles';
+import "./HomePage.css";
 
 function Item(props: any)
 {
     return (
-        <Paper>
+        <Paper id="homePage-paper">
             <h2>{props.item.name}</h2>
             <p>{props.item.description}</p>
             <CardMedia
@@ -51,34 +53,40 @@ function HomePage(){
     const theme = createTheme(palette);
 
     return(
-        <Container className="wholeContainer" sx={{
-            position: "relative",
-            marginTop: theme.spacing(12)
-        }}>
-            <img src="https://raw.githubusercontent.com/DrBackmischung/Kino-Dokumentation/main/Kinovation.png" alt="Kinovation Logo" height={100}/>
-            <Box>
-                <Carousel>
-                    {
-                        items.map( (item, i) => <Item key={i} item={item} /> )
-                    }
-                </Carousel>
-            </Box>
-            <Button variant="contained" disabled size="large" sx={{
-                mt: 3,
-                width: 1,
-                height: 30,
-                position: 'relative',
-                backgroundColor: palette.palette.primary.dark,
-            }}/>
-            <Box>
-                <h3>More Movies:</h3>
-                <MovieCard
-                    filter={""}
-                    location={""}
-                    moviesData={moviesData.data}
-                />
-            </Box>
-        </Container>
+        <ThemeProvider theme={theme}>
+            <Container 
+                className="wholeContainer" 
+                sx={{
+                    position: "relative",
+                    marginTop: theme.spacing(12)
+                }}
+                id="homePage-container"
+            >
+                <img src="https://raw.githubusercontent.com/DrBackmischung/Kino-Dokumentation/main/Kinovation.png" alt="Kinovation Logo" height={100}/>
+                <Box>
+                    <Carousel>
+                        {
+                            items.map( (item, i) => <Item key={i} item={item} /> )
+                        }
+                    </Carousel>
+                </Box>
+                <Button variant="contained" disabled size="large" sx={{
+                    mt: 3,
+                    width: 1,
+                    height: 30,
+                    position: 'relative',
+                    backgroundColor: palette.palette.primary.dark,
+                }}/>
+                <Box id="homePage-box">
+                    <h3>More Movies:</h3>
+                    <MovieCard
+                        filter={""}
+                        location={""}
+                        moviesData={moviesData.data}
+                    />
+                </Box>
+            </Container>
+        </ThemeProvider>
     )
 }
 

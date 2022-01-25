@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import HomeIcon from "@mui/icons-material/Home";
-import { Box, Container, Menu, MenuItem, Grid } from "@mui/material";
+import { Box, Container, Menu, MenuItem, Grid, MenuProps } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { useState } from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
@@ -24,6 +24,7 @@ import APIUrl from "../../config/APIUrl";
 import PricesPage from "../../pages/PricesPage";
 import HomePage from "../../pages/HomePage";
 import CookiesNotification from "../CookiesNotification";
+import { styled } from '@mui/material/styles';
 
 function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -64,6 +65,29 @@ function MenuBar() {
       userId: getCookie("userId"),
     });
   };
+
+  const StyledMenu = styled((props: MenuProps) => (
+    <Menu
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      {...props}
+    />
+  ))(({theme})=>({
+    '& .MuiPaper-root': {
+      borderRadius: 6,
+      minWidth:180,
+    },
+    '& .MuiMenu-list': {
+      backgroundColor: '#6d6d6d',
+      padding: '4px 0',
+    },
+  }));
 
   const theme = createTheme(palette)
   
@@ -147,25 +171,16 @@ function MenuBar() {
                       aria-controls="menu-appbar"
                       aria-haspopup="true"
                       onClick={handleMenu}
-                      color="inherit"
+                      color="secondary"
                     >
                       <AccountCircle />
                     </IconButton>
-                    <Menu
+                    <StyledMenu
                       id="menu-appbar"
                       anchorEl={anchorEl}
-                      anchorOrigin={{
-                        vertical: "top",
-                        horizontal: "right",
-                      }}
                       keepMounted
-                      transformOrigin={{
-                        vertical: "top",
-                        horizontal: "right",
-                      }}
                       open={Boolean(anchorEl)}
-                      onClose={handleClose}
-                    >
+                      onClose={handleClose}>
                       <MenuItem component={Link} to="/SignUpPage">
                           Registrieren
                       </MenuItem>
@@ -173,7 +188,7 @@ function MenuBar() {
                           Einloggen
                       </MenuItem>
                       <MenuItem onClick={handleClose}>My account</MenuItem>
-                    </Menu>
+                    </StyledMenu>
                   </>
                 )}
               </Box>

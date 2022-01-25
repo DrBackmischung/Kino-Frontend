@@ -35,7 +35,7 @@ function MovieCard(props: any) {
             (movie: any) =>
               movie.title.toLowerCase().includes(filter) && (
                 <Grid item key={movie.id} xs={12} sm={6} md={4}>
-                  <Card
+                  <Card id="movieCard-card"
                     sx={{
                       height: "100%",
                       display: "flex",
@@ -84,6 +84,7 @@ function MovieCard(props: any) {
                         onClick={() => {
                           navigateToDetails(`${movie.id}`);
                         }}
+                        id="movieCard-button"
                       >
                         Tickets
                       </Button>
