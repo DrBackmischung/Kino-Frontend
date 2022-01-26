@@ -20,6 +20,7 @@ import { getCookie, setCookie } from "../CookieHandler";
 import { useQuery } from "react-query";
 import APIUrl from "../../config/APIUrl";
 import PricesPage from "../../pages/PricesPage";
+import ProfilePage from "../../pages/ProfilePage";
 import HomePage from "../../pages/HomePage";
 import CookiesNotification from "../CookiesNotification";
 import TermsAndConditionsPage from "../../pages/TermsAndConditionsPage";
@@ -200,6 +201,7 @@ function MenuBar() {
         />
         <Route path="/Impressum" element={<Impressum />} />
         <Route path="/Admin" element={<AdminPage userData={data} />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
       <CookiesNotification/>
     </BrowserRouter>
