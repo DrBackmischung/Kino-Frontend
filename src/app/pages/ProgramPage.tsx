@@ -35,34 +35,12 @@ function ProgramPage() {
 
     if (moviesData.error) {
         return (
-            <Container
-                sx={{
-                    bgcolor: "background.paper",
-                    pt: 8,
-                    pb: 6,
-                    position: "relative",
-                    marginTop: "15rem",
-                }}
-                maxWidth="md"
-            >
-                <ErrorPage />
-            </Container>
+            <ErrorPage />
         );
     }
     if (moviesData.isLoading)
         return (
-            <Container
-                sx={{
-                    bgcolor: "background.paper",
-                    pt: 8,
-                    pb: 6,
-                    position: "relative",
-                    marginTop: "15rem",
-                }}
-                maxWidth="md"
-            >
-                <LoadingAnimation />
-            </Container>
+            <LoadingAnimation />
         );
 
     return (
