@@ -10,6 +10,7 @@ import APIUrl from "../config/APIUrl";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import {IconButton} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import ProgramCard from "../components/ProgramCard";
 
 
 function ProgramPage() {
@@ -53,7 +54,7 @@ function ProgramPage() {
                 setSelectedSort={setSelectedSort}
                 selectedSort={selectedSort}
             />
-            <MovieCard
+            <ProgramCard
                 filter={filter}
                 moviesData={moviesData.data}
                 selectedSort={selectedSort}
