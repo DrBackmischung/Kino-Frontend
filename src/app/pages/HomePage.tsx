@@ -55,7 +55,6 @@ function HomePage(){
             position: "relative",
             marginTop: theme.spacing(12)
         }}>
-            <img src="https://raw.githubusercontent.com/DrBackmischung/Kino-Dokumentation/main/Kinovation.png" alt="Kinovation Logo" height={100}/>
             <Box>
                 <Carousel>
                     {

@@ -12,9 +12,11 @@ import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import ProgramPage from "../../pages/ProgramPage";
 import ComingSoon from "../../pages/ComingSoon";
 import DetailsPage from "../../pages/DetailsPage";
+import NewsAndEventsPage from "../../pages/NewsAndEventsPage";
 import SignInPage from "../../pages/SignInPage";
 import UserRegistrationPage from "../../pages/UserRegistrationPage";
 import Impressum from "../../pages/Impressum";
+import AdminPage from "../../pages/AdminPage";
 import { getCookie, setCookie } from "../CookieHandler";
 import { useQuery } from "react-query";
 import APIUrl from "../../config/APIUrl";
@@ -33,28 +35,26 @@ function MenuBar() {
   });
 
   const apiUrl = `${APIUrl.apiUrl}/user/${currentUser.userId}`;
-  const { data, refetch } = useQuery(
+  const userData = useQuery(
     "userData",
     () => fetch(apiUrl).then((res) => res.json()),
     {
-      refetchOnWindowFocus: false,
-      enabled: false,
+      refetchOnWindowFocus: true,
+      enabled: true,
     }
   );
 
   useEffect(() => {
-    refetch();
+    userData.refetch();
   }, [currentUser.userId]);
 
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   const [pages, setPages] = useState([
     { name: "Programm", link: "/programPage" },
-    { name: "Events", link: "/eventsPage" },
+    { name: "News & Events", link: "/newsAndEventsPage" },
     { name: "Preisübersicht", link: "/pricesOverviewPage" },
-    { name: "News", link: "/newsPage" },
   ]);
 
   const setUser = () => {
@@ -80,9 +80,9 @@ function MenuBar() {
               to={"/"}
             >
               <img
-                  src="https://raw.githubusercontent.com/DrBackmischung/Kino-Dokumentation/main/KV.png"
-                  alt="Kinovation Logo"
-                  height={40}
+                src="https://raw.githubusercontent.com/DrBackmischung/Kino-Dokumentation/main/Kinovation.png"
+                alt="Kinovation Logo"
+                height={40}
               />
             </IconButton>
             <Box
@@ -107,13 +107,14 @@ function MenuBar() {
               ))}
             </Box>
             <Box>
-              {currentUser.userId !== "null" ? (
+              {currentUser?.userId !== "null" &&
+              currentUser?.userId !== undefined ? (
                 <>
                   <Grid container spacing={2}>
                     <Grid item xs={8}>
                       <p
                         style={{ marginTop: "1.35rem" }}
-                      >{`Willkommen ${data?.userName}!`}</p>
+                      >{`Willkommen ${userData?.data?.userName}!`}</p>
                     </Grid>
                     <Grid item xs={4}>
                       <Button
@@ -123,6 +124,7 @@ function MenuBar() {
                         variant="outlined"
                         onClick={(e) => {
                           setCookie("userId", "null", 7);
+                          setCookie("role", "null", 7);
                           setCurrentUser({
                             userId: "null",
                           });
@@ -177,14 +179,16 @@ function MenuBar() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/programPage" element={<ProgramPage />} />
-        <Route path="/eventsPage" element={<ComingSoon />} />
+        <Route path="/newsAndEventsPage" element={<NewsAndEventsPage />} />
         <Route path="/pricesOverviewPage" element={<PricesPage />} />
-        <Route path="/newsPage" element={<ComingSoon />} />
-        <Route path="/TermsAndConditionsPage" element={<TermsAndConditionsPage />} />
+        <Route
+          path="/TermsAndConditionsPage"
+          element={<TermsAndConditionsPage />}
+        />
         <Route
           path="/DetailsPage"
           // @ts-ignore
-          element={<DetailsPage userData={data} />}
+          element={<DetailsPage userData={userData?.data} />}
         />
         <Route
           path="/SignInPage"
@@ -197,8 +201,13 @@ function MenuBar() {
           element={<UserRegistrationPage setUser={setUser} />}
         />
         <Route path="/Impressum" element={<Impressum />} />
+        <Route
+          path="/Admin"
+          // @ts-ignore
+          element={<AdminPage userData={userData} />}
+        />
       </Routes>
-      <CookiesNotification/>
+      <CookiesNotification />
     </BrowserRouter>
   );
 }

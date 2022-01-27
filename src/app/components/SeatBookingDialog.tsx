@@ -11,6 +11,10 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import Person from "@mui/icons-material/Person";
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import PersonOffIcon from '@mui/icons-material/PersonOff';
+import WeekendIcon from '@mui/icons-material/Weekend';
+import AccessibleIcon from '@mui/icons-material/Accessible';
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import ErrorPage from "../pages/ErrorPage";
@@ -19,6 +23,7 @@ import APIUrl from "../config/APIUrl";
 import "./SeatBookingDialog.css";
 import { createTheme } from "@mui/material/styles";
 import palette from "../config/Colours";
+import { grey, blue, orange, red, green, purple } from '@mui/material/colors';
 
 function SeatBookingDialog(props: any) {
   const {
@@ -99,6 +104,21 @@ function SeatBookingDialog(props: any) {
     }
   };
   const theme = createTheme(palette);
+
+  const convertType: any = (t: string) => {
+      switch (t) {
+          case "PARQUET":
+              return { color: grey[500] };
+          case "LODGE":
+              return { color: blue[500] };
+          case "PREMIUM":
+              return { color: orange[500] };
+          case "WHEELCHAIR":
+              return { color: green[500] };
+          case "DOUBLESEAT":
+              return { color: purple[500] };
+        }
+  }
   return (
     <ThemeProvider theme={theme}>
       <Dialog
@@ -142,12 +162,17 @@ function SeatBookingDialog(props: any) {
                           className="seatCheckbox"
                           sx={{
                             width: widthForSeats,
-                            "&.Mui-checked": {
-                              color: "orange",
-                            },
                           }}
-                          icon={<Person />}
-                          checkedIcon={<Person />}
+                          icon={seat.state === "RESERVED" ? <PersonOffIcon sx={{ color: red[500] }} /> : 
+                            (seat.type === "WHEELCHAIR" ?
+                              <AccessibleIcon sx={convertType(seat.type)}/>
+                              : (seat.type === "DOUBLESEAT") ?
+                              <WeekendIcon sx={convertType(seat.type)}/>
+                              : <PersonOutlineIcon sx={convertType(seat.type)}/>)
+                          }
+                          checkedIcon={
+                            <Person sx={convertType(seat.type)}/>
+                          }
                           onChange={(e) => handleSeatChecked(e, seat.id, seat)}
                         />
                       ))}
