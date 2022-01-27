@@ -17,6 +17,14 @@ function ProgramPage() {
     const [filter, setFilter] = useState("");
     const [selectedSort, setSelectedSort] = useState("");
 
+    const [selectedLanguage, setSelectedLanguage] = useState([]);
+    const [selectedFSK, setSelectedFSK] = useState([]);
+    const [selectedGenre, setSelectedGenre] = useState([]);
+    const [applyFilters, setApplyFilters] = useState([]);
+
+    const [ratingValue, setRatingValue] = React.useState<number | null>(0);
+
+
     const handleSearchChange = (e: any) => {
         setFilter(e.target.value.toLowerCase());
     };
@@ -30,7 +38,6 @@ function ProgramPage() {
     function goBack() {
         navigate(-1);
     }
-
 
     if (moviesData.error) {
         return (
@@ -51,11 +58,24 @@ function ProgramPage() {
                 handleSearchChange={handleSearchChange}
                 setSelectedSort={setSelectedSort}
                 selectedSort={selectedSort}
+                setSelectedLanguage={setSelectedLanguage}
+                setSelectedFSK={setSelectedFSK}
+                setSelectedGenre={setSelectedGenre}
+                moviesData={moviesData.data}
+                selectedGenre={selectedGenre}
+                setApplyFilters={setApplyFilters}
+                setRatingValue={setRatingValue}
+                ratingValue={ratingValue}
             />
             <ProgramCard
                 filter={filter}
                 moviesData={moviesData.data}
                 selectedSort={selectedSort}
+                selectedLanguage={selectedLanguage}
+                selectedFSK={selectedFSK}
+                selectedGenre={selectedGenre}
+                applyFilters={applyFilters}
+                ratingValue={ratingValue}
             />
         </div>
     );

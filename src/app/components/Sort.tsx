@@ -17,17 +17,17 @@ function Sort(props: any) {
     return (
         <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
-                <InputLabel id="simple-select-sortBy-label">Sortirung</InputLabel>
+                <InputLabel id="simple-select-sortBy-label">Sortierung</InputLabel>
                 <Select
                     labelId="simple-select-sortBy-label"
                     id="simple-select-sortBy"
                     defaultValue={""}
                     value={selectedSort}
-                    label="Sortirung"
+                    label="Sortierung"
                     onChange={(e) => handleSortBy(e)}
                       >
-                    <MenuItem key="shortest"  value="shortest">  <KeyboardArrowUpIcon/> Duration </MenuItem>
-                    <MenuItem key="longest"  value="longest">  <KeyboardArrowDownIcon/> Duration </MenuItem>
+                    <MenuItem key="shortest"  value="shortest">  <KeyboardArrowUpIcon/> Filmlänge </MenuItem>
+                    <MenuItem key="longest"  value="longest">  <KeyboardArrowDownIcon/> Filmlänge </MenuItem>
                     <MenuItem key="best"   value="best">   <KeyboardArrowDownIcon/> Rating </MenuItem>
                 </Select>
             </FormControl>
