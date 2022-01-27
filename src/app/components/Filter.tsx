@@ -131,16 +131,6 @@ function Filter(props: any) {
                                             control={
                                                 <Checkbox
                                                     color="primary"
-                                                    value="Japanisch"
-                                                    onChange={(e) => handleCheckboxSelect(e)}
-                                                />
-                                            }
-                                            label="Japanisch"
-                                        />
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    color="primary"
                                                     value="Deutsch"
                                                     onChange={(e) => handleCheckboxSelect(e)}
                                                 />
@@ -156,8 +146,16 @@ function Filter(props: any) {
                                                 />
                                             }
                                             label="Englisch"
+                                        /><FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    color="primary"
+                                                    value="Japanisch"
+                                                    onChange={(e) => handleCheckboxSelect(e)}
+                                                />
+                                            }
+                                            label="Japanisch"
                                         />
-
                                         <FormControlLabel
                                             control={
                                                 <Checkbox

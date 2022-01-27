@@ -43,15 +43,15 @@ function ProgramCard(props: any) {
 
       if (selectedSort !== undefined) {
           if (selectedSort?.length !== 0) {
-              moviesData.sort((a: any, b: any) => {
-                  if (selectedSort === "longest") {
-                      return b.duration - a.duration;
-                  }
-                  else if (selectedSort === "shortest") {
-                      return a.duration - b.duration;
-                  }
-                  //TODO Sort by Rating
-              });
+              return moviesData.sort((a: any, b: any) => {
+                          if (selectedSort === "longest") {
+                              return b.duration - a.duration;
+                          }
+                          else if (selectedSort === "shortest") {
+                              return a.duration - b.duration;
+                          }
+                          //TODO Sort by Rating
+                        });
           }
           setSortBy(!sortBy);
       }
@@ -67,6 +67,7 @@ function ProgramCard(props: any) {
                   preparedMovieData = preparedMovieData?.filter((item: any) => {
                       return newReviewsArray?.includes(item['id']);
                   });
+                  return preparedMovieData;
               }
           }
 
@@ -105,7 +106,7 @@ function ProgramCard(props: any) {
      }
 
 // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[selectedSort, moviesData, selectedLanguage, selectedFSK, selectedGenre, applyFilters, ratingValue]);
+  },[selectedSort, moviesData, selectedLanguage, selectedFSK, selectedGenre, applyFilters, ratingValue, newReviewsArray]);
 
 
 
