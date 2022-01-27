@@ -1,15 +1,14 @@
 import * as React from "react";
 import Toolbar from "../components/Toolbar";
-import MovieCard from "../components/MovieCard";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import Container from "@mui/material/Container";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import {IconButton} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import ProgramCard from "../components/ProgramCard";
 
 
 function ProgramPage() {
@@ -35,34 +34,12 @@ function ProgramPage() {
 
     if (moviesData.error) {
         return (
-            <Container
-                sx={{
-                    bgcolor: "background.paper",
-                    pt: 8,
-                    pb: 6,
-                    position: "relative",
-                    marginTop: "15rem",
-                }}
-                maxWidth="md"
-            >
-                <ErrorPage />
-            </Container>
+            <ErrorPage />
         );
     }
     if (moviesData.isLoading)
         return (
-            <Container
-                sx={{
-                    bgcolor: "background.paper",
-                    pt: 8,
-                    pb: 6,
-                    position: "relative",
-                    marginTop: "15rem",
-                }}
-                maxWidth="md"
-            >
-                <LoadingAnimation />
-            </Container>
+            <LoadingAnimation />
         );
 
     return (
@@ -75,7 +52,7 @@ function ProgramPage() {
                 setSelectedSort={setSelectedSort}
                 selectedSort={selectedSort}
             />
-            <MovieCard
+            <ProgramCard
                 filter={filter}
                 moviesData={moviesData.data}
                 selectedSort={selectedSort}
