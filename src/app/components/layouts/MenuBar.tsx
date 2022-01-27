@@ -107,9 +107,15 @@ function MenuBar() {
             <Box>
               {currentUser?.userId !== "null" && currentUser?.userId !== undefined ? (
                 <>
-                  <p
+                  <Grid container spacing={2}>
+                    <Grid item xs={10}>
+                      <p
                         style={{ marginTop: "1.35rem" }}
-                  >{`Willkommen ${userData?.data?.userName}!`}</p>
+                      >
+                        {`Willkommen ${userData?.data?.userName}!`}
+                      </p>
+                    </Grid>
+                    <Grid item xs={2} sx={{pt: 3, pb:2}}>
                   <IconButton
                     size="large"
                     aria-label="account of current user"
@@ -117,6 +123,7 @@ function MenuBar() {
                     aria-haspopup="true"
                     onClick={handleMenu}
                     color="inherit"
+                    sx={{pt: 3}}
                   >
                     <AccountCircle />
                   </IconButton>
@@ -152,6 +159,8 @@ function MenuBar() {
                       Ausloggen
                     </MenuItem>
                   </Menu>
+                    </Grid>
+                  </Grid>
                 </>
               ) : (
                 <>
