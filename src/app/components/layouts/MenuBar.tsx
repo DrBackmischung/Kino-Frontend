@@ -4,13 +4,11 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import HomeIcon from "@mui/icons-material/Home";
 import { Box, Container, Menu, MenuItem, Grid } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { useState } from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import ProgramPage from "../../pages/ProgramPage";
-import ComingSoon from "../../pages/ComingSoon";
 import DetailsPage from "../../pages/DetailsPage";
 import NewsAndEventsPage from "../../pages/NewsAndEventsPage";
 import SignInPage from "../../pages/SignInPage";
@@ -22,6 +20,7 @@ import { useQuery } from "react-query";
 import APIUrl from "../../config/APIUrl";
 import PricesPage from "../../pages/PricesPage";
 import HomePage from "../../pages/HomePage";
+import ProfilePage from "../../pages/ProfilePage";
 import CookiesNotification from "../CookiesNotification";
 import TermsAndConditionsPage from "../../pages/TermsAndConditionsPage";
 
@@ -80,9 +79,9 @@ function MenuBar() {
               to={"/"}
             >
               <img
-                src="https://raw.githubusercontent.com/DrBackmischung/Kino-Dokumentation/main/Kinovation.png"
-                alt="Kinovation Logo"
-                height={40}
+                  src="https://raw.githubusercontent.com/DrBackmischung/Kino-Dokumentation/main/KV.png"
+                  alt="Kinovation Logo"
+                  height={40}
               />
             </IconButton>
             <Box
@@ -96,7 +95,6 @@ function MenuBar() {
                 <Button
                   style={{ backgroundColor: "white", opacity: 0.95 }}
                   key={page.name}
-                  //onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: "black", display: "block" }}
                   variant="contained"
                   component={Link}
@@ -107,31 +105,60 @@ function MenuBar() {
               ))}
             </Box>
             <Box>
-              {currentUser?.userId !== "null" &&
-              currentUser?.userId !== undefined ? (
+              {currentUser?.userId !== "null" && currentUser?.userId !== undefined ? (
                 <>
                   <Grid container spacing={2}>
-                    <Grid item xs={8}>
+                    <Grid item xs={10}>
                       <p
                         style={{ marginTop: "1.35rem" }}
-                      >{`Willkommen ${userData?.data?.userName}!`}</p>
+                      >
+                        {`Willkommen ${userData?.data?.userName}!`}
+                      </p>
                     </Grid>
-                    <Grid item xs={4}>
-                      <Button
-                        style={{ backgroundColor: "white", opacity: 0.95 }}
-                        key="Ausloggen"
-                        sx={{ my: 2, color: "black", display: "block" }}
-                        variant="outlined"
-                        onClick={(e) => {
+                    <Grid item xs={2} sx={{pt: 3, pb:2}}>
+                  <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleMenu}
+                    color="inherit"
+                    sx={{pt: 3}}
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                  >
+                    <MenuItem component={Link} to="/profile">
+                      Profil
+                    </MenuItem>
+                    <MenuItem
+                      onClick={
+                        () => {
                           setCookie("userId", "null", 7);
                           setCookie("role", "null", 7);
                           setCurrentUser({
                             userId: "null",
                           });
-                        }}
-                      >
-                        Ausloggen
-                      </Button>
+                        }
+                      }
+                    >
+                      Ausloggen
+                    </MenuItem>
+                  </Menu>
                     </Grid>
                   </Grid>
                 </>
@@ -181,10 +208,7 @@ function MenuBar() {
         <Route path="/programPage" element={<ProgramPage />} />
         <Route path="/newsAndEventsPage" element={<NewsAndEventsPage />} />
         <Route path="/pricesOverviewPage" element={<PricesPage />} />
-        <Route
-          path="/TermsAndConditionsPage"
-          element={<TermsAndConditionsPage />}
-        />
+        <Route path="/TermsAndConditionsPage" element={<TermsAndConditionsPage />} />
         <Route
           path="/DetailsPage"
           // @ts-ignore
@@ -201,13 +225,10 @@ function MenuBar() {
           element={<UserRegistrationPage setUser={setUser} />}
         />
         <Route path="/Impressum" element={<Impressum />} />
-        <Route
-          path="/Admin"
-          // @ts-ignore
-          element={<AdminPage userData={userData} />}
-        />
+        <Route path="/Admin" element={<AdminPage userData={userData} />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
-      <CookiesNotification />
+      <CookiesNotification/>
     </BrowserRouter>
   );
 }
