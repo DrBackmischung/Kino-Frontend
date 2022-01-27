@@ -1,13 +1,24 @@
 import React, {useEffect, useState } from "react";
 import { Grid, Card, CardMedia, Typography, Box, Button, CardActions, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import APIUrl from "../config/APIUrl";
+import {useQuery} from "react-query";
 
 function ProgramCard(props: any) {
-  const { filter, moviesData, selectedSort } = props;
+  const { filter, moviesData, applyFilters, selectedSort, selectedLanguage, selectedFSK, selectedGenre, ratingValue} = props;
   const [moviesToRender, setMoviesToRender] = useState(moviesData);
   const [sortBy, setSortBy] = useState(true);
 
   let navigate = useNavigate();
+
+  const apiUrlReviews = `${APIUrl.apiUrl}/review/getAll`;
+
+  const reviewsData = useQuery("Reviews", () =>
+        fetch(apiUrlReviews).then((res) => res.json())
+  );
+
+
+  let newReviewsArray: any;
 
   function navigateToDetails(movieId: any) {
     navigate("/DetailsPage", { state: { movieId } });
@@ -32,7 +43,7 @@ function ProgramCard(props: any) {
 
       if (selectedSort !== undefined) {
           if (selectedSort?.length !== 0) {
-              preparedMovieData = preparedMovieData.sort((a: any, b: any) => {
+              moviesData.sort((a: any, b: any) => {
                   if (selectedSort === "longest") {
                       return b.duration - a.duration;
                   }
@@ -40,17 +51,65 @@ function ProgramCard(props: any) {
                       return a.duration - b.duration;
                   }
                   //TODO Sort by Rating
-                  return preparedMovieData;
               });
           }
           setSortBy(!sortBy);
       }
 
-      setMoviesToRender(preparedMovieData);
+      // Selected Rating
+          if (ratingValue !== undefined) {
+              if (ratingValue?.length !== 0) {
+                  newReviewsArray = reviewsData.data?.map(function (item:any) {
+                      if (item['rating'] >= ratingValue){
+                          return item['movie']['id']
+                      } });
 
-  },[selectedSort, sortBy, moviesData, moviesToRender]);
+                  preparedMovieData = preparedMovieData?.filter((item: any) => {
+                      return newReviewsArray?.includes(item['id']);
+                  });
+              }
+          }
 
-  return (
+
+      //Language Filter
+      if (applyFilters === true) {
+          if (selectedLanguage !== undefined) {
+              if (selectedLanguage?.length !== 0) {
+                  preparedMovieData = preparedMovieData.filter((movie: any) => {
+                      return selectedLanguage.includes(movie.language)
+                  });
+              }
+          }
+
+
+     // FSK
+     if (selectedFSK !== undefined) {
+          if (selectedFSK?.length !== 0) {
+              preparedMovieData = preparedMovieData.filter((movie: any) => {
+                   return selectedFSK.includes(movie.fsk.toString())
+              });
+          }
+     }
+
+     // Genre
+     if (selectedGenre !== undefined) {
+         if (selectedGenre?.length !== 0) {
+              preparedMovieData = preparedMovieData.filter((movie: any) => {
+                  return (movie.genre.toString().includes(selectedGenre));
+              });
+         }
+     }
+          setMoviesToRender(preparedMovieData)
+     } else {
+          setMoviesToRender(moviesData)
+     }
+
+// eslint-disable-next-line react-hooks/exhaustive-deps
+  },[selectedSort, moviesData, selectedLanguage, selectedFSK, selectedGenre, applyFilters, ratingValue]);
+
+
+
+    return (
     <Container
       sx={{
         bgcolor: "background.paper",
@@ -60,7 +119,7 @@ function ProgramCard(props: any) {
       maxWidth="xl"
     >
       <Grid container spacing={4} xs={12}>
-        {moviesData?.map(
+        {moviesToRender?.map(
           (movie: any) =>
             movie.title.toLowerCase().includes(filter) && (
               <>
@@ -98,7 +157,6 @@ function ProgramCard(props: any) {
                               onClick={() => {
                                 navigateToDetails(`${movie.id}`);
                               }}
-
                             >
                               <Typography variant="h5" component="h1"><b>Tickets</b></Typography>
                             </Button>
