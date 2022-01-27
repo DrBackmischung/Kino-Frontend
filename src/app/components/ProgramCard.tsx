@@ -1,12 +1,11 @@
 import React, {useEffect, useState } from "react";
-import { Grid, Card, CardMedia, CardContent, Typography, Box, Button, CardActions, Container } from "@mui/material";
+import { Grid, Card, CardMedia, Typography, Box, Button, CardActions, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 function ProgramCard(props: any) {
   const { filter, moviesData, selectedSort } = props;
   const [moviesToRender, setMoviesToRender] = useState(moviesData);
   const [sortBy, setSortBy] = useState(true);
-  const [nr, setNr] = useState(0);
 
   let navigate = useNavigate();
 

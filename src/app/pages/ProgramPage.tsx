@@ -1,9 +1,7 @@
 import * as React from "react";
 import Toolbar from "../components/Toolbar";
-import MovieCard from "../components/MovieCard";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import Container from "@mui/material/Container";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
