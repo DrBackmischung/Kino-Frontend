@@ -17,7 +17,7 @@ function ProgramCard(props: any) {
         fetch(apiUrlReviews).then((res) => res.json())
   );
 
-
+// eslint-disable-next-line
   let newReviewsArray: any;
 
   function navigateToDetails(movieId: any) {
@@ -43,7 +43,7 @@ function ProgramCard(props: any) {
 
       if (selectedSort !== undefined) {
           if (selectedSort?.length !== 0) {
-              return moviesData.sort((a: any, b: any) => {
+              preparedMovieData = preparedMovieData.sort((a: any, b: any) => {
                           if (selectedSort === "longest") {
                               return b.duration - a.duration;
                           }
@@ -51,7 +51,9 @@ function ProgramCard(props: any) {
                               return a.duration - b.duration;
                           }
                           //TODO Sort by Rating
-                        });
+
+                        return preparedMovieData;
+              });
           }
           setSortBy(!sortBy);
       }
@@ -59,18 +61,18 @@ function ProgramCard(props: any) {
       // Selected Rating
           if (ratingValue !== undefined) {
               if (ratingValue?.length !== 0) {
+                  // eslint-disable-next-line
                   newReviewsArray = reviewsData.data?.map(function (item:any) {
                       if (item['rating'] >= ratingValue){
                           return item['movie']['id']
                       } });
-
                   preparedMovieData = preparedMovieData?.filter((item: any) => {
                       return newReviewsArray?.includes(item['id']);
                   });
                   return preparedMovieData;
               }
+              return preparedMovieData;
           }
-
 
       //Language Filter
       if (applyFilters === true) {
@@ -106,7 +108,7 @@ function ProgramCard(props: any) {
      }
 
 // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[selectedSort, moviesData, selectedLanguage, selectedFSK, selectedGenre, applyFilters, ratingValue, newReviewsArray]);
+  },[selectedSort, moviesData, selectedLanguage, selectedFSK, selectedGenre, applyFilters, ratingValue]);
 
 
 
