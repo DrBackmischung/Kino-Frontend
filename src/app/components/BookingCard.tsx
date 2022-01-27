@@ -34,9 +34,9 @@ export function BookingCard(props: any) {
     return <ErrorPage />;
   }
 
-  if (dataBookings === undefined) {
+  if (dataBookings[0] === undefined) {
     return (
-      <Grid item xs={12} spacing={3} paddingTop={5}>
+      <Grid item xs={12} spacing={3} borderTop={"3px solid grey"} paddingTop={5}>
         <Typography align="center" component="h1" variant="h5">Keine Buchungen</Typography>
       </Grid>
     );
@@ -69,10 +69,10 @@ export function BookingCard(props: any) {
                 component="img"
                 
                 sx={{
-                  pt: "6%",
-                  pr: "6%",
-                  pb: "6%",
-                  width: "35%",
+                  pt: "2%",
+                  pr: "2%",
+                  pb: "2%",
+                  width: "25%",
                 }}
                 src={"data:image/png;base64," + b.qrCode}
                 alt="poster"

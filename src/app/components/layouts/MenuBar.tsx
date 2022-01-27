@@ -111,30 +111,48 @@ function MenuBar() {
             <Box>
               {currentUser.userId !== "null" ? (
                 <>
-                  <Grid container spacing={2}>
-                    <Grid item xs={8}>
-                      <p
-                        style={{ marginTop: "1.35rem" }}
-                      >{`Willkommen ${data?.userName}!`}</p>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Button
-                        style={{ backgroundColor: "white", opacity: 0.95 }}
-                        key="Ausloggen"
-                        sx={{ my: 2, color: "black", display: "block" }}
-                        variant="outlined"
-                        onClick={(e) => {
+                  <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleMenu}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                  >
+                    <MenuItem component={Link} to="/profile">
+                      Profil
+                    </MenuItem>
+                    <MenuItem
+                      onClick={
+                        () => {
                           setCookie("userId", "null", 7);
                           setCookie("role", "null", 7);
                           setCurrentUser({
                             userId: "null",
                           });
-                        }}
-                      >
-                        Ausloggen
-                      </Button>
-                    </Grid>
-                  </Grid>
+                        }
+                      }
+                    >
+                      Ausloggen
+                    </MenuItem>
+                  </Menu>
                 </>
               ) : (
                 <>

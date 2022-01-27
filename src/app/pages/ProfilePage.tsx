@@ -21,21 +21,15 @@ import CreditCardDetails from "../components/CreditCardDetails";
 import UpdateProfileDashboard from "../components/UpdateProfileDashboard";
 import { useTreeData } from "@adobe/react-spectrum";
 import { BookingCard } from "../components/BookingCard";
+import { ReviewDashboard } from "../components/ReviewDashboard";
 
 function ProfilePage() {
   const userID : string = getCookie("userId");
-  let row2Width : number = 6;
 
   const apiUrlGetUser = `${APIUrl.apiUrl}/user/${userID}`;
   const {isLoading: isLoadingUser, error: errorUser, data: dataUser} : any = useQuery("User", () =>
     fetch(apiUrlGetUser).then((res) => res.json())
   );
-
-  if(dataUser) {
-    if(dataUser.role.autorization === "ADMIN") {
-      row2Width = 4;
-    }
-  }
 
   if (isLoadingUser) {
     return <LoadingAnimation />;
@@ -58,6 +52,7 @@ function ProfilePage() {
           position: "relative",
           marginTop: theme.spacing(12),
         }}
+        maxWidth="xl"
       >
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -72,17 +67,12 @@ function ProfilePage() {
           <Grid item xs={4}>
             <UpdateProfileDashboard />
           </Grid>
-          <Grid item xs={row2Width}>
+          <Grid item xs={6}>
             <BookingCard selectedUser={dataUser} />
           </Grid>
-          <Grid item xs={row2Width}>
-            <CreditCardDetails selectedUser={dataUser} />
+          <Grid item xs={6}>
+            <ReviewDashboard selectedUser={dataUser} />
           </Grid>
-          {dataUser.role.autorization === "ADMIN" ? (
-            <Grid item xs={row2Width}>
-            <UpdateProfileDashboard />
-            </Grid>
-          ) : null}
         </Grid>
       </Container>
     </ThemeProvider>
