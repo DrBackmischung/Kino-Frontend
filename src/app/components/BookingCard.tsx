@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Typography, Card, CardMedia, CardContent, CardActions, Button } from "@mui/material";
+import { Grid, Typography, Card, CardMedia, CardContent, Button } from "@mui/material";
 import APIUrl from "../config/APIUrl";
 import { useQuery } from "react-query";
 import ErrorPage from "../pages/ErrorPage";

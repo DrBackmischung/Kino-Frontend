@@ -1,25 +1,16 @@
-import React, { useState, useEffect } from "react";
-import MovieDetails from "../components/MovieDetails";
-import ShowPicker from "../components/ShowPicker";
-import Slider from "../components/Slider";
-import { Box, Container, Grid, ThemeProvider, Typography } from "@mui/material";
+import React from "react";
+import { Container, Grid, ThemeProvider, Typography } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { useQuery } from "react-query";
 import palette from "../config/Colours";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import IconButton from "@mui/material/IconButton";
-import { useLocation } from "react-router-dom";
-import ManageCheckout from "../components/ManageCheckout";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Ratings from "../components/Ratings";
 import { getCookie } from "../components/CookieHandler";
 import ProfileDetails from "../components/ProfileDetails";
 import CreditCardDetails from "../components/CreditCardDetails";
 import UpdateProfileDashboard from "../components/UpdateProfileDashboard";
-import { useTreeData } from "@adobe/react-spectrum";
 import { BookingCard } from "../components/BookingCard";
 import { ReviewDashboard } from "../components/ReviewDashboard";
 

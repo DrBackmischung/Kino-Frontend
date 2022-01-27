@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { Grid, Typography, Card, CardMedia, CardContent, CardActions, Button, Box } from "@mui/material";
+import React from "react";
+import { Grid, Typography, Card, CardContent, Box } from "@mui/material";
 import APIUrl from "../config/APIUrl";
 import { useQuery } from "react-query";
 import ErrorPage from "../pages/ErrorPage";
 import LoadingAnimation from "./layouts/LoadingAnimation";
-import ManageBooking from "./ManageBooking";
 import Ratings from "./Ratings";
 
 export function ReviewDashboard(props: any) {
