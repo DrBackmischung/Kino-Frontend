@@ -59,7 +59,7 @@ function SignUp(props: any) {
   const [error, setError] = useState({ isError: false, msg: "No Error" });
   const [agree, setAgree] = useState(false);
 
-    const {
+  const {
     setValue,
     handleSubmit,
     formState: { errors },
@@ -116,12 +116,11 @@ function SignUp(props: any) {
       const response = await fetch(apiUrlAll, requestOptions);
       if (!response.ok) {
         setError({ isError: true, msg: `Fehler: ${response.statusText}` });
+        setAgree(false);
       } else if (response.ok) {
-        postMessage("Registration successfull! Redirecting to Homepage!");
         const data: any = await response.json();
         setError({ isError: false, msg: "No error" });
         setCookie("userId", data.id, 7);
-        setCookie("role", data.role.authorization, 7);
         setUser();
         redirectHome = true;
       }
@@ -153,21 +152,20 @@ function SignUp(props: any) {
       </Container>
     );
 
-    function checkboxHandler() {
-        setAgree(!agree);
-    }
+  function checkboxHandler() {
+    setAgree(!agree);
+  }
 
-    function redirectToTerms() {
-        navigate("/TermsAndConditionsPage");
-    }
+  function redirectToTerms() {
+    navigate("/TermsAndConditionsPage");
+  }
 
-    return (
+  return (
     <Container
       component="main"
       maxWidth="xs"
       sx={{
         bgcolor: "background.paper",
-        pt: 8,
         pb: 6,
         position: "relative",
       }}
@@ -175,7 +173,6 @@ function SignUp(props: any) {
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -300,7 +297,7 @@ function SignUp(props: any) {
                     minLength: 7,
                     maxLength: 32,
                     pattern:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
                   }}
                   render={({ field }) => (
                     <TextField
@@ -338,7 +335,7 @@ function SignUp(props: any) {
                     minLength: 7,
                     maxLength: 32,
                     pattern:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
                   }}
                   render={({ field }) => (
                     <TextField
@@ -468,12 +465,23 @@ function SignUp(props: any) {
               </Grid>
 
               <Grid item xs={12}>
-                  <input type="checkbox" value="allowExtraEmails" color="primary" />
-                  <label> I want to receive inspiration, marketing promotions and updates via e-mail.</label>
+                <input
+                  type="checkbox"
+                  value="allowExtraEmails"
+                  color="primary"
+                />
+                <label>
+                  {" "}
+                  I want to receive inspiration, marketing promotions and
+                  updates via e-mail.
+                </label>
               </Grid>
+
               <Grid item xs={12}>
                 <input type="checkbox" id="agree" onChange={checkboxHandler} />
-                  <label htmlFor="agree"> I agree to </label><Link onClick={redirectToTerms}>terms and conditions</Link><label>.</label>
+                <label htmlFor="agree"> I agree to </label>
+                <Link onClick={redirectToTerms}>terms and conditions</Link>
+                <label>.</label>
               </Grid>
             </Grid>
             <Button

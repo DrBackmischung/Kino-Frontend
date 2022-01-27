@@ -4,14 +4,13 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import HomeIcon from "@mui/icons-material/Home";
 import { Box, Container, Menu, MenuItem, Grid } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { useState } from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import ProgramPage from "../../pages/ProgramPage";
-import ComingSoon from "../../pages/ComingSoon";
 import DetailsPage from "../../pages/DetailsPage";
+import NewsAndEventsPage from "../../pages/NewsAndEventsPage";
 import SignInPage from "../../pages/SignInPage";
 import UserRegistrationPage from "../../pages/UserRegistrationPage";
 import Impressum from "../../pages/Impressum";
@@ -20,8 +19,8 @@ import { getCookie, setCookie } from "../CookieHandler";
 import { useQuery } from "react-query";
 import APIUrl from "../../config/APIUrl";
 import PricesPage from "../../pages/PricesPage";
-import ProfilePage from "../../pages/ProfilePage";
 import HomePage from "../../pages/HomePage";
+import ProfilePage from "../../pages/ProfilePage";
 import CookiesNotification from "../CookiesNotification";
 import TermsAndConditionsPage from "../../pages/TermsAndConditionsPage";
 
@@ -35,28 +34,26 @@ function MenuBar() {
   });
 
   const apiUrl = `${APIUrl.apiUrl}/user/${currentUser.userId}`;
-  const { data, refetch } = useQuery(
+  const userData = useQuery(
     "userData",
     () => fetch(apiUrl).then((res) => res.json()),
     {
-      refetchOnWindowFocus: false,
-      enabled: false,
+      refetchOnWindowFocus: true,
+      enabled: true,
     }
   );
 
   useEffect(() => {
-    refetch();
+    userData.refetch();
   }, [currentUser.userId]);
 
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   const [pages, setPages] = useState([
     { name: "Programm", link: "/programPage" },
-    { name: "Events", link: "/eventsPage" },
+    { name: "News & Events", link: "/newsAndEventsPage" },
     { name: "Preisübersicht", link: "/pricesOverviewPage" },
-    { name: "News", link: "/newsPage" },
   ]);
 
   const setUser = () => {
@@ -98,7 +95,6 @@ function MenuBar() {
                 <Button
                   style={{ backgroundColor: "white", opacity: 0.95 }}
                   key={page.name}
-                  //onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: "black", display: "block" }}
                   variant="contained"
                   component={Link}
@@ -109,8 +105,11 @@ function MenuBar() {
               ))}
             </Box>
             <Box>
-              {currentUser.userId !== "null" ? (
+              {currentUser?.userId !== "null" && currentUser?.userId !== undefined ? (
                 <>
+                  <p
+                        style={{ marginTop: "1.35rem" }}
+                  >{`Willkommen ${userData?.data?.userName}!`}</p>
                   <IconButton
                     size="large"
                     aria-label="account of current user"
@@ -198,14 +197,13 @@ function MenuBar() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/programPage" element={<ProgramPage />} />
-        <Route path="/eventsPage" element={<ComingSoon />} />
+        <Route path="/newsAndEventsPage" element={<NewsAndEventsPage />} />
         <Route path="/pricesOverviewPage" element={<PricesPage />} />
-        <Route path="/newsPage" element={<ComingSoon />} />
         <Route path="/TermsAndConditionsPage" element={<TermsAndConditionsPage />} />
         <Route
           path="/DetailsPage"
           // @ts-ignore
-          element={<DetailsPage userData={data} />}
+          element={<DetailsPage userData={userData?.data} />}
         />
         <Route
           path="/SignInPage"
@@ -218,7 +216,7 @@ function MenuBar() {
           element={<UserRegistrationPage setUser={setUser} />}
         />
         <Route path="/Impressum" element={<Impressum />} />
-        <Route path="/Admin" element={<AdminPage userData={data} />} />
+        <Route path="/Admin" element={<AdminPage userData={userData} />} />
         <Route path="/profile" element={<ProfilePage />} />
       </Routes>
       <CookiesNotification/>

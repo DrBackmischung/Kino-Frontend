@@ -13,7 +13,8 @@ import {
   FormLabel,
   FormControlLabel,
   Radio,
-  ThemeProvider, Link,
+  ThemeProvider,
+  Link,
 } from "@mui/material";
 import React, { useState } from "react";
 import LoadingAnimation from "./layouts/LoadingAnimation";
@@ -91,7 +92,7 @@ function CheckoutDialog(props: any) {
   }
 
   const theme = createTheme(palette);
-  if (user.id === undefined) {
+  if (user?.id === undefined) {
     return (
       <ThemeProvider theme={theme}>
         <Dialog
@@ -343,6 +344,16 @@ function CheckoutDialog(props: any) {
                       </p>
                     ) : null}
                   </RadioGroup>
+
+                  <label htmlFor="agree">
+                    <input
+                      type="checkbox"
+                      id="agree"
+                      onChange={checkboxHandler}
+                    />{" "}
+                    I agree to{" "}
+                    <Link onClick={redirectToTerms}>terms and conditions</Link>.{" "}
+                  </label>
                 </FormControl>
               </Grid>
             </Grid>
@@ -355,11 +366,11 @@ function CheckoutDialog(props: any) {
             ) : null}
           </DialogContentText>
         </DialogContent>
-        <input type="checkbox" id="agree" onChange={checkboxHandler} />
-        <label htmlFor="agree"> I agree to </label><Link onClick={redirectToTerms}>terms and conditions</Link><label>.</label>
         <DialogActions>
           <Button onClick={handleClose}>Abbruch</Button>
-          <Button disabled={!agree} onClick={handleSubmit(blockSeat)}>Bezahlen</Button>
+          <Button disabled={!agree} onClick={handleSubmit(blockSeat)}>
+            Bezahlen
+          </Button>
         </DialogActions>
       </Dialog>
     </ThemeProvider>
