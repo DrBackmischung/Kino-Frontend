@@ -158,7 +158,6 @@ function CheckoutDialog(props: any) {
               <Grid item xs={5}>
                 <h2>{selectedShow?.movie?.titel}</h2>
                 <p>
-                  {selectedShow?.startTime} Kino 3 Kino:{" "}
                   {selectedShow?.cinemaRoom?.roomName}
                   <br />
                   {selectedShow?.startTime?.substring(0, 5)} Uhr
