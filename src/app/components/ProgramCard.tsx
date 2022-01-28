@@ -122,37 +122,37 @@ function ProgramCard(props: any) {
         {moviesToRender?.map(
           (movie: any) =>
             movie.title.toLowerCase().includes(filter) && (
-              <>
                 <Grid item key={movie.id} xs={6}>
-                  <Card>
-                    <Grid container>
-                      <Grid item xs={4}>
+                   <Card sx={{
+                      height: "98%",
+                      display: "flex",
+                      flexDirection: "row",
+                  }}>
                         <CardMedia
                           component="img"
                           sx={{
                             pt: "0",
-                            width: "100%",
+                            width: "33%",
                             alignSelf: 'flex-start',
                           }}
                           image={movie.pictureLink}
                           alt="poster"
                         />
-                      </Grid>
                       <Grid item xs={8}>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pt: 4}}>
-                            <p style={{fontSize: "25px", alignSelf: 'center', textAlign: 'center'}}><b>{movie.title}</b></p> 
-                            <p>{movie.duration} Min FSK {movie.fsk}</p>
-                          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pt: 2, pb: 2}}>
-                            <CardMedia
-                              component="img"
-                              sx={{ width: "15%"}}
-                              image={getFlag(movie.language)}
-                              alt="Flagge"
-                            />
+                          <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', pt: 2, height: "73%" }}>
+                              <p style={{fontSize: "25px", alignSelf: 'center', textAlign: 'center', height: "20%" }}><b>{movie.title}</b></p>
+                              <p style={{fontSize: "18px"}}>{movie.duration} Min FSK {movie.fsk}</p>
+                              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pt: 2, pb: 2}}>
+                                <CardMedia
+                                  component="img"
+                                  sx={{ width: "15%",}}
+                                  image={getFlag(movie.language)}
+                                  alt="Flagge"
+                                />
+                              </Box>
                           </Box>
-                          <CardActions sx={{pb: 4}}>
+                          <CardActions sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', pt: 2}}>
                             <Button
-                              fullWidth
                               variant="contained"
                               onClick={() => {
                                 navigateToDetails(`${movie.id}`);
@@ -161,12 +161,9 @@ function ProgramCard(props: any) {
                               <Typography variant="h5" component="h1"><b>Tickets</b></Typography>
                             </Button>
                           </CardActions>
-                        </Box>
                       </Grid>
-                    </Grid>
                   </Card>
                 </Grid>
-              </>
             )
         )}
       </Grid>
