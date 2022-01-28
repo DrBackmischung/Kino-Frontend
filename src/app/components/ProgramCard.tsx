@@ -43,6 +43,7 @@ function ProgramCard(props: any) {
 
       if (selectedSort !== undefined) {
           if (selectedSort?.length !== 0) {
+              // eslint-disable-next-line
               preparedMovieData = preparedMovieData.sort((a: any, b: any) => {
                           if (selectedSort === "longest") {
                               return b.duration - a.duration;
@@ -51,8 +52,6 @@ function ProgramCard(props: any) {
                               return a.duration - b.duration;
                           }
                           //TODO Sort by Rating
-
-                        return preparedMovieData;
               });
           }
           setSortBy(!sortBy);
@@ -69,9 +68,7 @@ function ProgramCard(props: any) {
                   preparedMovieData = preparedMovieData?.filter((item: any) => {
                       return newReviewsArray?.includes(item['id']);
                   });
-                  return preparedMovieData;
               }
-              return preparedMovieData;
           }
 
       //Language Filter
