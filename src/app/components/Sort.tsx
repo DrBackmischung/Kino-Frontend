@@ -28,7 +28,6 @@ function Sort(props: any) {
                       >
                     <MenuItem key="shortest"  value="shortest">  <KeyboardArrowUpIcon/> Filmlänge </MenuItem>
                     <MenuItem key="longest"  value="longest">  <KeyboardArrowDownIcon/> Filmlänge </MenuItem>
-                    <MenuItem key="best"   value="best">   <KeyboardArrowDownIcon/> Rating </MenuItem>
                 </Select>
             </FormControl>
         </Box>
