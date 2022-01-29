@@ -11,7 +11,7 @@ import MovieCard from "../components/MovieCard";
 function Item(props: any)
 {
     return (
-        <Paper>
+         <Paper>
             <h2>{props.item.name}</h2>
             <p>{props.item.description}</p>
             <CardMedia
@@ -25,7 +25,7 @@ function Item(props: any)
                 }}
             />
         </Paper>
-    )
+      )
 }
 
 function HomePage(){
@@ -51,7 +51,7 @@ function HomePage(){
     const theme = createTheme(palette);
 
     return(
-        <Container className="wholeContainer" sx={{
+         <Container className="wholeContainer" sx={{
             position: "relative",
             marginTop: theme.spacing(12)
         }}>
