@@ -4,7 +4,6 @@ import {Button, Paper} from '@mui/material'
 import {Box, CardMedia, Container} from "@mui/material";
 import APIUrl from "../config/APIUrl";
 import {useQuery} from "react-query";
-import {createTheme} from "@mui/material/styles";
 import palette from "../config/Colours";
 import MovieCard from "../components/MovieCard";
 
@@ -48,12 +47,10 @@ function HomePage(){
         }
     ]
 
-    const theme = createTheme(palette);
 
     return(
          <Container className="wholeContainer" sx={{
             position: "relative",
-            marginTop: theme.spacing(12)
         }}>
             <Box>
                 <Carousel>

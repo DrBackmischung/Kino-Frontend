@@ -120,12 +120,14 @@ function ProgramCard(props: any) {
         <Container
             sx={{
                 bgcolor: "background.paper",
+                marginTop: 7,
                 pb: 4,
                 position: "relative",
+                zIndex: '0'
             }}
             maxWidth="xl"
         >
-            <Grid container spacing={4} xs={12}>
+            <Grid container spacing={4} xs={12}  sx={{  position: "relative", zIndex: '0' }}>
                 {moviesToRender?.map(
                     (movie: any) =>
                         movie.title.toLowerCase().includes(filter) && (
