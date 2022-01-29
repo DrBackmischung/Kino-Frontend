@@ -8,8 +8,7 @@ import {
     DialogContentText,
     DialogActions,
     Button,
-    Container,
-    Typography
+    Container
 } from "@mui/material";
   
 export function Booking(props: any) {
@@ -46,9 +45,6 @@ export function Booking(props: any) {
                                 </Grid> 
                                 )
                             )}
-                            <Grid item xs={12}>
-                                <Typography align="center" component="h1" variant="h5">{selectedBooking.show.movie.title}</Typography>
-                            </Grid>
                         </Grid>
                     </Container>
                 </DialogContentText>

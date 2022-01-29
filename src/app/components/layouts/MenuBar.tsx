@@ -23,6 +23,7 @@ import HomePage from "../../pages/HomePage";
 import ProfilePage from "../../pages/ProfilePage";
 import CookiesNotification from "../CookiesNotification";
 import TermsAndConditionsPage from "../../pages/TermsAndConditionsPage";
+import InfoPage from "../../pages/InfoPage";
 
 function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -228,6 +229,7 @@ function MenuBar() {
         <Route path="/Impressum" element={<Impressum />} />
         <Route path="/Admin" element={<AdminPage userData={userData} />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/info/:bookingID" element={<InfoPage />} />
       </Routes>
       <CookiesNotification/>
     </BrowserRouter>
