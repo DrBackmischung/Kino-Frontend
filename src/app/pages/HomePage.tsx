@@ -48,6 +48,7 @@ function HomePage(){
         }
     ]
 
+// eslint-disable-next-line no-unused-vars
     const theme = createTheme(palette);
 
     return(
