@@ -57,7 +57,6 @@ function ProgramPage() {
             <Toolbar
                 handleSearchChange={handleSearchChange}
                 setSelectedSort={setSelectedSort}
-                selectedSort={selectedSort}
                 setSelectedLanguage={setSelectedLanguage}
                 setSelectedFSK={setSelectedFSK}
                 setSelectedGenre={setSelectedGenre}
