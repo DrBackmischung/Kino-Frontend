@@ -62,11 +62,12 @@ function MenuBar() {
     });
   };
 
+
   return (
     <BrowserRouter>
       <AppBar
-        style={{ backgroundColor: "#393E41", opacity: 0.95 }}
-        position="fixed"
+          style={{ backgroundColor: "#393E41", opacity: 1, }}
+          position="sticky"
       >
         <Container fixed>
           <Toolbar>

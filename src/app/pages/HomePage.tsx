@@ -53,7 +53,6 @@ function HomePage(){
     return(
          <Container className="wholeContainer" sx={{
             position: "relative",
-            marginTop: theme.spacing(12)
         }}>
             <Box>
                 <Carousel>

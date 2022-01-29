@@ -8,40 +8,38 @@ function Slider(props: any) {
   const { selectedMovie } = props;
 
   const customRenderItem = (item: any, props: any) => (
-    <item.type {...item.props} {...props} />
+      <item.type {...item.props} {...props} />
   );
 
   const YoutubeSlide = ({
-    url,
-    isSelected,
-  }: {
+                          url,
+                          isSelected,
+                        }: {
     url: string;
     isSelected?: boolean;
   }) => (
-    <ReactPlayer
-      width="100%"
-      url={url}
-      playing={isSelected}
-      style={{ paddingTop: "20%" }}
-    />
+      <ReactPlayer
+          width="100%"
+          url={url}
+          playing={isSelected}
+          controls={true}
+          style={{ marginTop: "30%" }}
+      />
   );
 
   return (
-    <div className="carouselContainer">
-      <Carousel className="carousel" renderItem={customRenderItem}>
-        <div>
-          <CardMedia
-            component="img"
-            sx={{
-              pl: "15%",
-            }}
-            src={selectedMovie?.pictureLink}
-            alt="poster"
-          />
-        </div>
-        <YoutubeSlide key="1" url={selectedMovie?.trailerLink} />
-      </Carousel>
-    </div>
+      <div className="carouselContainer">
+        <Carousel className="carousel" renderItem={customRenderItem} showArrows={true} showThumbs={false}>
+          <div>
+            <CardMedia
+                component="img"
+                src={selectedMovie?.pictureLink}
+                alt="poster"
+            />
+          </div>
+          <YoutubeSlide key="1" url={selectedMovie?.trailerLink} />
+        </Carousel>
+      </div>
   );
 }
 
