@@ -8,8 +8,6 @@ import {
   Button,
   CssBaseline,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Link,
   Grid,
   Box,
@@ -60,6 +58,8 @@ function SignUp(props: any) {
   const [city, setCity] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ isError: false, msg: "No Error" });
+  const [agree, setAgree] = useState(false);
+
   const {
     setValue,
     handleSubmit,
@@ -117,8 +117,8 @@ function SignUp(props: any) {
       const response = await fetch(apiUrlAll, requestOptions);
       if (!response.ok) {
         setError({ isError: true, msg: `Fehler: ${response.statusText}` });
+        setAgree(false);
       } else if (response.ok) {
-        postMessage("Registration successfull! Redirecting to Homepage!");
         const data: any = await response.json();
         setError({ isError: false, msg: "No error" });
         setCookie("userId", data.id, 7);
@@ -152,6 +152,14 @@ function SignUp(props: any) {
         <LoadingAnimation />
       </Container>
     );
+
+  function checkboxHandler() {
+    setAgree(!agree);
+  }
+
+  function redirectToTerms() {
+    navigate("/TermsAndConditionsPage");
+  }
 
   return (
     <Container 
@@ -291,7 +299,7 @@ function SignUp(props: any) {
                     minLength: 7,
                     maxLength: 32,
                     pattern:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
                   }}
                   render={({ field }) => (
                     <TextField
@@ -329,7 +337,7 @@ function SignUp(props: any) {
                     minLength: 7,
                     maxLength: 32,
                     pattern:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-!@#\$%\^&\*])(?=.{7,})?/i, //eslint-disable-line no-useless-escape
                   }}
                   render={({ field }) => (
                     <TextField
@@ -459,16 +467,28 @@ function SignUp(props: any) {
               </Grid>
 
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via e-mail."
+                <input
+                  type="checkbox"
+                  value="allowExtraEmails"
+                  color="primary"
                 />
+                <label>
+                  {" "}
+                  I want to receive inspiration, marketing promotions and
+                  updates via e-mail.
+                </label>
+              </Grid>
+
+              <Grid item xs={12}>
+                <input type="checkbox" id="agree" onChange={checkboxHandler} />
+                <label htmlFor="agree"> I agree to </label>
+                <Link onClick={redirectToTerms}>terms and conditions</Link>
+                <label>.</label>
               </Grid>
             </Grid>
             <Button
               id="signUp-button"
+              disabled={!agree}
               type="submit"
               fullWidth
               variant="contained"

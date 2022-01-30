@@ -1,7 +1,6 @@
 import React from "react";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import BasicSelect from "./BasicSelect";
 import SearchField from "./SearchField";
 import Filter from "./Filter";
 import Sort from "./Sort";
@@ -10,9 +9,9 @@ import palette from "../config/Colours";
 import "./Toolbar.css";
 
 function Toolbar(props: any) {
-  const { handleSearchChange, handleSelectChange, cityData } = props;
+    const theme: any = createTheme();
+    const { handleSearchChange, setSelectedSort, selectedSort} = props;
 
-  const theme = createTheme(palette)
   const theme2: any = createTheme();
   
   return (
@@ -23,18 +22,15 @@ function Toolbar(props: any) {
         <Grid 
           container spacing={4} 
           className="toolbar-grid"
-        >
-          <BasicSelect
-            handleSelectChange={handleSelectChange}
-            cityData={cityData}
-          />
-          <SearchField handleSearchChange={handleSearchChange} />
-          <Filter />
-          <Sort />
-        </Grid>
-      </Container>
-    </ThemeProvider>
-  );
+        />
+            <Grid container spacing={4} sx={{ justifyContent: "space-evenly" }}>
+                <Sort setSelectedSort={setSelectedSort} selectedSort={selectedSort}/>
+                <SearchField handleSearchChange={handleSearchChange} />
+                <Filter />
+            </Grid>
+        </Container>
+      </ThemeProvider>
+    );
 }
 
 export default Toolbar;

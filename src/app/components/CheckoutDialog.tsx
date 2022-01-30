@@ -14,6 +14,7 @@ import {
   FormControlLabel,
   Radio,
   ThemeProvider,
+  Link,
 } from "@mui/material";
 import React, { useState } from "react";
 import LoadingAnimation from "./layouts/LoadingAnimation";
@@ -42,6 +43,7 @@ function CheckoutDialog(props: any) {
   const [cardName, setCardName] = useState(`${user?.firstName} ${user?.name}`);
   const [cardExpiry, setCardExpiry] = useState("");
   const [cardPin, setCardPin] = useState("");
+  const [agree, setAgree] = useState(false);
   const apiUrlBlockSeat = `${APIUrl.apiUrl}/booking/add`;
   const {
     setValue,
@@ -81,8 +83,16 @@ function CheckoutDialog(props: any) {
     }
   };
 
+  function redirectToTerms() {
+    navigate("/TermsAndConditionsPage");
+  }
+
+  function checkboxHandler() {
+    setAgree(!agree);
+  }
+
   const theme = createTheme(palette);
-  if (user.id === undefined) {
+  if (user?.id === undefined) {
     return (
       <ThemeProvider theme={theme}>
         <Dialog
@@ -334,6 +344,16 @@ function CheckoutDialog(props: any) {
                       </p>
                     ) : null}
                   </RadioGroup>
+
+                  <label htmlFor="agree">
+                    <input
+                      type="checkbox"
+                      id="agree"
+                      onChange={checkboxHandler}
+                    />{" "}
+                    I agree to{" "}
+                    <Link onClick={redirectToTerms}>terms and conditions</Link>.{" "}
+                  </label>
                 </FormControl>
               </Grid>
             </Grid>
@@ -348,7 +368,9 @@ function CheckoutDialog(props: any) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Abbruch</Button>
-          <Button onClick={handleSubmit(blockSeat)}>Bezahlen</Button>
+          <Button disabled={!agree} onClick={handleSubmit(blockSeat)}>
+            Bezahlen
+          </Button>
         </DialogActions>
       </Dialog>
     </ThemeProvider>
