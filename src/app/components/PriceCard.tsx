@@ -86,6 +86,7 @@ function PriceCard(pricesData: any){
                 </TableContainer>
                 <p><strong>Ermäßigung</strong> gewähren wir Studierenden, Azubis und Scherbehinderten.</p>
                 <p><strong>SchülerInnen</strong> gewähren wir Montags - Donnerstags den Kinderpreis und am Wochenende den ermäßigten Eintrittspreis</p>
+                <p>Tickets mit diesen Vergünstigungen sind nur beim Kaufen vor Ort erwerbbar.</p>
                 <br/>
                 <h2>Zuschläge</h2>
                 <p>Bei Filmen in 3D erheben wir einen Zuschlag von 3,00€</p>

@@ -41,8 +41,9 @@ function PricesPage(){
 
     return(
         <div className='PricePage-div'>
-            <IconButton sx={{marginTop: 12, marginBottom: -12, marginLeft: 48}} onClick={goBack}>
-                <ArrowBackIosIcon />
+            <IconButton sx={{marginTop: -0.6, marginBottom: -12, marginLeft: 5, position: 'fixed', zIndex: '100'}}
+                        onClick={goBack}>
+                <ArrowBackIosIcon/>
             </IconButton>
             <PriceCard
                 pricesData={priceData.data}

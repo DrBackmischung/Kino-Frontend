@@ -1,9 +1,6 @@
 import React from "react";
-import {MenuItem} from "@mui/material";
+import {Menu, MenuItem} from "@mui/material";
 import Box from "@mui/material/Box";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import IconButton from "@mui/material/IconButton";
@@ -14,30 +11,52 @@ import palette from "../config/Colours";
 const theme = createTheme(palette)
 
 function Sort(props: any) {
-    const { setSelectedSort, selectedSort } = props;
+    const { setSelectedSort} = props;
 
-    const handleSortBy = (e: any) => {
-        setSelectedSort(e.target.value);
+    const handleSortByLongest = () => {
+        setSelectedSort('longest');
+        setAnchorEl(null);
+    };
+
+    const handleSortByShortest = () => {
+        setSelectedSort('shortest');
+        setAnchorEl(null);
+    };
+
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
     };
 
     return (
       <ThemeProvider theme={theme}>
         <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth>
-                <InputLabel id="simple-select-sortBy-label">Sortirung</InputLabel>
-                <Select
-                    labelId="simple-select-sortBy-label"
-                    id="simple-select-sortBy"
-                    defaultValue={""}
-                    value={selectedSort}
-                    label="Sortirung"
-                    onChange={(e) => handleSortBy(e)}
-                      >
-                    <MenuItem key="shortest"  value="shortest">  <KeyboardArrowUpIcon/> Duration </MenuItem>
-                    <MenuItem key="longest"  value="longest">  <KeyboardArrowDownIcon/> Duration </MenuItem>
-                    <MenuItem key="best"   value="best">   <KeyboardArrowDownIcon/> Rating </MenuItem>
-                </Select>
-            </FormControl>
+
+            <IconButton size="large" color="inherit"  onClick={handleMenu}>
+                <SortIcon />
+            </IconButton>
+            <Menu
+                id="menu-sort"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+            >
+                <MenuItem onClick={handleSortByShortest}> Filmlänge <KeyboardArrowUpIcon/> </MenuItem>
+                <MenuItem onClick={handleSortByLongest}> Filmlänge <KeyboardArrowDownIcon/> </MenuItem>
+            </Menu>
         </Box>
       </ThemeProvider>
     );

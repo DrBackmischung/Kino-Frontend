@@ -1,9 +1,7 @@
 import * as React from "react";
 import Toolbar from "../components/Toolbar";
-import MovieCard from "../components/MovieCard";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import Container from "@mui/material/Container";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
@@ -12,8 +10,10 @@ import palette from "../config/Colours";
 import { ThemeProvider } from "@mui/styles";
 import "./ProgramPage.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import {IconButton} from "@mui/material";
+import {Container, IconButton, SelectChangeEvent} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import ProgramCard from "../components/ProgramCard";
+import MovieCard from "../components/MovieCard";
 
 
 function ProgramPage() {
@@ -21,6 +21,14 @@ function ProgramPage() {
 
     const [filter, setFilter] = useState("");
     const [selectedSort, setSelectedSort] = useState("");
+
+    const [selectedLanguage, setSelectedLanguage] = useState([]);
+    const [selectedFSK, setSelectedFSK] = useState([]);
+    const [selectedGenre, setSelectedGenre] = useState([]);
+    const [applyFilters, setApplyFilters] = useState([]);
+
+    const [ratingValue, setRatingValue] = React.useState<number | null>(0);
+
 
     const handleSearchChange = (e: any) => {
         setFilter(e.target.value.toLowerCase());
@@ -49,54 +57,43 @@ function ProgramPage() {
         navigate(-1);
     }
 
-
     if (moviesData.error) {
         return (
-            <Container
-                sx={{
-                    bgcolor: "background.paper",
-                    pt: 8,
-                    pb: 6,
-                    position: "relative",
-                    marginTop: "15rem",
-                }}
-                maxWidth="md"
-            >
-                <ErrorPage />
-            </Container>
+            <ErrorPage />
         );
     }
     if (moviesData.isLoading)
         return (
-            <Container
-                sx={{
-                    bgcolor: "background.paper",
-                    pt: 8,
-                    pb: 6,
-                    position: "relative",
-                    marginTop: "15rem",
-                }}
-                maxWidth="md"
-            >
-                <LoadingAnimation />
-            </Container>
+            <LoadingAnimation />
         );
 
   if (cityData.error || moviesData.error) {
     return (
         <div>
-            <IconButton sx={{marginTop: 12, marginBottom: -12, marginLeft: 48}} onClick={goBack}>
+            <IconButton sx={{marginTop: -1, marginBottom: -12, marginLeft: 5, position: 'fixed', zIndex: '100'}} onClick={goBack}>
                 <ArrowBackIosIcon />
             </IconButton>
             <Toolbar
                 handleSearchChange={handleSearchChange}
                 setSelectedSort={setSelectedSort}
-                selectedSort={selectedSort}
+                setSelectedLanguage={setSelectedLanguage}
+                setSelectedFSK={setSelectedFSK}
+                setSelectedGenre={setSelectedGenre}
+                moviesData={moviesData.data}
+                selectedGenre={selectedGenre}
+                setApplyFilters={setApplyFilters}
+                setRatingValue={setRatingValue}
+                ratingValue={ratingValue}
             />
-            <MovieCard
+            <ProgramCard
                 filter={filter}
                 moviesData={moviesData.data}
                 selectedSort={selectedSort}
+                selectedLanguage={selectedLanguage}
+                selectedFSK={selectedFSK}
+                selectedGenre={selectedGenre}
+                applyFilters={applyFilters}
+                ratingValue={ratingValue}
             />
         </div>
     );

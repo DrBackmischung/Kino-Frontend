@@ -18,7 +18,7 @@ function Impressum() {
   const theme = createTheme(palette);
 
   function redirectToTerms() {
-    navigate("/TermsAndConditionsPage");
+    navigate("/AGBs");
   }
 
   return (

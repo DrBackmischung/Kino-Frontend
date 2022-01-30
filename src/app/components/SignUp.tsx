@@ -35,7 +35,7 @@ function Copyright(props: any) {
       >
         {"Copyright © "}
         <Link color="inherit" onClick={() => redirectToImpressum()}>
-          by SAuE Team 1
+          SAuE Team 1
         </Link>{" "}
         {new Date().getFullYear()}
         {"."}
@@ -158,7 +158,7 @@ function SignUp(props: any) {
   }
 
   function redirectToTerms() {
-    navigate("/TermsAndConditionsPage");
+    navigate("/AGBs");
   }
 
   return (
@@ -199,7 +199,7 @@ function SignUp(props: any) {
                       {...field}
                       required
                       fullWidth
-                      label="Username"
+                      label="Benutzername"
                       autoFocus
                       onChange={(e: any) => {
                         setUserName(e.target.value);
@@ -223,7 +223,7 @@ function SignUp(props: any) {
                       autoComplete="given-name"
                       required
                       fullWidth
-                      label="First Name"
+                      label="Vorname"
                       autoFocus
                       onChange={(e: any) => {
                         setFirstName(e.target.value);
@@ -246,7 +246,7 @@ function SignUp(props: any) {
                       {...field}
                       required
                       fullWidth
-                      label="Last Name"
+                      label="Nachname"
                       autoComplete="family-name"
                       onChange={(e: any) => {
                         setLastName(e.target.value);
@@ -275,7 +275,7 @@ function SignUp(props: any) {
                       {...field}
                       required
                       fullWidth
-                      label="E-mail Address"
+                      label="E-Mail-Adresse"
                       autoComplete="email"
                       onChange={(e: any) => {
                         setEmail(e.target.value);
@@ -288,7 +288,7 @@ function SignUp(props: any) {
                   )}
                 />
 
-                <small>We won't share your e-mail with anyone else!</small>
+                <small>Wir werden Deine E-Mail niemals mit einem Dritten teilen!</small>
               </Grid>
               <Grid item xs={12}>
                 <Controller
@@ -306,7 +306,7 @@ function SignUp(props: any) {
                       {...field}
                       required
                       fullWidth
-                      label="Password"
+                      label="Passwort"
                       type="password"
                       autoComplete="new-password"
                       onChange={(e: any) => {
@@ -344,7 +344,7 @@ function SignUp(props: any) {
                       {...field}
                       required
                       fullWidth
-                      label="Confirm Password"
+                      label="Bestätige Password"
                       type="password"
                       value={confirmPassword}
                       onChange={(e: any) => {
@@ -375,7 +375,7 @@ function SignUp(props: any) {
                         {...field}
                         required
                         fullWidth
-                        label="Street"
+                        label="Straße"
                         value={street}
                         onChange={(e: any) => {
                           setStreet(e.target.value);
@@ -397,7 +397,7 @@ function SignUp(props: any) {
                         {...field}
                         required
                         fullWidth
-                        label="Number"
+                        label="Hausnummer"
                         value={number}
                         onChange={(e: any) => {
                           setNumber(e.target.value);
@@ -446,7 +446,7 @@ function SignUp(props: any) {
                       {...field}
                       required
                       fullWidth
-                      label="City"
+                      label="Ort"
                       value={city}
                       onChange={(e: any) => {
                         setCity(e.target.value);
@@ -474,16 +474,15 @@ function SignUp(props: any) {
                 />
                 <label>
                   {" "}
-                  I want to receive inspiration, marketing promotions and
-                  updates via e-mail.
+                    Ich möchte Inspiration, Marketingaktionen und Updates per E-Mail erhalten.
                 </label>
               </Grid>
 
               <Grid item xs={12}>
                 <input type="checkbox" id="agree" onChange={checkboxHandler} />
-                <label htmlFor="agree"> I agree to </label>
-                <Link onClick={redirectToTerms}>terms and conditions</Link>
-                <label>.</label>
+                <label htmlFor="agree"> Ich stimme den </label>
+                <Link onClick={redirectToTerms}>Allgemeinen Geschäftsbedingungen (AGBs)</Link>
+                <label> zu.</label>
               </Grid>
             </Grid>
             <Button
@@ -495,12 +494,12 @@ function SignUp(props: any) {
               onClick={handleSubmit(handleSubmitClick)}
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Registrieren
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link className="loginText" onClick={() => redirectToLogin()}>
-                  Already have an account? Login here
+                  Du hast bereits einen Account? Logge Dich hier ein!
                 </Link>
               </Grid>
             </Grid>

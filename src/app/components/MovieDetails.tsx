@@ -10,20 +10,18 @@ function MovieDetails(props: any) {
   
   return (
     <ThemeProvider theme={theme}>  
-      <div className="detailsContainer">
-        <div className="movieDetails">
-          <h1>{selectedMovie?.titel}</h1>
-          <h2>
-            Movie Duration: {selectedMovie?.duration} min. FSK{" "}
-            {selectedMovie?.fsk}
-          </h2>
-          <h3>Language: {selectedMovie?.language}</h3>
-          <h3>Movie Description:</h3>
-          <p>{selectedMovie?.description}</p>
-          <br />
-          <p>Director: {selectedMovie?.director}</p>
-          <p>Actors: {selectedMovie?.actors}</p>
-        </div>
+      <div className="movieDetails">
+        <h1>{selectedMovie?.title}</h1>
+        <h2>
+          Filmdauer: {selectedMovie?.duration} min. FSK{" "}
+          {selectedMovie?.fsk}
+        </h2>
+        <h3>Sprache: {selectedMovie?.language}</h3>
+        <h3>Filmbeschreibung:</h3>
+        <p>{selectedMovie?.description}</p>
+        <br />
+        <p>Regisseur: {selectedMovie?.director}</p>
+        <p>Schauspieler: {selectedMovie?.actors}</p>
       </div>
     </ThemeProvider>
   );

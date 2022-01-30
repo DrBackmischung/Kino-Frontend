@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React from "react";
 import {useQuery} from "react-query";
-import {Button, Grid, Tooltip, Typography, Zoom} from "@mui/material";
+import {Button, Container, Grid, Tooltip, Typography, Zoom} from "@mui/material";
 import Box from "@mui/material/Box";
 import ErrorPage from "../pages/ErrorPage";
 import LoadingAnimation from "./layouts/LoadingAnimation";
@@ -73,7 +73,7 @@ function ShowPicker(props: any) {
     return (
       <ThemeProvider theme={theme}>
         <Box className="overallContainer" maxWidth="sm">
-            <h3>Shows:</h3>
+            <h3>Vorstellungen:</h3>
             <Box className="showTimeContainer">
                 <Grid
                     container
@@ -84,36 +84,40 @@ function ShowPicker(props: any) {
                         <ErrorPage/>
                     ) : isLoading ? (
                         <LoadingAnimation/>
-                    ) : (
-                        prepareShows(data)?.map((item: any) => (
-                            <Grid item xs={1} sm={4} md={4} key={`${item.id}`}>
-                                <Typography>
-                                    <Box sx={{ fontSize: 17.5, fontWeight: "bold"}}>
-                                        {formattedDate(item.showDate)}
-                                    </Box>
-                                </Typography>
-                                <Tooltip
-                                    TransitionComponent={Zoom}
-                                    title="Click to book a seat!"
-                                    arrow
-                                >
-                                    <Button
-                                        key={`${item.id}`}
-                                        fullWidth
-                                        onClick={() => {
-                                            openDialog(item);
-                                        }}
-                                        variant="contained"
+                    ) : (data?.length === 0 ? (
+                            <Container sx={{mt: 6, ml: 7 }}>
+                                <Typography sx={{fontStyle: "italic"}}>Sorry, zur Zeit sind leider keine Vorstellungen für diesen Film verfügbar!</Typography>
+                            </Container>
+                        ) : (
+                            prepareShows(data)?.map((item: any) => (
+                                <Grid item xs={1} sm={4} md={4} key={`${item.id}`}>
+                                    <Typography>
+                                        <Box sx={{ fontSize: 17.5, fontWeight: "bold"}}>
+                                            {formattedDate(item.showDate)}
+                                        </Box>
+                                    </Typography>
+                                    <Tooltip
+                                        TransitionComponent={Zoom}
+                                        title="Klick zur Buchung eines Sitzes!"
+                                        arrow
                                     >
-                                        <Typography>
-                                            <Box sx={{fontFamily: "Monospace", fontSize: 20}}>
-                                                {formattedTime(item)}
-                                            </Box>
-                                        </Typography>
-                                    </Button>
-                                </Tooltip>
-                            </Grid>
-                        ))
+                                        <Button
+                                            key={`${item.id}`}
+                                            fullWidth
+                                            onClick={() => {
+                                                openDialog(item);
+                                            }}
+                                            variant="contained"
+                                        >
+                                            <Typography>
+                                                <Box sx={{fontFamily: "Monospace", fontSize: 20}}>
+                                                    {formattedTime(item)}
+                                                </Box>
+                                            </Typography>
+                                        </Button>
+                                    </Tooltip>
+                                </Grid>
+                            )))
                     )}
                 </Grid>
             </Box>

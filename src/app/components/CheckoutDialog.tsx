@@ -84,7 +84,7 @@ function CheckoutDialog(props: any) {
   };
 
   function redirectToTerms() {
-    navigate("/TermsAndConditionsPage");
+    navigate("/AGBs");
   }
 
   function checkboxHandler() {
@@ -158,7 +158,9 @@ function CheckoutDialog(props: any) {
               <Grid item xs={5}>
                 <h2>{selectedShow?.movie?.titel}</h2>
                 <p>
-                  {selectedShow?.startTime} Kino 3
+                  {selectedShow?.cinemaRoom?.roomName}
+                  <br />
+                  {selectedShow?.startTime?.substring(0, 5)} Uhr
                   <br />
                   Sprache: {selectedShow?.movie?.language}
                 </p>

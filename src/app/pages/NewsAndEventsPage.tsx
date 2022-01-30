@@ -1,7 +1,7 @@
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 import APIUrl from "../config/APIUrl";
 import {useQuery} from "react-query";
 import {useState} from "react";
@@ -50,7 +50,7 @@ function NewsAndEventsPage() {
         return sortedData;
     };
 
-    
+
     if (newsData.error) {
         return (
             <Container
@@ -59,11 +59,10 @@ function NewsAndEventsPage() {
                     pt: 8,
                     pb: 6,
                     position: "relative",
-                    marginTop: "15rem",
                 }}
                 maxWidth="md"
             >
-                <ErrorPage />
+                <ErrorPage/>
             </Container>
         );
     }
@@ -79,7 +78,7 @@ function NewsAndEventsPage() {
                 }}
                 maxWidth="md"
             >
-                <LoadingAnimation />
+                <LoadingAnimation/>
             </Container>
         );
 
@@ -89,17 +88,17 @@ function NewsAndEventsPage() {
 
     return (
         <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Container maxWidth="lg"
-                       sx={{marginTop: "7rem"}} >
-                <IconButton onClick={goBack}>
-                    <ArrowBackIosIcon />
-                </IconButton>
+            <CssBaseline/>
+            <IconButton sx={{marginTop: 2, marginBottom: -12, marginLeft: 5, position: 'fixed', zIndex: '100'}}
+                        onClick={goBack}>
+                <ArrowBackIosIcon/>
+            </IconButton>
+            <Container maxWidth="lg" sx={{marginTop: 2}}>
                 <main>
-                    <MainNewsCard data={prepareData(newsData.data)}/>
                     <SearchField handleSearchChange={handleSearchChange}/>
-                    <NewsCard  filter={filter}
-                               data={prepareData(newsData.data)}/>
+                    <MainNewsCard data={prepareData(newsData.data)}/>
+                    <NewsCard filter={filter}
+                              data={prepareData(newsData.data)}/>
                 </main>
             </Container>
         </ThemeProvider>

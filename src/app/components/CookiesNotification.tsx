@@ -12,9 +12,9 @@ function CookiesNotification(){
                 style={{ background: "#2B373B" }}
                 buttonStyle={{ color: "#4e503b", fontSize: "15px" }}
             >
-                This website uses essential cookies to enhance the user experience.{" "}
-                <span style={{ fontSize: "12px" }}>By using this website you agree to the terms of the usage of
-                essential cookies!</span>
+                Diese Website verwendet essentielle Cookies, um die Benutzererfahrung zu verbessern.{" "}
+                <span style={{ fontSize: "12px" }}>Durch die Nutzung dieser Website stimmst Du den Nutzungsbedingungen
+                    für essentielle Cookies zu!</span>
             </CookieConsent>
         </div>
     )
