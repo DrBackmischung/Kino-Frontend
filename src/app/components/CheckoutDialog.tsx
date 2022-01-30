@@ -115,11 +115,11 @@ function CheckoutDialog(props: any) {
 
   function getSnackPrice() : number {
     let price = 0;
-    {snacks.map(
+    snacks.map(
       (s: any) => (
         price = price + s.price
       )
-    )}
+    )
     return price;
   }
 
