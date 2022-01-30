@@ -150,7 +150,7 @@ function ShowPicker(props: any) {
           spacing={{ xs: 2, md: 3 }}
           columns={{ xs: 4, sm: 8, md: 12 }}
         >
-          {data?.length == 0 ? (
+          {data?.length === 0 ? (
             <Container sx={{ mt: 6, ml: 7 }}>
               <Typography sx={{ fontStyle: "italic" }}>
                 Sorry, zur Zeit sind leider keine Vorstellungen für diesen Film
