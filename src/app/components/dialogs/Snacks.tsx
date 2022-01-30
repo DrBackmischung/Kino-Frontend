@@ -30,10 +30,8 @@ export function Snacks(props: any) {
 
     function removeSnack(s: any) {
         let arr = snacks;
-        console.log(arr);
         const index = arr.indexOf(s)
         arr.splice(index, 1);
-        console.log(arr);
         setSnacks(arr);
     }
 

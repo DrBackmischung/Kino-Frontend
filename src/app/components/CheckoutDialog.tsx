@@ -71,18 +71,9 @@ function CheckoutDialog(props: any) {
     setSnackIDs([]);
     snacks.map(
       (s: any) => {
-        console.log("=================")
-        console.log(snacks);
-        console.log(snackIDs);
-        console.log(s.id);
         var arr = snackIDs;
-        console.log("arr: "+arr)
         arr.push(s.id);
-        console.log("arr: "+arr)
         setSnackIDs(arr);
-        console.log(snacks);
-        console.log(snackIDs);
-        console.log(s.id);
       }
     );
     
