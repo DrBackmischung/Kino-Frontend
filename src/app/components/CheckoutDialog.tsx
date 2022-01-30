@@ -70,6 +70,7 @@ function CheckoutDialog(props: any) {
   const blockSeat = async () => {
     setSnackIDs([]);
     snacks.map(
+      // eslint-disable-next-line
       (s: any) => {
         var arr = snackIDs;
         arr.push(s.id);
@@ -123,6 +124,7 @@ function CheckoutDialog(props: any) {
   }
 
   const theme = createTheme(palette);
+  // eslint-disable-next-line
   if (user?.id === undefined) {
     return (
       <ThemeProvider theme={theme}>
