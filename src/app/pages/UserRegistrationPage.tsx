@@ -13,12 +13,14 @@ function UserRegistrationPage(props: any) {
     }
 
     return (
-        <Container sx={{marginTop: 12}}>
-            <IconButton onClick={goBack}>
+        <div>
+            <IconButton sx={{marginBottom: -12, marginLeft: 5, position: 'fixed', zIndex: '100'}} onClick={goBack}>
                 <ArrowBackIosIcon/>
             </IconButton>
-            <SignUp setUser={setUser}/>
-        </Container>
+            <Container sx={{mt: 2}}>
+                <SignUp setUser={setUser}/>
+            </Container>
+        </div>
     );
 }
 
