@@ -56,3 +56,29 @@ export function Booking(props: any) {
     );
   }
   
+  export function CancelBooking(props: any) {
+      const { open, cancel, selectedBooking, deleteBooking } = props;
+      return (
+          <Dialog
+            open={open}
+            onClose={cancel}
+            scroll="paper"
+            aria-labelledby="scroll-dialog-title"
+            aria-describedby="scroll-dialog-description"
+            fullWidth={true}
+            maxWidth="sm"
+          >
+              <DialogTitle id="scroll-dialog-title">{selectedBooking.show.movie.title}<br></br> am {selectedBooking.show.showDate.substring(8, 10)}.{selectedBooking.show.showDate.substring(5, 7)}.{selectedBooking.show.showDate.substring(0, 4)} um {selectedBooking.show.startTime.substring(0, 5)}</DialogTitle>
+              <DialogContent dividers={true}>
+                  <DialogContentText id="scroll-dialog-description">
+                      Willst du wirklich stornieren?
+                  </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                  <Button onClick={deleteBooking}>Ja</Button>
+                  <Button onClick={cancel}>Nein</Button>
+              </DialogActions>
+          </Dialog>
+      );
+    }
+  
