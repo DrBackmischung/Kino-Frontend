@@ -1,6 +1,4 @@
 import React from "react";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import IconButton from "@mui/material/IconButton";
 import {
     Button, Checkbox,
     Dialog,
@@ -9,17 +7,19 @@ import {
     DialogTitle, FormControl,
     FormControlLabel,
     FormGroup, FormLabel, Radio, RadioGroup,
-
+    Rating,
+    Select
 } from "@mui/material";
 import {styled} from "@mui/styles";
-
 import CloseIcon from '@mui/icons-material/Close';
-import "./Filter.css";
-import Select from "@mui/material/Select";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
-import Rating from '@mui/material/Rating';
+import "./Filter.css";
 
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({}));
+
+//Dialog Window Settings
+const BootstrapDialog = styled(Dialog)(({theme}) => ({}));
 
 export interface DialogTitleProps {
     id: string;
@@ -28,10 +28,10 @@ export interface DialogTitleProps {
 }
 
 const BootstrapDialogTitle = (props: DialogTitleProps) => {
-    const { children, onClose, ...other } = props;
+    const {children, onClose, ...other} = props;
 
     return (
-        <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+        <DialogTitle sx={{m: 0, p: 2}} {...other}>
             {children}
             {onClose ? (
                 <IconButton
@@ -44,7 +44,7 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
                         color: (theme) => theme.palette.grey[500],
                     }}
                 >
-                    <CloseIcon />
+                    <CloseIcon/>
                 </IconButton>
             ) : null}
         </DialogTitle>
@@ -53,15 +53,19 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
 
 
 function Filter(props: any) {
-    const {setSelectedLanguage} = props;
-    const {setSelectedFSK} = props;
-    const {setSelectedGenre} = props;
-    const {setApplyFilters} = props;
-    const {setRatingValue} = props;
-    const {moviesData, selectedGenre, ratingValue } = props;
+    const {
+        setSelectedLanguage,
+        setSelectedFSK,
+        setSelectedGenre,
+        setApplyFilters,
+        setRatingValue,
+    } = props;
+
+    const {moviesData, selectedGenre, ratingValue} = props;
 
     const [open, setOpen] = React.useState(false);
 
+    //Dialog Window functionality: open, close, apply Filters
     const handleClickOpen = () => {
         setOpen(true);
         setApplyFilters(false);
@@ -80,8 +84,8 @@ function Filter(props: any) {
         setOpen(false);
     }
 
-    function handleCheckboxSelect(e: any){
-
+    //Events Handling for existing Filters
+    function handleCheckboxSelect(e: any) {
         if (e.target.checked) {
             setSelectedLanguage((prevValues: any) => prevValues?.concat(e.target.value));
         } else {
@@ -89,10 +93,9 @@ function Filter(props: any) {
                 prevValues.filter((item: any) => item !== e.target.value)
             );
         }
-
     }
 
-    function handleFskRadioButtonSelect(e: any){
+    function handleFskRadioButtonSelect(e: any) {
         if (e.target.checked) {
             setSelectedFSK(e.target.value);
         }
@@ -102,15 +105,22 @@ function Filter(props: any) {
         setSelectedGenre(e.target.value);
     }
 
+    //Arrays preparation (existing options for filtering)
     const originalGenresArray = moviesData?.map((item: any) => item.genre);
     let genresString = originalGenresArray.toString();
     let genresStringArray = genresString.split(",");
     const uniqueGenresArray = genresStringArray.filter((value: any, index: any, self: any) => self.indexOf(value.toLowerCase()) === index);
 
+    const originalLanguagesArray = moviesData?.map((item: any) => item.language);
+    const uniqueLanguagesArray = originalLanguagesArray.filter((value: any, index: any, self: any) => self.indexOf(value) === index);
+
+    const FSKIndex = [0, 6, 12, 16, 18];
+
+
     return (
         <div>
             <IconButton size="large" color="inherit" onClick={handleClickOpen}>
-                <FilterAltIcon />
+                <FilterAltIcon/>
             </IconButton>
             <BootstrapDialog
                 onClose={handleClose}
@@ -124,48 +134,23 @@ function Filter(props: any) {
                     <FormControl component="fieldset">
                         <FormLabel component="legend">Sprache</FormLabel>
                         <FormGroup className="filter__checkboxes">
-                            <div className="filter__checkboxes" >
+                            <div className="filter__checkboxes">
                                 <div className="filter__checkboxes-column">
                                     <div className="checkboxes">
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    color="primary"
-                                                    value="Deutsch"
-                                                    onChange={(e) => handleCheckboxSelect(e)}
+                                        {uniqueLanguagesArray?.map(
+                                            (language: any) =>
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            color="primary"
+                                                            key={language}
+                                                            value={language}
+                                                            onChange={(e) => handleCheckboxSelect(e)}
+                                                        />
+                                                    }
+                                                    label={language}
                                                 />
-                                            }
-                                            label="Deutsch"
-                                        />
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    color="primary"
-                                                    value="Englisch"
-                                                    onChange={(e) => handleCheckboxSelect(e)}
-                                                />
-                                            }
-                                            label="Englisch"
-                                        /><FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    color="primary"
-                                                    value="Japanisch"
-                                                    onChange={(e) => handleCheckboxSelect(e)}
-                                                />
-                                            }
-                                            label="Japanisch"
-                                        />
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    color="primary"
-                                                    value="Russisch"
-                                                    onChange={(e) => handleCheckboxSelect(e)}
-                                                />
-                                            }
-                                            label="Russisch"
-                                        />
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -174,11 +159,10 @@ function Filter(props: any) {
                     <FormControl component="fieldset">
                         <FormLabel component="legend">FSK</FormLabel>
                         <RadioGroup row aria-label="gender" name="row-radio-buttons-group" className="fsk-select">
-                            <FormControlLabel value={0} control={<Radio />} label="ab 0" onChange={(e) => handleFskRadioButtonSelect(e)} />
-                            <FormControlLabel value='{ "key1": "0", "key2": "6"}' control={<Radio />} label="ab 6" onChange={(e) => handleFskRadioButtonSelect(e)}/>
-                            <FormControlLabel value='{ "key1": "0", "key2": "6", "key3": "14"}'  control={<Radio />} label="ab 14" onChange={(e) => handleFskRadioButtonSelect(e)}/>
-                            <FormControlLabel value='{ "key1": "0", "key2": "6", "key3": "14", "key4": "16"}' control={<Radio />} label="ab 16" onChange={(e) => handleFskRadioButtonSelect(e)}/>
-                            <FormControlLabel value='{ "key1": "0", "key2": "6", "key3": "14", "key4": "16", "key5": "18"}'  control={<Radio />} label="ab 18" onChange={(e) => handleFskRadioButtonSelect(e)}/>
+                            {FSKIndex?.map((index: any) => (
+                                <FormControlLabel key={index} value={index} control={<Radio/>} label={'ab ' + index}
+                                                  onChange={(e) => handleFskRadioButtonSelect(e)}/>
+                            ))}
                         </RadioGroup>
                     </FormControl>
                     <FormControl component="fieldset" className="genre-select">
@@ -211,8 +195,8 @@ function Filter(props: any) {
                     </FormControl>
                 </DialogContent>
                 <DialogActions>
-                     <Button autoFocus onClick={handleApplyFilters}>
-                         Filter anwenden
+                    <Button autoFocus onClick={handleApplyFilters}>
+                        Filter anwenden
                     </Button>
                 </DialogActions>
             </BootstrapDialog>

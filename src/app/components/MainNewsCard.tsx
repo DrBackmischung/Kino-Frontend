@@ -16,7 +16,7 @@ export default function MainNewsCard(props: any) {
                 position: 'relative',
                 backgroundColor: 'grey.800',
                 color: '#fff',
-                mb: 4,
+                p: 4,
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center',

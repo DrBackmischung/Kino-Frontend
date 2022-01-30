@@ -51,13 +51,12 @@ function ProgramPage() {
 
     return (
         <div>
-            <IconButton sx={{marginTop: 12, marginBottom: -12, marginLeft: 48}} onClick={goBack}>
+            <IconButton sx={{marginTop: -1, marginBottom: -12, marginLeft: 5, position: 'fixed', zIndex: '100'}} onClick={goBack}>
                 <ArrowBackIosIcon />
             </IconButton>
             <Toolbar
                 handleSearchChange={handleSearchChange}
                 setSelectedSort={setSelectedSort}
-                selectedSort={selectedSort}
                 setSelectedLanguage={setSelectedLanguage}
                 setSelectedFSK={setSelectedFSK}
                 setSelectedGenre={setSelectedGenre}

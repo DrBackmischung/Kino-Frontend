@@ -1,7 +1,14 @@
 // eslint-disable-next-line
 import React from "react";
 import { useQuery } from "react-query";
-import { Button, Grid, Tooltip, Typography, Zoom } from "@mui/material";
+import {
+  Button,
+  Container,
+  Grid,
+  Tooltip,
+  Typography,
+  Zoom,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import ErrorPage from "../pages/ErrorPage";
 import LoadingAnimation from "./layouts/LoadingAnimation";
@@ -128,6 +135,12 @@ function ShowPicker(props: any) {
     return showsToBeReturned;
   };
 
+  if (isLoading) {
+    return <LoadingAnimation />;
+  }
+
+  if (error) return <ErrorPage />;
+
   return (
     <Box className="overallContainer" maxWidth="sm">
       <h3>Shows:</h3>
@@ -137,10 +150,13 @@ function ShowPicker(props: any) {
           spacing={{ xs: 2, md: 3 }}
           columns={{ xs: 4, sm: 8, md: 12 }}
         >
-          {error ? (
-            <ErrorPage />
-          ) : isLoading ? (
-            <LoadingAnimation />
+          {data?.length == 0 ? (
+            <Container sx={{ mt: 6, ml: 7 }}>
+              <Typography sx={{ fontStyle: "italic" }}>
+                Sorry, zur Zeit sind leider keine Vorstellungen für diesen Film
+                verfügbar!
+              </Typography>
+            </Container>
           ) : (
             renderShowsForWeekDayIGuess(data).map((weekDay: any) => {
               if (weekDay?.length !== 0) {

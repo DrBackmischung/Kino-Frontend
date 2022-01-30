@@ -19,7 +19,7 @@ function PriceCard(pricesData: any){
         <Container
             sx={{
                 bgcolor: "background.paper",
-                pt: 8,
+                pt: -1,
                 pb: 6,
                position: "relative",
             }}
@@ -47,7 +47,6 @@ function PriceCard(pricesData: any){
 
                         ))}
                     </TableBody>
-
                 </Table>
             </TableContainer>
             <p><strong>Ermäßigung</strong> gewähren wir Studierenden, Azubis und Scherbehinderten.</p>

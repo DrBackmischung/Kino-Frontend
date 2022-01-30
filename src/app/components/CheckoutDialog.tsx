@@ -84,7 +84,7 @@ function CheckoutDialog(props: any) {
   };
 
   function redirectToTerms() {
-    navigate("/TermsAndConditionsPage");
+    navigate("/AGBs");
   }
 
   function checkboxHandler() {
