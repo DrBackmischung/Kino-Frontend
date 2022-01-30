@@ -24,17 +24,9 @@ export function Snacks(props: any) {
 
     const apiUrlGetAllSnacks = `${APIUrl.apiUrl}/snack/getAll`;
       
-    const {isLoading, error} : any = useQuery("Snacks", () =>
+    const {isLoading, error, data} : any = useQuery("Snacks", () =>
         fetch(apiUrlGetAllSnacks).then((res) => res.json())
     );
-
-    const data = [{
-        id: "ad5ee9a2-8201-11ec-a8a3-0242ac120002",
-        product: "Cola",
-        size: "0,5l",
-        pictureLink: "localhost",
-        price: 3.5
-      }];
 
     function removeSnack(s: any) {
         let arr = snacks;
