@@ -16,7 +16,7 @@ function Item(props: any)
             <CardMedia
                 component="img"
                 src={props.item.pictureLink}
-                alt="There should be a poster here... Where did it go?"
+                alt="Hier sollte ein Poster sein... Wo ist es nur hin?"
                 sx={{
                     maxHeight: "5",
                     maxWidth: "100%",
@@ -36,13 +36,13 @@ function HomePage(){
 
     let items = [
         {
-            name: "Our Top Movie of the Month",
-            description: "Probably the most random thing you have ever seen!",
+            name: "Unsere Top Film-Empfehlung des Monats",
+            description: "Der Blockbuster des Monats: Spider-Man: No Way Home",
             pictureLink: "https://i.blogs.es/cb2ce6/spiderman-no-way-home-cartel/1366_2000.jpeg",
         },
         {
-            name: "Keeping you safe!",
-            description: "Watching the future of cinema without the fear of COVID! Have a look at our rules...",
+            name: "Wir beschützen Dich!",
+            description: "Genieße das voll Kino-Entertainment ohne Angst vor COVID zu haben! Wirf einen Blick auf unsere Regeln...",
             pictureLink: "https://cdn.cineweb.de/media/betreiber/cinexx-hachenburg-2018/city/hachenburg-2018/images/Grafiken_intern/Corona/Corona-Regeln%20Reopening.jpg",
         }
     ]
@@ -67,7 +67,7 @@ function HomePage(){
                 backgroundColor: palette.palette.primary.dark,
             }}/>
             <Box>
-                <h3>More Movies:</h3>
+                <h3>Weitere Filme:</h3>
                 <MovieCard
                     filter={""}
                     location={""}
