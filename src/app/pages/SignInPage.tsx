@@ -138,7 +138,7 @@ export default function SignIn(props: any) {
           <LockIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Einloggen
         </Typography>
         <form className={classes.form} noValidate>
           <Controller
@@ -152,7 +152,7 @@ export default function SignIn(props: any) {
                 margin="normal"
                 required
                 fullWidth
-                label="Username"
+                label="Benutzername"
                 autoFocus
                 onChange={(e: any) => {
                   setUserName(e.target.value);
@@ -193,7 +193,7 @@ export default function SignIn(props: any) {
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            label="Bleibe eingeloggt!"
           />
           <br />
           {error.isError && (
@@ -217,13 +217,13 @@ export default function SignIn(props: any) {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
-                Passwort Vergessen?
+              <Link href="/PasswortVergessen" variant="body2">
+                Passwort vergessen?
               </Link>
             </Grid>
             <Grid item>
               <Link href="/SignUpPage" variant="body2">
-                {"Neuer Benutzer? Registrieren"}
+                {"Neuer Benutzer? Hier kannst DU Dich registrieren!"}
               </Link>
             </Grid>
           </Grid>

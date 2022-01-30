@@ -24,6 +24,7 @@ import ProfilePage from "../../pages/ProfilePage";
 import CookiesNotification from "../CookiesNotification";
 import TermsAndConditionsPage from "../../pages/TermsAndConditionsPage";
 import InfoPage from "../../pages/InfoPage";
+import PasswortVergessenPage from "../../pages/PasswortVergessenPage";
 
 function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -210,7 +211,7 @@ function MenuBar() {
         <Route path="/programPage" element={<ProgramPage />} />
         <Route path="/newsAndEventsPage" element={<NewsAndEventsPage />} />
         <Route path="/pricesOverviewPage" element={<PricesPage />} />
-        <Route path="/TermsAndConditionsPage" element={<TermsAndConditionsPage />} />
+        <Route path="/AGBs" element={<TermsAndConditionsPage />} />
         <Route
           path="/DetailsPage"
           // @ts-ignore
@@ -230,6 +231,7 @@ function MenuBar() {
         <Route path="/Admin" element={<AdminPage userData={userData} />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/info/:bookingID" element={<InfoPage />} />
+        <Route path="/PasswortVergessen" element={<PasswortVergessenPage />} />
       </Routes>
       <CookiesNotification/>
     </BrowserRouter>

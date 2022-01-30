@@ -8,7 +8,7 @@ function Ratings(props: any){
         <div>
             <Grid container columns={5}>
                 <Grid item xs={1}>
-                    <h3>Rating:</h3>
+                    <h3>Bewertung:</h3>
                 </Grid>
                 <Grid item xs={4} mt={2.5}>
                     <Rating value={ratingValue} readOnly={true} precision={0.5}/>
