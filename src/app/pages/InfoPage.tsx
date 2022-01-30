@@ -43,6 +43,11 @@ function InfoPage() {
         maxWidth="xl"
       >
         <Grid container spacing={2}>
+          {data.state === "Canceled" ? (
+            <Grid item xs={12} spacing={3} paddingTop={5}>
+              <Typography align="center" component="h1" variant="h5">Buchung wurde storniert!</Typography>
+            </Grid>
+          ): null}
           <Grid item xs={12}>
             <Typography align="center" component="h1" variant="h5">{data?.show.movie.title}</Typography>
           </Grid>

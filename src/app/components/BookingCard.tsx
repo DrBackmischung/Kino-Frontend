@@ -9,7 +9,8 @@ import ManageBooking from "./ManageBooking";
 export function BookingCard(props: any) {
 
   const { selectedUser } = props;
-  const [booking, setBooking ] = useState();
+  const [booking, setBooking ] = useState<any>();
+  const [bookingID, setBookingID ] = useState();
   const [openBookingDetails, setOpenBookingDetails] = useState(false);
 
   const handleOpenBooking = () => {
@@ -18,6 +19,45 @@ export function BookingCard(props: any) {
   const handleCloseBooking = () => {
     setOpenBookingDetails(false);
   };
+  const [openCancel, setOpenCancel] = useState(false);
+
+  const handleOpenCancel = () => {
+    setOpenCancel(true);
+  };
+  const handleCloseCancel = () => {
+    setOpenCancel(false);
+  };
+
+  const deleteBooking = () => {
+    if(booking) {
+      const apiUrlCancelBooking = `${APIUrl.apiUrl}/booking/${bookingID}/changeStatus`;
+      let seatIDs : any[] = [];
+      let snackIDs : any[] = [];
+      for(const ticket of booking.tickets) {
+        seatIDs.push(ticket?.seat?.id);
+      }
+      for(const snack of booking.snacks) {
+        seatIDs.push(snack?.id);
+      }
+      // eslint-disable-next-line
+      const requestOptions = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userID: booking.user.id,
+          seatIDs: seatIDs,
+          showID: booking.show.id,
+          state: "Canceled",
+          bookingDate: booking.bookingDate,
+          snackIDs: snackIDs
+        }),
+      };
+      fetch(apiUrlCancelBooking, requestOptions).then((response) => {
+              return response.json();
+          });
+    }
+    handleCloseCancel();
+  }
 
   const apiUrlGetBookings = `${APIUrl.apiUrl}/user/${selectedUser?.id}/bookings`;
   const {isLoading: isLoadingBookings, error: errorBookings, data: dataBookings} : any = useQuery("Bookings", () =>
@@ -45,7 +85,7 @@ export function BookingCard(props: any) {
   return (
     <Grid container xs={12} borderTop={"3px solid grey"}>
       <Grid item xs={12} spacing={3} paddingTop={5}>
-        <Typography align="center" component="h1" variant="h5">Buchungen</Typography>
+        <Typography align="center" component="h1" variant="h5">Buchungen</Typography> 
       </Grid>
       {dataBookings.map(
         (b: any) => (
@@ -64,6 +104,22 @@ export function BookingCard(props: any) {
                 >
                   Details
                 </Button>
+                {b.state === "Canceled" ? (
+                  <p><b>=== Buchung storniert! ===</b></p>
+                ): (
+                  <Button
+                    sx={{marginTop:1}}
+                    fullWidth
+                    onClick={() => {
+                      handleOpenCancel();
+                      setBooking(b);
+                      setBookingID(b.id);
+                    }}
+                    variant="contained"
+                  >
+                    Buchung stornieren
+                  </Button>
+                )}
               </CardContent>
               <CardMedia
                 component="img"
@@ -85,7 +141,11 @@ export function BookingCard(props: any) {
         isOpen={openBookingDetails}
         open={handleOpenBooking}
         close={handleCloseBooking}
+        isOpenCancel={openCancel}
+        openCancel={handleOpenCancel}
+        closeCancel={handleCloseCancel}
         booking={booking}
+        deleteBooking={deleteBooking}
       />
     </Grid>
   );
