@@ -12,16 +12,12 @@ function ChatBot(props: any) {
     setOpen(false);
   };
   return (
-    <>
-      <Button
-        className="wholeContainer"
-        variant="contained"
-        onClick={onButtonPressed}
-      >
+    <div className="wholeContainer">
+      <Button variant="contained" onClick={onButtonPressed}>
         ChatBot
       </Button>
       <ChatBotDialog open={open} handleClose={handleClose} />
-    </>
+    </div>
   );
 }
 

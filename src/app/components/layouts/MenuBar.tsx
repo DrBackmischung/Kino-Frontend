@@ -7,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import { Box, Container, Menu, MenuItem, Grid } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { useState } from "react";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import ProgramPage from "../../pages/ProgramPage";
 import DetailsPage from "../../pages/DetailsPage";
 import NewsAndEventsPage from "../../pages/NewsAndEventsPage";
@@ -65,7 +65,7 @@ function MenuBar() {
   };
 
   return (
-    <BrowserRouter>
+    <>
       <AppBar
         style={{ backgroundColor: "#393E41", opacity: 1 }}
         position="sticky"
@@ -230,7 +230,7 @@ function MenuBar() {
         <Route path="/PasswortVergessen" element={<PasswortVergessenPage />} />
       </Routes>
       <CookiesNotification />
-    </BrowserRouter>
+    </>
   );
 }
 

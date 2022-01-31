@@ -1,19 +1,30 @@
-import { ThemeProvider } from "@mui/material";
-import { createTheme } from "@mui/material/styles";
 import React, { useState } from "react";
 import "./ChatMessage.css";
-import palette from "../config/Colours";
+import { useNavigate } from "react-router-dom";
 
 function ChatMessage(props: any) {
-  const { name, message, align } = props;
-  const theme = createTheme(palette);
+  const { message, align, navigateState, navigateTo, handleDialogClose } =
+    props;
+  const navigate = useNavigate();
+  const [messageCss] = useState(`messageContainer${align}`);
+  const navigateToLink = (e: any) => {
+    e.preventDefault();
+    handleDialogClose();
+    switch (navigateTo) {
+      case "/DetailsPage":
+        navigate(`${navigateTo}`, { state: { movieId: navigateState } });
+        break;
+    }
+  };
   return (
-    <ThemeProvider theme={theme}>
-      <div className="container">
-        <strong>{name}: </strong>
-        <p className="message">{message}</p>
-      </div>
-    </ThemeProvider>
+    <div className={messageCss}>
+      <p className="messageText">{`${message} `}</p>
+      {navigateTo === undefined ? null : (
+        <p className="myHyperLink" onClick={(e) => navigateToLink(e)}>
+          Mehr erfahren!
+        </p>
+      )}
+    </div>
   );
 }
 
