@@ -64,12 +64,11 @@ function MenuBar() {
     });
   };
 
-
   return (
     <BrowserRouter>
       <AppBar
-          style={{ backgroundColor: "#393E41", opacity: 1, }}
-          position="sticky"
+        style={{ backgroundColor: "#393E41", opacity: 1 }}
+        position="sticky"
       >
         <Container fixed>
           <Toolbar>
@@ -82,9 +81,9 @@ function MenuBar() {
               to={"/"}
             >
               <img
-                  src="https://raw.githubusercontent.com/DrBackmischung/Kino-Dokumentation/main/KV.png"
-                  alt="Kinovation Logo"
-                  height={40}
+                src="https://raw.githubusercontent.com/DrBackmischung/Kino-Dokumentation/main/KV.png"
+                alt="Kinovation Logo"
+                height={40}
               />
             </IconButton>
             <Box
@@ -108,60 +107,57 @@ function MenuBar() {
               ))}
             </Box>
             <Box>
-              {currentUser?.userId !== "null" && currentUser?.userId !== undefined ? (
+              {currentUser?.userId !== "null" &&
+              currentUser?.userId !== undefined ? (
                 <>
                   <Grid container spacing={2}>
                     <Grid item xs={10}>
-                      <p
-                        style={{ marginTop: "1.35rem" }}
-                      >
+                      <p style={{ marginTop: "1.35rem" }}>
                         {`Willkommen ${userData?.data?.userName}!`}
                       </p>
                     </Grid>
-                    <Grid item xs={2} sx={{pt: 3, pb:2}}>
-                  <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    onClick={handleMenu}
-                    color="inherit"
-                    sx={{pt: 3}}
-                  >
-                    <AccountCircle />
-                  </IconButton>
-                  <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                  >
-                    <MenuItem component={Link} to="/profile">
-                      Profil
-                    </MenuItem>
-                    <MenuItem
-                      onClick={
-                        () => {
-                          setCookie("userId", "null", 7);
-                          setCookie("role", "null", 7);
-                          setCurrentUser({
-                            userId: "null",
-                          });
-                        }
-                      }
-                    >
-                      Ausloggen
-                    </MenuItem>
-                  </Menu>
+                    <Grid item xs={2} sx={{ pt: 3, pb: 2 }}>
+                      <IconButton
+                        size="large"
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={handleMenu}
+                        color="inherit"
+                        sx={{ pt: 3 }}
+                      >
+                        <AccountCircle />
+                      </IconButton>
+                      <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                      >
+                        <MenuItem component={Link} to="/profile">
+                          Profil
+                        </MenuItem>
+                        <MenuItem
+                          onClick={() => {
+                            setCookie("userId", "null", 7);
+                            setCookie("role", "null", 7);
+                            setCurrentUser({
+                              userId: "null",
+                            });
+                          }}
+                        >
+                          Ausloggen
+                        </MenuItem>
+                      </Menu>
                     </Grid>
                   </Grid>
                 </>
@@ -233,7 +229,7 @@ function MenuBar() {
         <Route path="/info/:bookingID" element={<InfoPage />} />
         <Route path="/PasswortVergessen" element={<PasswortVergessenPage />} />
       </Routes>
-      <CookiesNotification/>
+      <CookiesNotification />
     </BrowserRouter>
   );
 }

@@ -1,0 +1,10 @@
+.container {
+  width: 100%;
+  display: flex;
+}
+.message {
+  margin-left: 1rem;
+  outline: 1px dotted gray;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
