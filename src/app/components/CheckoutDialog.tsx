@@ -24,6 +24,7 @@ import { createTheme } from "@mui/material/styles";
 import palette from "../config/Colours";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
+import ManageSnacks from "./ManageSnacks";
 
 function CheckoutDialog(props: any) {
   const {
@@ -55,8 +56,28 @@ function CheckoutDialog(props: any) {
   const handleRadioChange = (e: any) => {
     setPaymentMethod(e.target.value);
   };
+  const [openSnack, setOpenSnack] = useState(false);
+  const [snacks, setSnacks] = useState<any[]>([]);
+  const [snackIDs, setSnackIDs] = useState<string[]>([]);
+
+  const handleOpenSnack = () => {
+    setOpenSnack(true);
+  };
+  const handleCloseSnack = () => {
+    setOpenSnack(false);
+  };
 
   const blockSeat = async () => {
+    setSnackIDs([]);
+    snacks.map(
+      // eslint-disable-next-line
+      (s: any) => {
+        var arr = snackIDs;
+        arr.push(s.id);
+        setSnackIDs(arr);
+      }
+    );
+    
     let success: boolean = false;
     setIsLoading(true);
     const requestOptions = {
@@ -64,10 +85,11 @@ function CheckoutDialog(props: any) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         userID: user.id,
+        snackIDs: snackIDs,
         seatIDs: selectedSeats,
         showID: selectedShow.id,
         state: "Paid",
-        bookingDate: new Date(),
+        bookingDate: new Date().toISOString().substring(0,10),
       }),
     };
     const response = await fetch(apiUrlBlockSeat, requestOptions);
@@ -84,14 +106,25 @@ function CheckoutDialog(props: any) {
   };
 
   function redirectToTerms() {
-    navigate("/AGBs");
+    navigate("/TermsAndConditionsPage");
   }
 
   function checkboxHandler() {
     setAgree(!agree);
   }
 
+  function getSnackPrice() : number {
+    let price = 0;
+    snacks.map(
+      (s: any) => (
+        price = price + s.price
+      )
+    )
+    return price;
+  }
+
   const theme = createTheme(palette);
+  // eslint-disable-next-line
   if (user?.id === undefined) {
     return (
       <ThemeProvider theme={theme}>
@@ -164,7 +197,7 @@ function CheckoutDialog(props: any) {
                   <br />
                   Sprache: {selectedShow?.movie?.language}
                 </p>
-                <Button className="addCateringButton" variant="outlined">
+                <Button className="addCateringButton" variant="outlined" onClick={() => {handleOpenSnack()}}>
                   Verpflegung hinzufügen
                 </Button>
                 <br />
@@ -173,13 +206,19 @@ function CheckoutDialog(props: any) {
                   <Grid container spacing={1}>
                     <Grid item xs={8}>
                       <p>{selectedSeats.length} Sitzplätze</p>
-                      <p>2 Nachos(groß)</p>
-                      <p>2 Cola (0,5)</p>
+                      {snacks.map(
+                        (s: any) => (
+                          <p>{s.product} ({s.size})</p>
+                        )
+                      )}
                     </Grid>
                     <Grid item xs={4} className="textAlignRight">
                       <p>{priceForSeats}€</p>
-                      <p>10€</p>
-                      <p>5€</p>
+                      {snacks.map(
+                        (s: any) => (
+                          <p>{s.price}€</p>
+                        )
+                      )}
                     </Grid>
                   </Grid>
                 </Box>
@@ -188,7 +227,7 @@ function CheckoutDialog(props: any) {
                     <p>Gesamt:</p>
                   </Grid>
                   <Grid item xs={4}>
-                    <p>{priceForSeats + 15}€</p>
+                    <p>{priceForSeats+getSnackPrice()}€</p>
                   </Grid>
                 </Grid>
               </Grid>
@@ -374,6 +413,13 @@ function CheckoutDialog(props: any) {
             Bezahlen
           </Button>
         </DialogActions>
+        <ManageSnacks 
+          isOpen={openSnack}
+          open={handleOpenSnack}
+          close={handleCloseSnack}
+          snacks={snacks}
+          setSnacks={setSnacks}
+        />
       </Dialog>
     </ThemeProvider>
   );
