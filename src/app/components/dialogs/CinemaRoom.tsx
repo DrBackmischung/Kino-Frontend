@@ -93,7 +93,7 @@ export function AddCinemaRoomDialog(props: any) {
 
   const theme = createTheme(palette);
 
-  if (errorCienma || dataCinema?.error) {
+  if (errorCinema || dataCinema?.error) {
     return <ErrorPage errorCode={dataCinema?.status} />;
   }
   return (
