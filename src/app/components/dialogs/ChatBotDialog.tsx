@@ -18,11 +18,11 @@ import ErrorPage from "../../pages/ErrorPage";
 const welcomeMessage = [
   {
     message: "Hallo ich bin Theo das Ticket, wie kann ich dir behilflich sein?",
-    align: "Right",
+    align: "Left",
   },
   {
-    message: `Versuche Befehle wie "Zeig mir alle Filme" oder "Vorstellungen", zu dem Shows sehen möchtest!`,
-    align: "Right",
+    message: `Du kannst mich alles fragen! Zum Beispiel kann ich dir Filme raussuchen, du musst mir nur sagen was du suchst :)`,
+    align: "Left",
   },
 ];
 
@@ -50,7 +50,7 @@ function ChatBotDialog(props: any) {
           ...prevVal,
           {
             message: `Ich habe folgendes zu "${userMessage}" gefunden: Der gesuchte Film ${data.content.title} vom Regisseur ${data.content.director} handelt von ${data.content.description}, Dauert ${data.content.duration} Minuten und ist ab ${data.content.fsk} Jahren freigegeben.`,
-            align: "Right",
+            align: "Left",
             navigateState: `${data.content.id}`,
             navigateTo: "/DetailsPage",
           },
@@ -61,7 +61,7 @@ function ChatBotDialog(props: any) {
           ...prevVal,
           {
             message: `${data.content}`,
-            align: "Right",
+            align: "Left",
           },
         ]);
         break;
@@ -71,7 +71,7 @@ function ChatBotDialog(props: any) {
           ...prevVal,
           {
             message: `Ich habe folgendes zu "${userMessage}" gefunden: `,
-            align: "Right",
+            align: "Left",
             link: `${data.content}`,
           },
         ]);
@@ -81,7 +81,7 @@ function ChatBotDialog(props: any) {
           ...prevVal,
           {
             message: `Ich habe folgende Filme zu "${userMessage}" gefunden: `,
-            align: "Right",
+            align: "Left",
             navigateTo: "/DetailsPage",
             movieList: data.content,
           },
@@ -91,8 +91,8 @@ function ChatBotDialog(props: any) {
         setMessages((prevVal) => [
           ...prevVal,
           {
-            message: `Ich habe folgende Vorführungen zu "${userMessage}" gefunden: `,
-            align: "Right",
+            message: `Das sind alle Shows, die ich gefunden hab: `,
+            align: "Left",
             navigateTo: "/DetailsPage",
             showList: data.content,
             userData: userData,
@@ -107,7 +107,7 @@ function ChatBotDialog(props: any) {
     if (userInput.length > 1) {
       setMessages((prevVal) => [
         ...prevVal,
-        { message: userInput, align: "Left" },
+        { message: userInput, align: "Right" },
       ]);
       sendMessageToChatBot(userInput);
       setUserInput("");
