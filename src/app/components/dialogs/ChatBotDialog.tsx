@@ -38,26 +38,12 @@ function ChatBotDialog(props: any) {
   const sendMessageToChatBot = async (userMessage: any) => {
     setLoading(true);
     const messageToFetch = userMessage.replace(" ", "_");
-    /*const response = await fetch(`${APIUrlChat}/${messageToFetch}`);
+    const response = await fetch(`${APIUrlChat}/${messageToFetch}`);
     if (!response.ok) {
       setError(true);
       return;
     }
-    const data = await response.json(); */
-    const data = {
-      type: "MOVIE",
-      content: {
-        id: "c3437d13-0374-414f-9446-acdd8ae97f47",
-        title: "Shrek 3",
-        language: "Deutsch",
-        duration: 200.0,
-        director: "Mathis Neunzig",
-        description: "Grün und hässlich",
-        pictureLink:
-          "https://www.merkur.de/bilder/2021/07/15/90875184/26566547-burmilla-katze-rasse-kitten-1Rec.jpg",
-        fsk: 0,
-      },
-    };
+    const data = await response.json();
     switch (data?.type) {
       case "MOVIE":
         setMessages((prevVal) => [
