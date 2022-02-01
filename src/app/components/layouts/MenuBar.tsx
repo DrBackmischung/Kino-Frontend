@@ -7,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import { Box, Container, Menu, MenuItem, Grid } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { useState } from "react";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import ProgramPage from "../../pages/ProgramPage";
 import DetailsPage from "../../pages/DetailsPage";
 import NewsAndEventsPage from "../../pages/NewsAndEventsPage";
@@ -25,6 +25,7 @@ import CookiesNotification from "../CookiesNotification";
 import TermsAndConditionsPage from "../../pages/TermsAndConditionsPage";
 import InfoPage from "../../pages/InfoPage";
 import PasswortVergessenPage from "../../pages/PasswortVergessenPage";
+import ChatBot from "../ChatBot";
 
 function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -65,7 +66,8 @@ function MenuBar() {
   };
 
   return (
-    <BrowserRouter>
+    <>
+      <ChatBot userData={userData.data} />
       <AppBar
         style={{ backgroundColor: "#393E41", opacity: 1 }}
         position="sticky"
@@ -231,7 +233,7 @@ function MenuBar() {
         <Route path="/PasswortVergessen" element={<PasswortVergessenPage />} />
       </Routes>
       <CookiesNotification />
-    </BrowserRouter>
+    </>
   );
 }
 

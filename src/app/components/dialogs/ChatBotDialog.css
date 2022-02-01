@@ -1,0 +1,43 @@
+.userInput {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20%;
+}
+#sendButton {
+  width: 20%;
+  margin-left: 1rem;
+}
+#userText {
+  width: 80%;
+  margin-right: 1rem;
+  border-radius: 25px;
+}
+.chatBox {
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 25px;
+  min-height: 200px;
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.chatBoxInner {
+  min-height: 200px;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.chatBoxInner::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+.chatBoxInner::-webkit-scrollbar {
+  width: 8px;
+}
+.chatBoxInner::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #888;
+}

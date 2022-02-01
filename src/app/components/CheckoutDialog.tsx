@@ -77,7 +77,7 @@ function CheckoutDialog(props: any) {
         setSnackIDs(arr);
       }
     );
-    
+
     let success: boolean = false;
     setIsLoading(true);
     const requestOptions = {
@@ -89,7 +89,7 @@ function CheckoutDialog(props: any) {
         seatIDs: selectedSeats,
         showID: selectedShow.id,
         state: "Paid",
-        bookingDate: new Date().toISOString().substring(0,10),
+        bookingDate: new Date().toISOString().substring(0, 10),
       }),
     };
     const response = await fetch(apiUrlBlockSeat, requestOptions);
@@ -113,13 +113,9 @@ function CheckoutDialog(props: any) {
     setAgree(!agree);
   }
 
-  function getSnackPrice() : number {
+  function getSnackPrice(): number {
     let price = 0;
-    snacks.map(
-      (s: any) => (
-        price = price + s.price
-      )
-    )
+    snacks.map((s: any) => (price = price + s.price));
     return price;
   }
 
@@ -183,13 +179,15 @@ function CheckoutDialog(props: any) {
         fullWidth={true}
         maxWidth="sm"
       >
-        <DialogTitle id="scroll-dialog-title">Checkout</DialogTitle>
+        <DialogTitle id="scroll-dialog-title">
+          Checkout {selectedShow?.movie?.title}
+        </DialogTitle>
         <DialogContent dividers={true}>
           <DialogContentText id="scroll-dialog-description">
             {isLoading ? <LoadingAnimation /> : null}
             <Grid container spacing={2}>
               <Grid item xs={5}>
-                <h2>{selectedShow?.movie?.titel}</h2>
+                <h2>{selectedShow?.movie?.title}</h2>
                 <p>
                   {selectedShow?.cinemaRoom?.roomName}
                   <br />
@@ -197,7 +195,13 @@ function CheckoutDialog(props: any) {
                   <br />
                   Sprache: {selectedShow?.movie?.language}
                 </p>
-                <Button className="addCateringButton" variant="outlined" onClick={() => {handleOpenSnack()}}>
+                <Button
+                  className="addCateringButton"
+                  variant="outlined"
+                  onClick={() => {
+                    handleOpenSnack();
+                  }}
+                >
                   Verpflegung hinzufügen
                 </Button>
                 <br />
@@ -206,19 +210,17 @@ function CheckoutDialog(props: any) {
                   <Grid container spacing={1}>
                     <Grid item xs={8}>
                       <p>{selectedSeats.length} Sitzplätze</p>
-                      {snacks.map(
-                        (s: any) => (
-                          <p>{s.product} ({s.size})</p>
-                        )
-                      )}
+                      {snacks.map((s: any) => (
+                        <p>
+                          {s.product} ({s.size})
+                        </p>
+                      ))}
                     </Grid>
                     <Grid item xs={4} className="textAlignRight">
                       <p>{priceForSeats}€</p>
-                      {snacks.map(
-                        (s: any) => (
-                          <p>{s.price}€</p>
-                        )
-                      )}
+                      {snacks.map((s: any) => (
+                        <p>{s.price}€</p>
+                      ))}
                     </Grid>
                   </Grid>
                 </Box>
@@ -227,7 +229,7 @@ function CheckoutDialog(props: any) {
                     <p>Gesamt:</p>
                   </Grid>
                   <Grid item xs={4}>
-                    <p>{priceForSeats+getSnackPrice()}€</p>
+                    <p>{priceForSeats + getSnackPrice()}€</p>
                   </Grid>
                 </Grid>
               </Grid>
@@ -413,7 +415,7 @@ function CheckoutDialog(props: any) {
             Bezahlen
           </Button>
         </DialogActions>
-        <ManageSnacks 
+        <ManageSnacks
           isOpen={openSnack}
           open={handleOpenSnack}
           close={handleCloseSnack}
