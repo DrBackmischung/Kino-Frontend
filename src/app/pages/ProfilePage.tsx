@@ -20,7 +20,6 @@ function ProfilePage() {
   const apiUrlGetUser = `${APIUrl.apiUrl}/user/${userID}`;
   const {
     isLoading: isLoadingUser,
-    error: errorUser,
     data: dataUser,
     isError,
   }: any = useQuery("User", () =>

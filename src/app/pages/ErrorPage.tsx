@@ -16,6 +16,7 @@ function ErrorPage(props: any) {
   );
   useEffect(() => {
     errorData.refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errorCode]);
   if (errorData?.isError) {
     return (

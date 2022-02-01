@@ -226,6 +226,9 @@ export function DeleteNewsDialog(props: any) {
   if (errorNews || dataNews?.error) {
     return <ErrorPage errorCode={dataNews?.status} />;
   }
+  if (error) {
+    return <ErrorPage />;
+  }
   return (
     <ThemeProvider theme={theme}>
       <Dialog
