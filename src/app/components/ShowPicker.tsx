@@ -61,7 +61,6 @@ function ShowPicker(props: any) {
     const showsWithFormattedDate = removedShowsOutated?.map((item: any) => {
       return { ...item, showDate: formattedDate(item?.showDate) };
     });
-    console.log(showsWithFormattedDate);
     return showsWithFormattedDate;
   };
 
