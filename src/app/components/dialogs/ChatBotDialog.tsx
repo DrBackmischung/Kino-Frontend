@@ -21,7 +21,7 @@ const welcomeMessage = [
     align: "Right",
   },
   {
-    message: `Versuche Befehle wie "Shrek 3" oder ein Datum, zu dem Shows sehen möchtest!`,
+    message: `Versuche Befehle wie "Zeig mir alle Filme" oder "Vorstellungen", zu dem Shows sehen möchtest!`,
     align: "Right",
   },
 ];
@@ -122,7 +122,6 @@ function ChatBotDialog(props: any) {
     sendUserMessage();
   };
   const onClosePressed = () => {
-    setMessages(welcomeMessage);
     handleClose();
   };
   if (error !== 200) {
