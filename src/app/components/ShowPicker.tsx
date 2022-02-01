@@ -47,18 +47,29 @@ function ShowPicker(props: any) {
       }
     });
 
-    const showsWithFormattedDate = sortedByTime?.map((item: any) => {
+    const removedShowsOutated = sortedByTime?.filter((item: any) => {
+      var currentDate = new Date();
+      var movieStart = new Date();
+      movieStart.setHours(
+        item.startTime.split(":")[0],
+        item.startTime.split(":")[1],
+        0
+      );
+      return movieStart > currentDate;
+    });
+
+    const showsWithFormattedDate = removedShowsOutated?.map((item: any) => {
       return { ...item, showDate: formattedDate(item?.showDate) };
     });
+    console.log(showsWithFormattedDate);
     return showsWithFormattedDate;
   };
 
   let formattedDate: any = (showDate: any) => {
-    return new Date(showDate).toLocaleDateString(undefined, {
+    return new Date(showDate).toLocaleDateString("de-DE", {
       weekday: "long",
       day: "2-digit",
       month: "2-digit",
-      year: "numeric",
     });
   };
 
@@ -80,25 +91,25 @@ function ShowPicker(props: any) {
   const renderShowsForWeekDayIGuess = (data: any) => {
     const shows = prepareShows(data);
     const showsMonday = shows?.filter(
-      (item: any) => item.showDate.split(",")[0] === "Monday"
+      (item: any) => item.showDate.split(",")[0] === "Montag"
     );
     const showsTuesday = shows?.filter(
-      (item: any) => item.showDate.split(",")[0] === "Tuesday"
+      (item: any) => item.showDate.split(",")[0] === "Dienstag"
     );
     const showsWednesday = shows?.filter(
-      (item: any) => item.showDate.split(",")[0] === "Wednesday"
+      (item: any) => item.showDate.split(",")[0] === "Mittwoch"
     );
     const showsThursday = shows?.filter(
-      (item: any) => item.showDate.split(",")[0] === "Thursday"
+      (item: any) => item.showDate.split(",")[0] === "Donnerstag"
     );
     const showsFriday = shows?.filter(
-      (item: any) => item.showDate.split(",")[0] === "Friday"
+      (item: any) => item.showDate.split(",")[0] === "Freitag"
     );
     const showsSaturday = shows?.filter(
-      (item: any) => item.showDate.split(",")[0] === "Saturday"
+      (item: any) => item.showDate.split(",")[0] === "Samstag"
     );
     const showsSunday = shows?.filter(
-      (item: any) => item.showDate.split(",")[0] === "Sunday"
+      (item: any) => item.showDate.split(",")[0] === "Sonntag"
     );
 
     let showsSortedByTheDays = [];
