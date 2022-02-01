@@ -4,7 +4,7 @@ import ErrorPage from "../pages/ErrorPage";
 import LoadingAnimation from "./layouts/LoadingAnimation";
 
 function ReviewsCard(props: any) {
-  const { data, isLoading, error } = props;
+  const { data, isLoading, isError } = props;
 
   let prepareReviews: any = (reviews: any) => {
     if (data === undefined) {
@@ -29,8 +29,8 @@ function ReviewsCard(props: any) {
     return <LoadingAnimation />;
   }
 
-  if (error) {
-    return <ErrorPage />;
+  if (isError || data?.error) {
+    return <ErrorPage errorCode={data?.status} />;
   }
 
   return (

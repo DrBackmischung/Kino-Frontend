@@ -28,7 +28,7 @@ function DetailsPage(props: any) {
   let navigate = useNavigate();
   const apiUrlAll = `${APIUrl.apiUrl}/movie/${movieId}`;
 
-  const { isLoading, data, refetch, error } = useQuery(
+  const { isLoading, data, refetch, isError } = useQuery(
     "movie",
     () => fetch(apiUrlAll).then((res) => res.json()),
     {
@@ -50,8 +50,8 @@ function DetailsPage(props: any) {
     return <LoadingAnimation />;
   }
 
-  if (error) {
-    return <ErrorPage />;
+  if (isError || data?.error) {
+    return <ErrorPage errorCode={data?.status} />;
   }
 
   const theme = createTheme(palette);

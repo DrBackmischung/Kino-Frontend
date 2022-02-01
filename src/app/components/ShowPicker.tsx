@@ -19,7 +19,7 @@ function ShowPicker(props: any) {
   const { setOpenSeatBooking, movieId, setSelectedShow } = props;
 
   const apiUrlAll = `${APIUrl.apiUrl}/movie/${movieId}/shows`;
-  const { isLoading, error, data } = useQuery(
+  const { isLoading, data, isError } = useQuery(
     ["shows", movieId],
     () => {
       return fetch(apiUrlAll).then((res) => {
@@ -70,7 +70,9 @@ function ShowPicker(props: any) {
     return <LoadingAnimation />;
   }
 
-  if (error) return <ErrorPage />;
+  if (isError || data?.error) {
+    return <ErrorPage errorCode={data?.status} />;
+  }
 
   function openDialog(show: any) {
     setOpenSeatBooking((prevVal: any) => prevVal + 1);
@@ -138,8 +140,6 @@ function ShowPicker(props: any) {
   if (isLoading) {
     return <LoadingAnimation />;
   }
-
-  if (error) return <ErrorPage />;
 
   return (
     <Box className="overallContainer" maxWidth="sm">

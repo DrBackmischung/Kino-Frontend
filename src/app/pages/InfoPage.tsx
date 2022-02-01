@@ -15,7 +15,7 @@ function InfoPage() {
   let { bookingID } = useParams();
 
   const apiUrlGetBooking = `${APIUrl.apiUrl}/booking/${bookingID}`;
-  const {isLoading, error, data} : any = useQuery("Booking", () =>
+  const { isLoading, data, isError }: any = useQuery("Booking", () =>
     fetch(apiUrlGetBooking).then((res) => res.json())
   );
 
@@ -23,8 +23,8 @@ function InfoPage() {
     return <LoadingAnimation />;
   }
 
-  if (error) {
-    return <ErrorPage />;
+  if (isError || data?.error) {
+    return <ErrorPage errorCode={data?.status} />;
   }
 
   const theme = createTheme(palette);
@@ -45,11 +45,15 @@ function InfoPage() {
         <Grid container spacing={2}>
           {data.state === "Canceled" ? (
             <Grid item xs={12} spacing={3} paddingTop={5}>
-              <Typography align="center" component="h1" variant="h5">Buchung wurde storniert!</Typography>
+              <Typography align="center" component="h1" variant="h5">
+                Buchung wurde storniert!
+              </Typography>
             </Grid>
-          ): null}
+          ) : null}
           <Grid item xs={12}>
-            <Typography align="center" component="h1" variant="h5">{data?.show.movie.title}</Typography>
+            <Typography align="center" component="h1" variant="h5">
+              {data?.show.movie.title}
+            </Typography>
           </Grid>
           <Grid item xs={6}>
             <BookingDetails selectedBooking={data} />

@@ -7,28 +7,37 @@ import LoadingAnimation from "./layouts/LoadingAnimation";
 import Ratings from "./Ratings";
 
 export function ReviewDashboard(props: any) {
-
   const { selectedUser } = props;
 
   const apiUrlGetReviews = `${APIUrl.apiUrl}/user/${selectedUser?.id}/reviews`;
-  const {isLoading: isLoadingReviews, error: errorReviews, data: dataReviews} : any = useQuery("Reviews", () =>
+  const {
+    isLoading: isLoadingReviews,
+    isError,
+    data: dataReviews,
+  }: any = useQuery("Reviews", () =>
     fetch(apiUrlGetReviews).then((res) => res.json())
   );
-
-  console.log(dataReviews);
 
   if (isLoadingReviews) {
     return <LoadingAnimation />;
   }
 
-  if (errorReviews) {
-    return <ErrorPage />;
+  if (isError || dataReviews?.error) {
+    return <ErrorPage errorCode={dataReviews?.status} />;
   }
 
   if (dataReviews[0] === undefined) {
     return (
-      <Grid item xs={12} spacing={3} borderTop={"3px solid grey"} paddingTop={5}>
-        <Typography align="center" component="h1" variant="h5">Keine Reviews</Typography>
+      <Grid
+        item
+        xs={12}
+        spacing={3}
+        borderTop={"3px solid grey"}
+        paddingTop={5}
+      >
+        <Typography align="center" component="h1" variant="h5">
+          Keine Reviews
+        </Typography>
       </Grid>
     );
   }
@@ -36,24 +45,28 @@ export function ReviewDashboard(props: any) {
   return (
     <Grid container xs={12} borderTop={"3px solid grey"}>
       <Grid item xs={12} spacing={3} paddingTop={5}>
-        <Typography align="center" component="h1" variant="h5">Reviews</Typography>
+        <Typography align="center" component="h1" variant="h5">
+          Reviews
+        </Typography>
       </Grid>
-      {dataReviews.map(
-        (r: any) => (
-          <Grid item xs={12} padding={2}>
-            <Card sx={{ display: 'flex' }}>
-              <Box>
-              <CardContent sx={{ flex: '1 0 auto' }}>
-                <Typography align="left" component="h1" variant="h5">{r.movie.title}</Typography>
-                <p><b>{r.header}</b></p>
+      {dataReviews.map((r: any) => (
+        <Grid item xs={12} padding={2}>
+          <Card sx={{ display: "flex" }}>
+            <Box>
+              <CardContent sx={{ flex: "1 0 auto" }}>
+                <Typography align="left" component="h1" variant="h5">
+                  {r.movie.title}
+                </Typography>
+                <p>
+                  <b>{r.header}</b>
+                </p>
                 <p>{r.content}</p>
                 <Ratings ratingValue={r.rating} />
               </CardContent>
-              </Box>
-            </Card>
-          </Grid> 
-        )
-      )}
+            </Box>
+          </Card>
+        </Grid>
+      ))}
     </Grid>
   );
 }
