@@ -15,10 +15,14 @@ import { BookingCard } from "../components/BookingCard";
 import { ReviewDashboard } from "../components/ReviewDashboard";
 
 function ProfilePage() {
-  const userID : string = getCookie("userId");
+  const userID: string = getCookie("userId");
 
   const apiUrlGetUser = `${APIUrl.apiUrl}/user/${userID}`;
-  const {isLoading: isLoadingUser, error: errorUser, data: dataUser} : any = useQuery("User", () =>
+  const {
+    isLoading: isLoadingUser,
+    data: dataUser,
+    isError,
+  }: any = useQuery("User", () =>
     fetch(apiUrlGetUser).then((res) => res.json())
   );
 
@@ -26,8 +30,8 @@ function ProfilePage() {
     return <LoadingAnimation />;
   }
 
-  if (errorUser) {
-    return <ErrorPage />;
+  if (isError || dataUser?.error) {
+    return <ErrorPage errorCode={dataUser?.status} />;
   }
 
   const theme = createTheme(palette);
@@ -47,7 +51,9 @@ function ProfilePage() {
       >
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography align="center" component="h1" variant="h5">Profil von {dataUser?.userName}</Typography>
+            <Typography align="center" component="h1" variant="h5">
+              Profil von {dataUser?.userName}
+            </Typography>
           </Grid>
           <Grid item xs={4}>
             <ProfileDetails selectedUser={dataUser} />
