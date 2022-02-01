@@ -25,6 +25,7 @@ import CookiesNotification from "../CookiesNotification";
 import TermsAndConditionsPage from "../../pages/TermsAndConditionsPage";
 import InfoPage from "../../pages/InfoPage";
 import PasswortVergessenPage from "../../pages/PasswortVergessenPage";
+import ChatBot from "../ChatBot";
 
 function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -66,6 +67,7 @@ function MenuBar() {
 
   return (
     <>
+      <ChatBot userData={userData.data} />
       <AppBar
         style={{ backgroundColor: "#393E41", opacity: 1 }}
         position="sticky"

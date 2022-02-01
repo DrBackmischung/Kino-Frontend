@@ -12,7 +12,6 @@ function App() {
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <MenuBar />
-        <ChatBot />
       </QueryClientProvider>
     </BrowserRouter>
   );

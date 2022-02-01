@@ -27,11 +27,11 @@ const welcomeMessage = [
 ];
 
 function ChatBotDialog(props: any) {
-  const { open, handleClose } = props;
+  const { open, handleClose, userData } = props;
   const [userInput, setUserInput] = useState("");
   const [messages, setMessages] = useState(welcomeMessage);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(200);
   const theme = createTheme(palette);
   const APIUrlChat = `https://wi2020seb-cinema-theo.azurewebsites.net/query`;
 
@@ -40,7 +40,7 @@ function ChatBotDialog(props: any) {
     const messageToFetch = userMessage.replace(" ", "_");
     const response = await fetch(`${APIUrlChat}/${messageToFetch}`);
     if (!response.ok) {
-      setError(true);
+      setError(response.status);
       return;
     }
     const data = await response.json();
@@ -66,10 +66,38 @@ function ChatBotDialog(props: any) {
         ]);
         break;
       case "LINK":
+        console.log(data.content);
+        setMessages((prevVal) => [
+          ...prevVal,
+          {
+            message: `Ich habe folgendes zu "${userMessage}" gefunden: `,
+            align: "Right",
+            link: `${data.content}`,
+          },
+        ]);
         break;
       case "MOVIELIST":
+        setMessages((prevVal) => [
+          ...prevVal,
+          {
+            message: `Ich habe folgende Filme zu "${userMessage}" gefunden: `,
+            align: "Right",
+            navigateTo: "/DetailsPage",
+            movieList: data.content,
+          },
+        ]);
         break;
-      case "SHOW":
+      case "SHOWLIST":
+        setMessages((prevVal) => [
+          ...prevVal,
+          {
+            message: `Ich habe folgende Vorführungen zu "${userMessage}" gefunden: `,
+            align: "Right",
+            navigateTo: "/DetailsPage",
+            showList: data.content,
+            userData: userData,
+          },
+        ]);
         break;
     }
     setLoading(false);
@@ -97,8 +125,30 @@ function ChatBotDialog(props: any) {
     setMessages(welcomeMessage);
     handleClose();
   };
-  if (error) {
-    return <ErrorPage />;
+  if (error !== 200) {
+    return (
+      <ThemeProvider theme={theme}>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          scroll="paper"
+          aria-labelledby="scroll-dialog-title"
+          aria-describedby="scroll-dialog-description"
+          fullWidth={true}
+          maxWidth="sm"
+        >
+          <DialogTitle id="scroll-dialog-title">Theo Ticket</DialogTitle>
+          <DialogContent dividers={true}>
+            <DialogContentText id="scroll-dialog-description">
+              <ErrorPage errorCode={error} />
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={onClosePressed}>Schließen</Button>
+          </DialogActions>
+        </Dialog>
+      </ThemeProvider>
+    );
   }
   return (
     <ThemeProvider theme={theme}>
@@ -123,6 +173,10 @@ function ChatBotDialog(props: any) {
                     navigateTo={item.navigateTo}
                     navigateState={item.navigateState}
                     handleDialogClose={handleClose}
+                    link={item.link}
+                    movieList={item.movieList}
+                    showList={item.showList}
+                    userData={item.userData}
                   />
                 ))}
               </div>
