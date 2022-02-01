@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Grid, Typography, Card, CardMedia, CardContent, Button } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Card,
+  CardMedia,
+  CardContent,
+  Button,
+} from "@mui/material";
 import APIUrl from "../config/APIUrl";
 import { useQuery } from "react-query";
 import ErrorPage from "../pages/ErrorPage";
@@ -7,10 +14,9 @@ import LoadingAnimation from "./layouts/LoadingAnimation";
 import ManageBooking from "./ManageBooking";
 
 export function BookingCard(props: any) {
-
   const { selectedUser } = props;
-  const [booking, setBooking ] = useState<any>();
-  const [bookingID, setBookingID ] = useState();
+  const [booking, setBooking] = useState<any>();
+  const [bookingID, setBookingID] = useState();
   const [openBookingDetails, setOpenBookingDetails] = useState(false);
 
   const handleOpenBooking = () => {
@@ -29,14 +35,14 @@ export function BookingCard(props: any) {
   };
 
   const deleteBooking = () => {
-    if(booking) {
+    if (booking) {
       const apiUrlCancelBooking = `${APIUrl.apiUrl}/booking/${bookingID}/changeStatus`;
-      let seatIDs : any[] = [];
-      let snackIDs : any[] = [];
-      for(const ticket of booking.tickets) {
+      let seatIDs: any[] = [];
+      let snackIDs: any[] = [];
+      for (const ticket of booking.tickets) {
         seatIDs.push(ticket?.seat?.id);
       }
-      for(const snack of booking.snacks) {
+      for (const snack of booking.snacks) {
         seatIDs.push(snack?.id);
       }
       // eslint-disable-next-line
@@ -49,35 +55,45 @@ export function BookingCard(props: any) {
           showID: booking.show.id,
           state: "Canceled",
           bookingDate: booking.bookingDate,
-          snackIDs: snackIDs
+          snackIDs: snackIDs,
         }),
       };
       fetch(apiUrlCancelBooking, requestOptions).then((response) => {
-              return response.json();
-          });
+        return response.json();
+      });
     }
     handleCloseCancel();
-  }
+  };
 
   const apiUrlGetBookings = `${APIUrl.apiUrl}/user/${selectedUser?.id}/bookings`;
-  const {isLoading: isLoadingBookings, error: errorBookings, data: dataBookings} : any = useQuery("Bookings", () =>
+  const {
+    isLoading: isLoadingBookings,
+    isError,
+    data: dataBookings,
+  }: any = useQuery("Bookings", () =>
     fetch(apiUrlGetBookings).then((res) => res.json())
   );
-
-  console.log(dataBookings);
 
   if (isLoadingBookings) {
     return <LoadingAnimation />;
   }
 
-  if (errorBookings) {
-    return <ErrorPage />;
+  if (isError || dataBookings?.error) {
+    return <ErrorPage errorCode={dataBookings?.status} />;
   }
 
   if (dataBookings[0] === undefined) {
     return (
-      <Grid item xs={12} spacing={3} borderTop={"3px solid grey"} paddingTop={5}>
-        <Typography align="center" component="h1" variant="h5">Keine Buchungen</Typography>
+      <Grid
+        item
+        xs={12}
+        spacing={3}
+        borderTop={"3px solid grey"}
+        paddingTop={5}
+      >
+        <Typography align="center" component="h1" variant="h5">
+          Keine Buchungen
+        </Typography>
       </Grid>
     );
   }
@@ -85,59 +101,67 @@ export function BookingCard(props: any) {
   return (
     <Grid container xs={12} borderTop={"3px solid grey"}>
       <Grid item xs={12} spacing={3} paddingTop={5}>
-        <Typography align="center" component="h1" variant="h5">Buchungen</Typography> 
+        <Typography align="center" component="h1" variant="h5">
+          Buchungen
+        </Typography>
       </Grid>
-      {dataBookings.map(
-        (b: any) => (
-          <Grid item xs={12} padding={2}>
-            <Card sx={{ display: 'flex' }}>
-              <CardContent sx={{ flex: '1 0 auto' }}>
-                <p><b>{b.show.movie.title}</b></p>
-                <p>am {b.show.showDate.substring(8, 10)}.{b.show.showDate.substring(5, 7)}.{b.show.showDate.substring(0, 4)} um {b.show.startTime.substring(0, 5)}</p>
+      {dataBookings.map((b: any) => (
+        <Grid item xs={12} padding={2}>
+          <Card sx={{ display: "flex" }}>
+            <CardContent sx={{ flex: "1 0 auto" }}>
+              <p>
+                <b>{b.show.movie.title}</b>
+              </p>
+              <p>
+                am {b.show.showDate.substring(8, 10)}.
+                {b.show.showDate.substring(5, 7)}.
+                {b.show.showDate.substring(0, 4)} um{" "}
+                {b.show.startTime.substring(0, 5)}
+              </p>
+              <Button
+                fullWidth
+                onClick={() => {
+                  handleOpenBooking();
+                  setBooking(b);
+                }}
+                variant="contained"
+              >
+                Details
+              </Button>
+              {b.state === "Canceled" ? (
+                <p>
+                  <b>=== Buchung storniert! ===</b>
+                </p>
+              ) : (
                 <Button
+                  sx={{ marginTop: 1 }}
                   fullWidth
                   onClick={() => {
-                    handleOpenBooking();
+                    handleOpenCancel();
                     setBooking(b);
+                    setBookingID(b.id);
                   }}
                   variant="contained"
                 >
-                  Details
+                  Buchung stornieren
                 </Button>
-                {b.state === "Canceled" ? (
-                  <p><b>=== Buchung storniert! ===</b></p>
-                ): (
-                  <Button
-                    sx={{marginTop:1}}
-                    fullWidth
-                    onClick={() => {
-                      handleOpenCancel();
-                      setBooking(b);
-                      setBookingID(b.id);
-                    }}
-                    variant="contained"
-                  >
-                    Buchung stornieren
-                  </Button>
-                )}
-              </CardContent>
-              <CardMedia
-                component="img"
-                
-                sx={{
-                  pt: "2%",
-                  pr: "2%",
-                  pb: "2%",
-                  width: "25%",
-                }}
-                src={"data:image/png;base64," + b.qrCode}
-                alt="poster"
-              />
-            </Card>
-          </Grid> 
-        )
-      )}
-      <ManageBooking 
+              )}
+            </CardContent>
+            <CardMedia
+              component="img"
+              sx={{
+                pt: "2%",
+                pr: "2%",
+                pb: "2%",
+                width: "25%",
+              }}
+              src={"data:image/png;base64," + b.qrCode}
+              alt="poster"
+            />
+          </Card>
+        </Grid>
+      ))}
+      <ManageBooking
         isOpen={openBookingDetails}
         open={handleOpenBooking}
         close={handleCloseBooking}
