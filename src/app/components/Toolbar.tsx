@@ -4,10 +4,8 @@ import Grid from "@mui/material/Grid";
 import SearchField from "./SearchField";
 import Filter from "./Filter";
 import Sort from "./Sort";
-import { createTheme } from "@mui/material/styles";
 
 function Toolbar(props: any) {
-    const theme: any = createTheme();
     const { handleSearchChange, setSelectedSort, setApplyFilters, setSelectedLanguage, setSelectedFSK, setSelectedGenre, moviesData, setRatingValue } = props;
 
     return (
