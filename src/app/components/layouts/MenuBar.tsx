@@ -4,7 +4,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import { Box, Container, Menu, MenuItem, Grid } from "@mui/material";
+import { Box, Container, Menu, MenuItem, Grid, styled, MenuProps } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { useState } from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
@@ -25,6 +25,9 @@ import CookiesNotification from "../CookiesNotification";
 import TermsAndConditionsPage from "../../pages/TermsAndConditionsPage";
 import InfoPage from "../../pages/InfoPage";
 import PasswortVergessenPage from "../../pages/PasswortVergessenPage";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import palette from "../../config/Colours";
+import "./MenuBar.css";
 
 function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -63,11 +66,37 @@ function MenuBar() {
       userId: getCookie("userId"),
     });
   };
+  
+  const StyledMenu = styled((props: MenuProps) => (
+    <Menu
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      {...props}
+    />
+  ))(({theme})=>({
+    '& .MuiPaper-root': {
+      borderRadius: 6,
+      minWidth:180,
+    },
+    '& .MuiMenu-list': {
+      backgroundColor: '#ba8434',
+      padding: '4px 0',
+    },
+  }));
 
+  const theme = createTheme(palette)
 
   return (
     <BrowserRouter>
+      <ThemeProvider theme={theme}>
       <AppBar
+          className="menu-appBar"
           style={{ backgroundColor: "#393E41", opacity: 1, }}
           position="sticky"
       >
@@ -96,7 +125,7 @@ function MenuBar() {
             >
               {pages.map((page) => (
                 <Button
-                  style={{ backgroundColor: "white", opacity: 0.95 }}
+                  style={{ backgroundColor: "#ba8434", opacity: 0.95 }}
                   key={page.name}
                   sx={{ my: 2, color: "black", display: "block" }}
                   variant="contained"
@@ -125,10 +154,9 @@ function MenuBar() {
                     aria-controls="menu-appbar"
                     aria-haspopup="true"
                     onClick={handleMenu}
-                    color="inherit"
                     sx={{pt: 3}}
                   >
-                    <AccountCircle />
+                    <AccountCircle color="secondary"/>
                   </IconButton>
                   <Menu
                     id="menu-appbar"
@@ -177,7 +205,7 @@ function MenuBar() {
                   >
                     <AccountCircle />
                   </IconButton>
-                  <Menu
+                  <StyledMenu
                     id="menu-appbar"
                     anchorEl={anchorEl}
                     anchorOrigin={{
@@ -198,13 +226,14 @@ function MenuBar() {
                     <MenuItem component={Link} to="/SignInPage">
                       Einloggen
                     </MenuItem>
-                  </Menu>
+                  </StyledMenu>
                 </>
               )}
             </Box>
           </Toolbar>
         </Container>
       </AppBar>
+      </ThemeProvider>
 
       <Routes>
         <Route path="/" element={<HomePage />} />

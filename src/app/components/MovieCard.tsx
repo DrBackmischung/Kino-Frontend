@@ -75,17 +75,7 @@ function MovieCard(props: any) {
                       size="small"
                       onClick={() => {
                         navigateToDetails(`${movie.id}`);
-                      }}/>
-                  </CardActions>
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {movie.title}
-                      </Typography>
-                      <Typography>
-                        {movie.duration} Min FSK {movie.fsk}
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
+                      }}/> 
                       <Button
                         size="small"
                         onClick={() => {
@@ -93,15 +83,7 @@ function MovieCard(props: any) {
                         }}
                         //image={movie.pictureLink}
                         //alt="poster"
-                      />
-                      <CardContent sx={{ flexGrow: 1 }}>
-                        <Typography gutterBottom variant="h5" component="h2">
-                          {movie.titel}
-                        </Typography>
-                        <Typography>
-                          {movie.duration} Min FSK {movie.fsk}
-                        </Typography>
-                      </CardContent>
+                      />  
                     </CardActions>
                     <CardActions>
                       <Button

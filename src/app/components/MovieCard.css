@@ -7,11 +7,12 @@
 }
 
 #movieCard-card{
-    background-color: #6d6d6d;
+    background-color: #ffffff;
 }
 
 #movieCard-button{
     background-color: #ba8434;
+    color: #000000;
 }
 
 #movieCard-button:hover{
