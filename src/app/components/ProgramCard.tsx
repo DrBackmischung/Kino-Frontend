@@ -43,6 +43,12 @@ function ProgramCard(props: any) {
             code = "fr";
         } else if (language.toLowerCase() === "japanisch") {
             code = "jp";
+        } else if (language.toLowerCase() === "russisch") {
+            code = "ru";
+        } else if (language.toLowerCase() === "koreanisch") {
+            code = "kr";
+        } else if (language.toLowerCase() === "spanisch") {
+            code = "es";
         }
         return 'https://flagicons.lipis.dev/flags/4x3/' + code + '.svg';
     }
