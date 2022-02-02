@@ -18,8 +18,7 @@ function Toolbar(props: any) {
                 pb:1,
                 bgcolor: "background.paper",
                 position: "fixed",
-                zIndex: '100',
-                marginLeft: theme.spacing(18),
+                zIndex: '90',
             }}
             maxWidth="xl"
         >
