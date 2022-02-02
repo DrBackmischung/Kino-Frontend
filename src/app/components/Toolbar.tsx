@@ -4,10 +4,8 @@ import Grid from "@mui/material/Grid";
 import SearchField from "./SearchField";
 import Filter from "./Filter";
 import Sort from "./Sort";
-import { createTheme } from "@mui/material/styles";
 
 function Toolbar(props: any) {
-    const theme: any = createTheme();
     const { handleSearchChange, setSelectedSort, setApplyFilters, setSelectedLanguage, setSelectedFSK, setSelectedGenre, moviesData, setRatingValue } = props;
 
     return (
@@ -18,8 +16,7 @@ function Toolbar(props: any) {
                 pb:1,
                 bgcolor: "background.paper",
                 position: "fixed",
-                zIndex: '100',
-                marginLeft: theme.spacing(18),
+                zIndex: '90',
             }}
             maxWidth="xl"
         >
