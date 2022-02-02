@@ -44,7 +44,6 @@ function ManageCheckout(props: any) {
     setOpenCheckout(false);
     resetSelectedSeats();
     navigate("/");
-    alert("Tickets erfolgreich gebucht!");
   };
 
   const handleCloseBooking = () => {
