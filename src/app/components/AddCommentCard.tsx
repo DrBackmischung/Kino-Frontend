@@ -1,4 +1,4 @@
-import { Container, CssBaseline, TextField, Button, Grid } from "@mui/material";
+import { Container, CssBaseline, TextField, Button, Grid, Rating, Typography } from "@mui/material";
 import React, { useState } from "react";
 import APIUrl from "../config/APIUrl";
 
@@ -7,6 +7,7 @@ function AddCommentCard(props: any) {
 
   const [reviewTitle, setReviewTitle] = useState("");
   const [reviewBody, setReviewBody] = useState("");
+  const [reviewRating, setReviewRating] : any = useState(0);
 
   const apiUrl = `${APIUrl.apiUrl}/review/add`;
 
@@ -21,11 +22,13 @@ function AddCommentCard(props: any) {
         content: reviewBody,
         movieID: movieId,
         userID: userId.id,
+        rating: reviewRating
       }),
     };
     await fetch(apiUrl, requestOptions).then(() => {
       setReviewTitle("");
       setReviewBody("");
+      setReviewRating(0);
     });
     refetch();
   };
@@ -55,7 +58,7 @@ function AddCommentCard(props: any) {
         <Grid item xs={12} sx={{ mb: 2 }}>
           <h3>Schreiben sie ein Review:</h3>
         </Grid>
-        <Grid item xs={8} sx={{ mb: 2 }}>
+        <Grid item xs={6} sx={{ mb: 2 }}>
           <TextField
             required
             fullWidth
@@ -67,6 +70,18 @@ function AddCommentCard(props: any) {
             }}
             value={reviewTitle}
           />
+        </Grid>
+        <Grid item xs={1}></Grid>
+        <Grid item xs={5} sx={{}}>
+          <Typography >Bewertung</Typography>
+          <Rating
+            name = "rating"
+            value={reviewRating}
+            onChange={(event, newValue) => {
+              setReviewRating(newValue);
+            }}
+          />
+
         </Grid>
         <Grid item xs={12} sx={{ mb: 2 }}>
           <TextField
