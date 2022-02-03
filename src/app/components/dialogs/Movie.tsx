@@ -60,7 +60,7 @@ export function AddMovieDialog(props: any) {
         pictureLink,
         trailerLink,
         genre,
-        FSK,
+        fsk: FSK,
       }),
     };
     fetch(apiUrlAddMovie, requestOptions).then((response) => {
@@ -334,7 +334,7 @@ export function UpdateMovieDialog(props: any) {
         pictureLink,
         trailerLink,
         genre,
-        FSK,
+        fsk: FSK,
       }),
     };
     fetch(apiUrlAddMovie, requestOptions).then((response) => {
