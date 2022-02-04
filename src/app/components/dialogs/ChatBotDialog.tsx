@@ -14,6 +14,7 @@ import React, { useState } from "react";
 import "./ChatBotDialog.css";
 import ChatMessage from "../ChatMessage";
 import ErrorPage from "../../pages/ErrorPage";
+import LoadingAnimation from "../layouts/LoadingAnimation";
 
 const welcomeMessage = [
   {
