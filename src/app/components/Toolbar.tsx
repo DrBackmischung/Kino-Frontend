@@ -9,20 +9,20 @@ import palette from "../config/Colours";
 import "./Toolbar.css";
 
 function Toolbar(props: any) {
-    const theme: any = createTheme();
     const { handleSearchChange, setSelectedSort, setApplyFilters, setSelectedLanguage, setSelectedFSK, setSelectedGenre, moviesData, setRatingValue } = props;
 
-  const theme2: any = createTheme();
-  
-  return (
-    <ThemeProvider theme={theme}>
-      <Container
-        className="toolbar-container"
-      >
-        <Grid 
-          container spacing={4} 
-          className="toolbar-grid"
-        />
+    return (
+        <Container
+            sx={{
+                marginTop: -5,
+                p:7,
+                pb:1,
+                bgcolor: "background.paper",
+                position: "fixed",
+                zIndex: '90',
+            }}
+            maxWidth="xl"
+        >
             <Grid container spacing={4} xs={12} sx={{ justifyContent: "space-evenly" }}>
                 <Sort setSelectedSort={setSelectedSort}
                       xs={4}
@@ -44,7 +44,6 @@ function Toolbar(props: any) {
                         setApplyFilters={setApplyFilters}  setRatingValue={setRatingValue} setSelectedFSK={setSelectedFSK} setSelectedGenre={setSelectedGenre} setSelectedLanguage={setSelectedLanguage} moviesData={moviesData} />
             </Grid>
         </Container>
-      </ThemeProvider>
     );
 }
 

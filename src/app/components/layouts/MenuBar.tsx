@@ -7,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import { Box, Container, Menu, MenuItem, Grid, styled, MenuProps } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { useState } from "react";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import ProgramPage from "../../pages/ProgramPage";
 import DetailsPage from "../../pages/DetailsPage";
 import NewsAndEventsPage from "../../pages/NewsAndEventsPage";
@@ -28,6 +28,7 @@ import PasswortVergessenPage from "../../pages/PasswortVergessenPage";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import palette from "../../config/Colours";
 import "./MenuBar.css";
+import ChatBot from "../ChatBot";
 
 function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -90,15 +91,12 @@ function MenuBar() {
     },
   }));
 
-  const theme = createTheme(palette)
-
   return (
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
+    <><>
+      <ChatBot userData={userData.data} />
       <AppBar
-          className="menu-appBar"
-          style={{ backgroundColor: "#393E41", opacity: 1, }}
-          position="sticky"
+        style={{ backgroundColor: "#393E41", opacity: 1 }}
+        position="sticky"
       >
         <Container fixed>
           <Toolbar>
@@ -111,10 +109,9 @@ function MenuBar() {
               to={"/"}
             >
               <img
-                  src="https://raw.githubusercontent.com/DrBackmischung/Kino-Dokumentation/main/KV.png"
-                  alt="Kinovation Logo"
-                  height={40}
-              />
+                src="https://raw.githubusercontent.com/DrBackmischung/Kino-Dokumentation/main/KV.png"
+                alt="Kinovation Logo"
+                height={40} />
             </IconButton>
             <Box
               sx={{
@@ -137,59 +134,58 @@ function MenuBar() {
               ))}
             </Box>
             <Box>
-              {currentUser?.userId !== "null" && currentUser?.userId !== undefined ? (
+              {currentUser?.userId !== "null" &&
+                currentUser?.userId !== undefined &&
+                userData?.data?.userName !== undefined ? (
                 <>
                   <Grid container spacing={2}>
                     <Grid item xs={10}>
-                      <p
-                        style={{ marginTop: "1.35rem" }}
-                      >
+                      <p style={{ marginTop: "1.35rem" }}>
                         {`Willkommen ${userData?.data?.userName}!`}
                       </p>
                     </Grid>
-                    <Grid item xs={2} sx={{pt: 3, pb:2}}>
-                  <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    onClick={handleMenu}
-                    sx={{pt: 3}}
-                  >
-                    <AccountCircle color="secondary"/>
-                  </IconButton>
-                  <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                  >
-                    <MenuItem component={Link} to="/profile">
-                      Profil
-                    </MenuItem>
-                    <MenuItem
-                      onClick={
-                        () => {
-                          setCookie("userId", "null", 7);
-                          setCookie("role", "null", 7);
-                          setCurrentUser({
-                            userId: "null",
-                          });
-                        }
-                      }
-                    >
-                      Ausloggen
-                    </MenuItem>
-                  </Menu>
+                    <Grid item xs={2} sx={{ pt: 3, pb: 2 }}>
+                      <IconButton
+                        size="large"
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={handleMenu}
+                        color="inherit"
+                        sx={{ pt: 3 }}
+                      >
+                        <AccountCircle />
+                      </IconButton>
+                      <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                      >
+                        <MenuItem component={Link} to="/profile">
+                          Profil
+                        </MenuItem>
+                        <MenuItem
+                          onClick={() => {
+                            setCookie("userId", "null", 7);
+                            setCookie("role", "null", 7);
+                            setCurrentUser({
+                              userId: "null",
+                            });
+                          } }
+                        >
+                          Ausloggen
+                        </MenuItem>
+                      </Menu>
                     </Grid>
                   </Grid>
                 </>
@@ -233,9 +229,7 @@ function MenuBar() {
           </Toolbar>
         </Container>
       </AppBar>
-      </ThemeProvider>
-
-      <Routes>
+    </><Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/programPage" element={<ProgramPage />} />
         <Route path="/newsAndEventsPage" element={<NewsAndEventsPage />} />
@@ -244,26 +238,22 @@ function MenuBar() {
         <Route
           path="/DetailsPage"
           // @ts-ignore
-          element={<DetailsPage userData={userData?.data} />}
-        />
+          element={<DetailsPage userData={userData?.data} />} />
         <Route
           path="/SignInPage"
           // @ts-ignore
-          element={<SignInPage setUser={setUser} />}
-        />
+          element={<SignInPage setUser={setUser} />} />
         <Route
           path="/SignUpPage"
           // @ts-ignore
-          element={<UserRegistrationPage setUser={setUser} />}
-        />
+          element={<UserRegistrationPage setUser={setUser} />} />
         <Route path="/Impressum" element={<Impressum />} />
         <Route path="/Admin" element={<AdminPage userData={userData} />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/info/:bookingID" element={<InfoPage />} />
         <Route path="/PasswortVergessen" element={<PasswortVergessenPage />} />
-      </Routes>
-      <CookiesNotification/>
-    </BrowserRouter>
+      </Routes><CookiesNotification /></>
+    
   );
 }
 

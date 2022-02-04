@@ -131,16 +131,20 @@ function SeatBookingDialog(props: any) {
         maxWidth="sm"
         className="wholeDialog"
       >
-        <DialogTitle id="scroll-dialog-title">Sitzplan</DialogTitle>
+        <DialogTitle id="scroll-dialog-title">
+          Sitzplan {selectedShow?.movie?.title}
+        </DialogTitle>
         <DialogContent dividers={true}>
           <DialogContentText id="scroll-dialog-description">
-            {seatsQuery.error || priceQuery.error ? (
-              <ErrorPage />
+            {seatsQuery.isError || seatsQuery.data?.error ? (
+              <ErrorPage errorCode={seatsQuery.data?.status} />
             ) : seatsQuery.isLoading || priceQuery.isLoading ? (
               <LoadingAnimation />
+            ) : priceQuery.isError || priceQuery.data?.error ? (
+              <ErrorPage errorCode={priceQuery.data?.status} />
             ) : (
               <>
-                <strong>{selectedShow?.movie?.titel}</strong>
+                <strong>{selectedShow?.movie?.title}</strong>
                 <p>
                   Kino: {selectedShow?.cinemaRoom?.roomName}
                   <br />

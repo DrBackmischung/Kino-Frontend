@@ -184,7 +184,7 @@ function SignUp(props: any) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Registrierung
         </Typography>
         <form noValidate>
           <Box component="form" noValidate sx={{ mt: 3 }}>

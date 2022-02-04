@@ -1,26 +1,50 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { IllustratedMessage } from "@adobe/react-spectrum";
 import NotFound from "@spectrum-icons/illustrations/NotFound";
 import { Heading, Content } from "@adobe/react-spectrum";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import palette from "../config/Colours";
 import "./ErrorPage.css";
+import { useQuery } from "react-query";
+import APIUrl from "../config/APIUrl";
+import LoadingAnimation from "../components/layouts/LoadingAnimation";
 
-const theme = createTheme(palette)
-  
-function ErrorPage() {
-  return (
-    <ThemeProvider theme={theme}>
+function ErrorPage(props: any) {
+  const { errorCode } = props;
+  const apiUrl = `${APIUrl.apiUrl}/error/`;
+
+  const errorData = useQuery("errorData", () =>
+    fetch(`${apiUrl}${errorCode}`).then((res) => res.json())
+  );
+  useEffect(() => {
+    errorData.refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [errorCode]);
+  if (errorData?.isError) {
+    return (
       <div className="errorPageContainer">
         <IllustratedMessage>
           <NotFound />
           <Heading>Ein Fehler ist aufgetreten!</Heading>
           <Content>
-            Bitte versuche die Seite neu zu laden oder wende dich an einen Admin!
+            Bitte versuche die Seite neu zu laden oder wende dich an einen
+            Admin!
           </Content>
         </IllustratedMessage>
       </div>
-    </ThemeProvider>
+    );
+  }
+  if (errorData?.isLoading) {
+    return <LoadingAnimation />;
+  }
+  return (
+    <div className="errorPageContainer">
+      <IllustratedMessage>
+        <NotFound />
+        <Heading>{`${errorCode}: ${errorData?.data?.name}`}</Heading>
+        <Content>{`${errorData?.data?.description}`}</Content>
+      </IllustratedMessage>
+    </div>
   );
 }
 
