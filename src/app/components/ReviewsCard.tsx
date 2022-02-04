@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Container, Grid } from "@mui/material";
+import { Box, Container, Grid, Rating } from "@mui/material";
 import ErrorPage from "../pages/ErrorPage";
 import LoadingAnimation from "./layouts/LoadingAnimation";
 
@@ -44,19 +44,30 @@ function ReviewsCard(props: any) {
       {prepareReviews(data)?.map((review: any) => (
         <Box key={review.id} sx={{ m: 1.5 }}>
           <Grid container>
-            <Grid item xs={2}>
-              <Box sx={{ fontWeight: "bold" }}>{review.user.userName} :</Box>
-            </Grid>
-            <Grid item xs={6}>
+          <Grid item xs={6}>
               <Box sx={{ fontWeight: "bold" }}>{review.header}</Box>
-            </Grid>
+          </Grid>
+          <Grid item xs={6}>
+            <Rating
+              name = "rating"
+              readOnly
+              value={review.rating}
+              onChange={(event, newValue) => {
+                
+              }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+              <Box sx={{ fontStyle: "italic" }}>{review.user.userName}</Box>
+          </Grid>
+          <Grid item xs={2}>
+              <Box sx={{ fontStyle: "italic" }}>{formatDate(review.date)}</Box>
+          </Grid>
 
-            <Grid item xs={12}>
+          <Grid item xs={12}>
               <Box>{review.content}</Box>
-            </Grid>
-            <Grid item xs={12}>
-              <Box sx={{ fontWeight: "italic" }}>{formatDate(review.date)}</Box>
-            </Grid>
+          </Grid>
+
           </Grid>
         </Box>
       ))}
