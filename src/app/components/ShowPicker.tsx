@@ -50,12 +50,15 @@ function ShowPicker(props: any) {
     const removedShowsOutated = sortedByTime?.filter((item: any) => {
       var currentDate = new Date();
       var movieStart = new Date();
-      movieStart.setHours(
-        item.startTime.split(":")[0],
-        item.startTime.split(":")[1],
-        0
-      );
-      return movieStart > currentDate;
+      if (new Date(item.showDate).getDate() === currentDate.getDate()) {
+        movieStart.setHours(
+          item.startTime.split(":")[0],
+          item.startTime.split(":")[1],
+          0
+        );
+        return movieStart > currentDate;
+      }
+      return true;
     });
 
     const showsWithFormattedDate = removedShowsOutated?.map((item: any) => {
