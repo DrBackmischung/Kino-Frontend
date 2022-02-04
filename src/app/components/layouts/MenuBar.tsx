@@ -135,8 +135,10 @@ function MenuBar() {
             </Box>
             <Box>
               {currentUser?.userId !== "null" &&
-                currentUser?.userId !== undefined &&
-                userData?.data?.userName !== undefined ? (
+              currentUser?.userId !== undefined &&
+              currentUser?.userId !== "undefined" &&
+              userData?.data?.userName !== undefined &&
+              userData?.data?.userName !== "undefined" ? (
                 <>
                   <Grid container spacing={2}>
                     <Grid item xs={10}>
