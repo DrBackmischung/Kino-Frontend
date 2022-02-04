@@ -150,6 +150,31 @@ function ChatBotDialog(props: any) {
       </ThemeProvider>
     );
   }
+  if (loading) {
+    return (
+      <ThemeProvider theme={theme}>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          scroll="paper"
+          aria-labelledby="scroll-dialog-title"
+          aria-describedby="scroll-dialog-description"
+          fullWidth={true}
+          maxWidth="sm"
+        >
+          <DialogTitle id="scroll-dialog-title">Theo Ticket</DialogTitle>
+          <DialogContent dividers={true}>
+            <DialogContentText id="scroll-dialog-description">
+              <LoadingAnimation />
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={onClosePressed}>Schließen</Button>
+          </DialogActions>
+        </Dialog>
+      </ThemeProvider>
+    );
+  }
   return (
     <ThemeProvider theme={theme}>
       <Dialog

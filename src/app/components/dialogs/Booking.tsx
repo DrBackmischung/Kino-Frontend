@@ -10,10 +10,30 @@ import {
   Button,
   Container,
 } from "@mui/material";
+import { useEffect } from "react";
+import { useQuery } from "react-query";
+import APIUrl from "../../config/APIUrl";
+import ErrorPage from "../../pages/ErrorPage";
+import LoadingAnimation from "../layouts/LoadingAnimation";
 
 export function Booking(props: any) {
   const { open, cancel, selectedBooking } = props;
-  console.log(selectedBooking);
+  const apiUrlMovies = `${APIUrl.apiUrl}/booking/${selectedBooking.id}/tickets`;
+
+  const bookedSeats = useQuery("BookedSeatsData", () =>
+    fetch(apiUrlMovies).then((res) => res.json())
+  );
+
+  useEffect(() => {
+    bookedSeats.refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedBooking]);
+  if (bookedSeats.isLoading) {
+    return <LoadingAnimation />;
+  }
+  if (bookedSeats.error) {
+    return <ErrorPage />;
+  }
   return (
     <Dialog
       open={open}
