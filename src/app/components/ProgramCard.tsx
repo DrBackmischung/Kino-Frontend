@@ -109,7 +109,7 @@ function ProgramCard(props: any) {
             if (selectedGenre !== undefined) {
                 if (selectedGenre?.length !== 0) {
                     preparedMovieData = preparedMovieData.filter((movie: any) => {
-                        return (movie.genre.toString().includes(selectedGenre));
+                        return (movie.genre.toString().toLowerCase().includes(selectedGenre));
                     });
                 }
             }

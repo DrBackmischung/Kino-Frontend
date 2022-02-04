@@ -109,7 +109,8 @@ function Filter(props: any) {
     const originalGenresArray = moviesData?.map((item: any) => item.genre);
     let genresString = originalGenresArray.toString();
     let genresStringArray = genresString.split(",");
-    const uniqueGenresArray = genresStringArray.filter((value: any, index: any, self: any) => self.indexOf(value.toLowerCase()) === index);
+    const genresStringArrayToLowerCase = genresStringArray?.map((item: any) => item.toLowerCase());
+    const uniqueGenresArray = genresStringArrayToLowerCase.filter((value: any, index: any, self: any) => self.indexOf(value) === index);
 
     const originalLanguagesArray = moviesData?.map((item: any) => item.language);
     const uniqueLanguagesArray = originalLanguagesArray.filter((value: any, index: any, self: any) => self.indexOf(value) === index);
