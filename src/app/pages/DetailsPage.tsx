@@ -77,6 +77,7 @@ function DetailsPage(props: any) {
   return (
     <div>
       <IconButton
+        id="detailsPage-iconButton"
         sx={{
           mt: 2,
           marginBottom: -12,
@@ -90,9 +91,9 @@ function DetailsPage(props: any) {
       </IconButton>
       <ThemeProvider theme={theme}>
         <Container
+          id="detailsPage-container"
           className="wholeContainer"
           sx={{
-            bgcolor: "background.paper",
             pt: 4,
             pb: 6,
             position: "relative",

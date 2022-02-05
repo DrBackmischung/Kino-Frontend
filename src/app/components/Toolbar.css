@@ -1,9 +1,6 @@
-.toolbar-container{
-    padding-top: 8rem;
-    padding-bottom: 2rem;
+#toolbar-container{
     position: relative;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-top: 0.25rem;
     max-width: md;
     background-color: #212121;
 }

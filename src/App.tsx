@@ -12,12 +12,18 @@ const theme = createTheme(palette)
 
 function App() {
   return (
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <MenuBar />
-        <Footer/>
-      </QueryClientProvider>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+        <div className="app-container">
+          <BrowserRouter>
+            <QueryClientProvider client={queryClient}>
+                <div className="app-wrapper">
+                    <MenuBar />
+                </div>
+                <Footer/>
+            </QueryClientProvider>
+          </BrowserRouter>
+        </div>
+    </ThemeProvider>
   );
 }
 

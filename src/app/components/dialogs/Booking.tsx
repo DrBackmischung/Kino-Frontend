@@ -10,6 +10,7 @@ import {
     Button,
     Container
 } from "@mui/material";
+import "./Booking.css";
   
 export function Booking(props: any) {
     const { open, cancel, selectedBooking } = props;
@@ -50,7 +51,7 @@ export function Booking(props: any) {
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={cancel}>Schließen</Button>
+                <Button className="booking-button" onClick={cancel}>Schließen</Button>
             </DialogActions>
         </Dialog>
     );
@@ -75,8 +76,8 @@ export function Booking(props: any) {
                   </DialogContentText>
               </DialogContent>
               <DialogActions>
-                  <Button onClick={deleteBooking}>Ja</Button>
-                  <Button onClick={cancel}>Nein</Button>
+                  <Button className="booking-button" onClick={deleteBooking}>Ja</Button>
+                  <Button className="booking-button" onClick={cancel}>Nein</Button>
               </DialogActions>
           </Dialog>
       );

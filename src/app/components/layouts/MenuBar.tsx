@@ -142,23 +142,23 @@ function MenuBar() {
                 <>
                   <Grid container spacing={2}>
                     <Grid item xs={10}>
-                      <p style={{ marginTop: "1.35rem" }}>
+                      <p style={{ marginTop: "1.35rem", color: "#ba8434" }}>
                         {`Willkommen ${userData?.data?.userName}!`}
                       </p>
                     </Grid>
                     <Grid item xs={2} sx={{ pt: 3, pb: 2 }}>
                       <IconButton
+                        id="menuBar-iconButton"
                         size="large"
                         aria-label="account of current user"
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
                         onClick={handleMenu}
-                        color="inherit"
                         sx={{ pt: 3 }}
                       >
                         <AccountCircle />
                       </IconButton>
-                      <Menu
+                      <StyledMenu
                         id="menu-appbar"
                         anchorEl={anchorEl}
                         anchorOrigin={{
@@ -187,13 +187,14 @@ function MenuBar() {
                         >
                           Ausloggen
                         </MenuItem>
-                      </Menu>
+                      </StyledMenu>
                     </Grid>
                   </Grid>
                 </>
               ) : (
                 <>
                   <IconButton
+                    id="menuBar-iconButton"
                     size="large"
                     aria-label="account of current user"
                     aria-controls="menu-appbar"

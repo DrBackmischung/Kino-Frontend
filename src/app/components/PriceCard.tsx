@@ -50,8 +50,6 @@ function PriceCard(pricesData: any){
             <Container
                 className="PriceCard-Container"
                 sx={{
-                    pt: 8,
-                    pb: 6,
                     position: "relative",
                 }}
                 maxWidth="md"

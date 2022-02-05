@@ -10,7 +10,7 @@ function LoadingAnimation() {
   return (
     <ThemeProvider theme={theme}>
       <div className="loadingContainer">
-        <Loader type="MutatingDots" color="secondary" secondaryColor="primary" height={100} width={100} />
+        <Loader type="MutatingDots" color="secondary" secondaryColor="secondary" height={100} width={100} />
       </div>
     </ThemeProvider>
   );

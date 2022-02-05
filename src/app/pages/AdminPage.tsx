@@ -11,6 +11,7 @@ import ManageAdminRoom from "../components/ManageAdminRoom";
 import ManageAdminNews from "../components/ManageAdminNews";
 import ManageAdminEvent from "../components/ManageAdminEvent";
 import ErrorPage from "./ErrorPage";
+import "./AdminPage.css";
 
 const theme = createTheme(palette);
 
@@ -116,9 +117,6 @@ function AdminPage(props: any) {
           <Container
             className="wholeContainer"
             sx={{
-              bgcolor: "background.paper",
-              pt: 8,
-              pb: 6,
               position: "relative",
               marginTop: theme.spacing(12),
             }}
@@ -139,7 +137,7 @@ function AdminPage(props: any) {
                   alignItems: "center",
                 }}
               >
-                <Button
+                <Button id="adminPage-button"
                   key={"addMovie"}
                   onClick={() => {
                     handleAddMovieClickOpen();
@@ -148,7 +146,7 @@ function AdminPage(props: any) {
                 >
                   Add Movie
                 </Button>
-                <Button
+                <Button id="adminPage-button"
                   key={"updateMovie"}
                   onClick={() => {
                     handleUpdateMovieClickOpen();
@@ -157,7 +155,7 @@ function AdminPage(props: any) {
                 >
                   Update Movie
                 </Button>
-                <Button
+                <Button id="adminPage-button"
                   key={"deleteMovie"}
                   onClick={() => {
                     handleDeleteMovieClickOpen();
@@ -175,7 +173,7 @@ function AdminPage(props: any) {
                   alignItems: "center",
                 }}
               >
-                <Button
+                <Button id="adminPage-button"
                   key={"addShow"}
                   onClick={() => {
                     handleAddShowClickOpen();
@@ -184,7 +182,7 @@ function AdminPage(props: any) {
                 >
                   Add Show
                 </Button>
-                <Button
+                <Button id="adminPage-button"
                   key={"deleteMovie"}
                   onClick={() => {
                     handleDeleteShowClickOpen();
@@ -202,7 +200,7 @@ function AdminPage(props: any) {
                   alignItems: "center",
                 }}
               >
-                <Button
+                <Button id="adminPage-button"
                   key={"createRoom"}
                   onClick={() => {
                     handleRoomClickOpen();
@@ -220,7 +218,7 @@ function AdminPage(props: any) {
                   alignItems: "center",
                 }}
               >
-                <Button
+                <Button id="adminPage-button"
                   key={"addNews"}
                   onClick={() => {
                     handleAddNewsClickOpen();
@@ -229,7 +227,7 @@ function AdminPage(props: any) {
                 >
                   Add News
                 </Button>
-                <Button
+                <Button id="adminPage-button"
                   key={"deleteNews"}
                   onClick={() => {
                     handleDeleteNewsClickOpen();
@@ -247,7 +245,7 @@ function AdminPage(props: any) {
                   alignItems: "center",
                 }}
               >
-                <Button
+                <Button id="adminPage-button"
                   key={"addEvent"}
                   onClick={() => {
                     handleAddEventClickOpen();
@@ -256,7 +254,7 @@ function AdminPage(props: any) {
                 >
                   Add Event
                 </Button>
-                <Button
+                <Button id="adminPage-button"
                   key={"deleteEvent"}
                   onClick={() => {
                     handleDeleteEventClickOpen();

@@ -1,8 +1,12 @@
 .PricePage-Container{
-    margin-top: 4.5rem;
+    margin-top: 4rem;
     position: relative;
 }
 
 .PricePage-div{
-    margin-top: 4.5rem;
+    margin-top: 1rem;
+}
+
+#pricePage-iconButton{
+    color: #ba8434;
 }

@@ -48,10 +48,11 @@ function ProgramPage() {
   if (moviesData.isLoading) return <LoadingAnimation />;
 
   return (
-    <div>
+    <div id="programmPage-div">
       <IconButton
+        id="programPage-iconButton"
         sx={{
-          marginTop: -1,
+          marginTop: 1,
           marginBottom: -12,
           marginLeft: 5,
           position: "fixed",

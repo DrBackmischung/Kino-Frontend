@@ -61,7 +61,7 @@ function MovieCard(props: any) {
               movie.title.toLowerCase().includes(filter) && (
                 <Grid item key={movie.id} xs={12} sm={6} md={4}>
                   <Card id="movieCard-card">
-                    <CardContent sx={{ flexGrow: 1 }}>
+                    <CardContent sx={{ flexGrow: 1, height: 90 }}>
                       <Typography gutterBottom variant="h5" component="h2">
                         {movie.title}
                       </Typography>

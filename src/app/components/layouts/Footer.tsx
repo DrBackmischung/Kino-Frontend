@@ -19,7 +19,7 @@ const Footer = () =>{
                     </div>
                     <div className="footer-row">
                         <p>
-                            &copy;{new Date().getFullYear()} KINO | All rights reserved 
+                            &copy;{new Date().getFullYear()} KINOVATION | All rights reserved 
                         </p>
                     </div>
                 </div>

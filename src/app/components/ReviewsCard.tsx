@@ -2,6 +2,7 @@ import * as React from "react";
 import { Box, Container, Grid, Rating } from "@mui/material";
 import ErrorPage from "../pages/ErrorPage";
 import LoadingAnimation from "./layouts/LoadingAnimation";
+import "./ReviewsCard.css";
 
 function ReviewsCard(props: any) {
   const { data, isLoading, isError } = props;
@@ -36,7 +37,6 @@ function ReviewsCard(props: any) {
   return (
     <Container
       sx={{
-        bgcolor: "background.paper",
         position: "relative",
       }}
       maxWidth="md"

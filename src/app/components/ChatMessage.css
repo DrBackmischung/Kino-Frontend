@@ -1,7 +1,7 @@
 .messageContainerLeft {
   outline: 1px solid gray;
   border-radius: 25px;
-  background-color: lightblue;
+  background-color: #f0b462;
   max-width: 45%;
   margin-left: 1rem;
   margin-top: 0.5rem;
@@ -12,7 +12,7 @@
 .messageContainerRight {
   outline: 1px solid gray;
   border-radius: 25px;
-  background-color: rgb(180, 230, 173);
+  background-color: #f0b462;
   max-width: 45%;
   margin-right: 1rem;
   margin-top: 0.5rem;
@@ -29,5 +29,6 @@
   margin: 0.5rem;
   font-size: 0.85rem;
   word-wrap: break-word;
-  color: blue;
+  color: #1b1b1b;
+  text-decoration: underline;
 }

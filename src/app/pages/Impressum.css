@@ -1,10 +1,14 @@
 .wholeContainer {
-    color: white;
+    color: #212121;
     font-style: italic;
+    margin-top: 1rem;
 }
 
 .AGBContainer{
    text-align: justify;
+   background-color: #212121;
+   color: white;
+   padding-top: 3rem;
 }
 
 .mainNameBox{
@@ -15,4 +19,16 @@
 .nameBox{
     text-indent: 1.5rem;
     line-height: 0.75rem;
+}
+
+#impressum-div{
+    background-color: #212121;
+}
+
+#impressum-iconButton{
+    color: #ba8434;
+}
+
+#impressum-link{
+    color: #ba8434;
 }
