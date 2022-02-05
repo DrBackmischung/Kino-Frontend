@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Grid, Card, CardMedia, Typography, Box, Button, CardActions, Container} from "@mui/material";
+import {Grid, Card, CardMedia, Typography, Box, Button, CardActions, Container } from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import APIUrl from "../config/APIUrl";
 import {useQuery} from "react-query";
+import "./ProgramCard.css";
 
 function ProgramCard(props: any) {
     const {
@@ -125,7 +126,6 @@ function ProgramCard(props: any) {
     return (
         <Container
             sx={{
-                bgcolor: "background.paper",
                 marginTop: 7,
                 pb: 4,
                 position: "relative",
@@ -186,6 +186,7 @@ function ProgramCard(props: any) {
                                         <CardActions
                                             sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', pt: 2}}>
                                             <Button
+                                                id="programCard-button"
                                                 variant="contained"
                                                 onClick={() => {
                                                     navigateToDetails(`${movie.id}`);

@@ -4,8 +4,9 @@ import IconButton from "@mui/material/IconButton";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import {useNavigate} from "react-router-dom";
 import Box from "@mui/material/Box";
-import {createTheme} from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import palette from "../config/Colours";
+import "./Impressum.css";
 
 function Impressum() {
     let navigate = useNavigate();
@@ -21,16 +22,14 @@ function Impressum() {
     }
 
     return (
-        <div>
-            <IconButton sx={{marginTop: -1, marginBottom: -12, marginLeft: 5, position: 'fixed', zIndex: '100'}} onClick={goBack}>
+        <div id="impressum-div">
+            <IconButton id="impressum-iconButton" sx={{marginTop: -1, marginBottom: -12, marginLeft: 5, position: 'fixed', zIndex: '100'}} onClick={goBack}>
                 <ArrowBackIosIcon/>
             </IconButton>
-            <Container
+            <Container className="wholeContainer"
                 sx={{
-                    bgcolor: "background.paper",
                     pb: 6,
                     position: "relative",
-                    marginTop: theme.spacing(2),
                 }}
             >
                 <Container className="AGBContainer">
@@ -65,8 +64,8 @@ function Impressum() {
                             <p>Nathalie Möck</p>
                         </Box>
                         <br/>
-                        <span>Die Allgemeinen Geschäftsbedingungen können </span><Link
-                        onClick={redirectToTerms}>hier</Link><span> gefunden werden.</span>
+                        <span>Die Allgemeinen Geschäftsbedingungen können </span>
+                        <Link id="impressum-link" onClick={redirectToTerms}>hier</Link><span> gefunden werden.</span>
                     </Box>
                 </Container>
             </Container>

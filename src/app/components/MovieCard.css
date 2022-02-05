@@ -1,0 +1,20 @@
+.movieCard-container{
+    position: relative;
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+    max-width: md;
+    background-color: #212121;
+}
+
+#movieCard-card{
+    background-color: #ffffff;
+}
+
+#movieCard-button{
+    background-color: #ba8434;
+    color: #000000;
+}
+
+#movieCard-button:hover{
+    background-color: #865700;
+}
