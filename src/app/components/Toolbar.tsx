@@ -4,16 +4,12 @@ import Grid from "@mui/material/Grid";
 import SearchField from "./SearchField";
 import Filter from "./Filter";
 import Sort from "./Sort";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import palette from "../config/Colours";
-import "./Toolbar.css";
 
 function Toolbar(props: any) {
     const { handleSearchChange, setSelectedSort, setApplyFilters, setSelectedLanguage, setSelectedFSK, setSelectedGenre, moviesData, setRatingValue } = props;
 
     return (
         <Container
-            id="toolbar-container"
             sx={{
                 marginTop: -5,
                 p:7,

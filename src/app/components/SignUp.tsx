@@ -16,7 +16,6 @@ import {
 } from "@mui/material";
 import LoadingAnimation from "./layouts/LoadingAnimation";
 import { useForm, Controller } from "react-hook-form";
-import "./SignUp.css";
 
 function Copyright(props: any) {
   let navigate = useNavigate();
@@ -162,8 +161,7 @@ function SignUp(props: any) {
   }
 
   return (
-    <Container 
-      id ="signUp-container"
+    <Container
       component="main"
       maxWidth="xs"
       sx={{
@@ -486,7 +484,6 @@ function SignUp(props: any) {
               </Grid>
             </Grid>
             <Button
-              id="signUp-button"
               disabled={!agree}
               type="submit"
               fullWidth

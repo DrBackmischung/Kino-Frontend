@@ -13,8 +13,6 @@ import Box from "@mui/material/Box";
 import ErrorPage from "../pages/ErrorPage";
 import LoadingAnimation from "./layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import palette from "../config/Colours";
 import "./ShowPicker.css";
 
 function ShowPicker(props: any) {
