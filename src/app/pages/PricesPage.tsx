@@ -4,7 +4,6 @@ import APIUrl from "../config/APIUrl";
 import LoadingAnimation from "../components/layouts/LoadingAnimation"
 import { useQuery } from 'react-query';
 import PriceCard from '../components/PriceCard';
-import "./PricePage.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import {useNavigate} from "react-router-dom";
 
@@ -20,11 +19,12 @@ function PricesPage(){
     while(priceData.isLoading)
        return(
             <Container
-                className='PricePage-Container'
-                sx={{
+             sx={{
                     bgcolor: "background.paper",
                     pt: 8,
                     pb: 6,
+                    position: "relative",
+                    marginTop: "15rem",
                 }}
                 maxWidth="md"
             >
@@ -40,8 +40,8 @@ function PricesPage(){
     }
 
     return(
-        <div className='PricePage-div'>
-            <IconButton id="pricePage-iconButton" sx={{marginTop: -1, marginBottom: -12, marginLeft: 5, position: 'fixed', zIndex: '100'}}
+        <div>
+            <IconButton sx={{marginTop: -0.6, marginBottom: -12, marginLeft: 5, position: 'fixed', zIndex: '100'}}
                         onClick={goBack}>
                 <ArrowBackIosIcon/>
             </IconButton>

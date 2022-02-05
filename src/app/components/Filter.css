@@ -2,7 +2,6 @@
     margin-bottom: 10px;
 
 }
-
 .filter__checkboxes .filter__checkboxes-column .fieldset {
     display: inline-block;
     justify-content: space-between;
@@ -33,12 +32,4 @@
 
 .filter__checkboxes .filter__checkboxes-column .checkboxes .radio__button {
     width: 20%;
-}
-
-#filter-iconButton{
-    color: #ba8434;
-}
-
-#filter-iconButton:hover{
-    background-color: #6d6d6d;
 }

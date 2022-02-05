@@ -120,7 +120,7 @@ function Filter(props: any) {
 
     return (
         <div>
-            <IconButton id="filter-iconButton" size="large" onClick={handleClickOpen}>
+            <IconButton size="large" color="inherit" onClick={handleClickOpen}>
                 <FilterAltIcon/>
             </IconButton>
             <BootstrapDialog

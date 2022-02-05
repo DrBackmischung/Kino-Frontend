@@ -5,15 +5,10 @@ import { useQuery } from "react-query";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
-import { createTheme } from "@mui/material/styles";
-import palette from "../config/Colours";
-import { ThemeProvider } from "@mui/styles";
-import "./ProgramPage.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import {Container, IconButton, SelectChangeEvent} from "@mui/material";
-import {useNavigate} from "react-router-dom";
+import { IconButton } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import ProgramCard from "../components/ProgramCard";
-import MovieCard from "../components/MovieCard";
 
 function ProgramPage() {
   let navigate = useNavigate();
@@ -48,11 +43,10 @@ function ProgramPage() {
   if (moviesData.isLoading) return <LoadingAnimation />;
 
   return (
-    <div id="programmPage-div">
+    <div>
       <IconButton
-        id="programPage-iconButton"
         sx={{
-          marginTop: 1,
+          marginTop: -1,
           marginBottom: -12,
           marginLeft: 5,
           position: "fixed",

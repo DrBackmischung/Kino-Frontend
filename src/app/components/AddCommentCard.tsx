@@ -1,25 +1,6 @@
-import { Container, CssBaseline, TextField, Button, Grid, Rating, Typography, withStyles, styled } from "@mui/material";
+import { Container, CssBaseline, TextField, Button, Grid, Rating, Typography } from "@mui/material";
 import React, { useState } from "react";
 import APIUrl from "../config/APIUrl";
-const CssTextField = styled(TextField)({
-  '& label.Mui-focused': {
-    color: '#ba8434',
-  },
-  '& .MuiInput-underline:after': {
-    borderBottomColor: '#ba8434',
-  },
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      borderColor: '#ba8434',
-    },
-    '&:hover fieldset': {
-      borderColor: '#ba8434',
-    },
-    '&.Mui-focused fieldset': {
-      borderColor: '#ba8434',
-    },
-  },
-});
 
 function AddCommentCard(props: any) {
   const { movieId, userId, refetch } = props;
@@ -64,6 +45,7 @@ function AddCommentCard(props: any) {
   return (
     <Container
       sx={{
+        bgcolor: "background.paper",
         pt: 8,
         pb: 6,
         position: "relative",
@@ -77,9 +59,10 @@ function AddCommentCard(props: any) {
           <h3>Schreiben sie ein Review:</h3>
         </Grid>
         <Grid item xs={6} sx={{ mb: 2 }}>
-          <CssTextField
+          <TextField
             required
             fullWidth
+            id="review-title"
             label="Titel"
             variant="outlined"
             onChange={(e: any) => {
@@ -101,10 +84,10 @@ function AddCommentCard(props: any) {
 
         </Grid>
         <Grid item xs={12} sx={{ mb: 2 }}>
-          <CssTextField
+          <TextField
             required
             fullWidth
-            label="Bewertung"
+            label="content"
             id="review-content"
             multiline
             maxRows={5}
@@ -116,7 +99,7 @@ function AddCommentCard(props: any) {
         </Grid>
         <Grid item xs={3}>
           <Button
-            color="secondary"
+            color="success"
             variant="contained"
             onClick={() => {
               addReview();

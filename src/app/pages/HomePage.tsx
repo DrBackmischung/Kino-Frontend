@@ -7,12 +7,10 @@ import { useQuery } from "react-query";
 import palette from "../config/Colours";
 import MovieCard from "../components/MovieCard";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import "./HomePage.css";
 
 function Item(props: any) {
   return (
-    <Paper id="homePage-paper">
+    <Paper>
       <h2>{props.item.name}</h2>
       <p>{props.item.description}</p>
       <LazyLoadImage
@@ -48,26 +46,37 @@ function HomePage() {
     },
   ];
 
-  const theme = createTheme();
-
   return (
-    <ThemeProvider theme={theme}>
-      <Container
-        id="homePage-container"
-        className="wholeContainer"
+    <Container
+      className="wholeContainer"
+      sx={{
+        position: "relative",
+      }}
+    >
+      <Box>
+        <Carousel>
+          {items.map((item, i) => (
+            <Item key={i} item={item} />
+          ))}
+        </Carousel>
+      </Box>
+      <Button
+        variant="contained"
+        disabled
+        size="large"
         sx={{
+          mt: 3,
+          width: 1,
+          height: 30,
           position: "relative",
+          backgroundColor: palette.palette.primary.dark,
         }}
-      >
-        <Box id="homePage-box">
-          <Carousel>
-            {items.map((item, i) => (
-              <Item key={i} item={item} />
-            ))}
-          </Carousel>
-        </Box>
-      </Container>
-    </ThemeProvider>
+      />
+      <Box>
+        <h3>Weitere Filme:</h3>
+        <MovieCard filter={""} location={""} moviesData={moviesData.data} />
+      </Box>
+    </Container>
   );
 }
 

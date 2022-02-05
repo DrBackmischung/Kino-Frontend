@@ -14,7 +14,7 @@ function ChatBot(props: any) {
   };
   return (
     <div className="wholeContainer">
-      <Button variant="contained" onClick={onButtonPressed} id="chatBot-Button">
+      <Button variant="contained" onClick={onButtonPressed}>
         ChatBot
       </Button>
       <ChatBotDialog

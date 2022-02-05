@@ -2,15 +2,13 @@ import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import palette from "../config/Colours";
 
 const Search = styled("div")(({ theme }: { theme: any }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.secondary.main, 0.35),
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
   "&:hover": {
-    backgroundColor: alpha(theme.palette.secondary.main, 1),
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
@@ -47,21 +45,17 @@ const StyledInputBase = styled(InputBase)(({ theme }: { theme: any }) => ({
 function SearchField(props: any) {
   const {handleSearchChange} = props;
 
-const theme = createTheme(palette)
-
   return (
-    <ThemeProvider theme={theme}>
-      <Search>
-        <SearchIconWrapper>
-          <SearchIcon />
-        </SearchIconWrapper>
-        <StyledInputBase
-            onChange={handleSearchChange}
-          placeholder="Suche…"
-          inputProps={{ "aria-label": "search" }}
-        />
-      </Search>
-    </ThemeProvider>
+    <Search>
+      <SearchIconWrapper>
+        <SearchIcon />
+      </SearchIconWrapper>
+      <StyledInputBase
+        onChange={handleSearchChange}
+        placeholder="Suche…"
+        inputProps={{ "aria-label": "search" }}
+      />
+    </Search>
   );
 }
 

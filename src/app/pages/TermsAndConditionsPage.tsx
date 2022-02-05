@@ -6,7 +6,6 @@ import {Container} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Box from "@mui/material/Box";
-import "./TermsAndConditionsPage.css";
 
 function TermsAndConditionsPage(props: any) {
     let navigate = useNavigate();
@@ -19,10 +18,11 @@ function TermsAndConditionsPage(props: any) {
 
     return (
         <div>
-            <IconButton  id="termsAndConditionsPage-iconButton" sx={{marginTop: -1, marginBottom: -12, marginLeft: 5, position: 'fixed', zIndex: '100'}} onClick={goBack}>
+            <IconButton sx={{marginTop: -1, marginBottom: -12, marginLeft: 5, position: 'fixed', zIndex: '100'}} onClick={goBack}>
                 <ArrowBackIosIcon/>
             </IconButton>
             <Container className="wholeContainer" sx={{
+                bgcolor: "background.paper",
                 pb: 6,
                 position: "relative",
                 marginTop: theme.spacing(2),

@@ -15,7 +15,6 @@ import { useQuery } from "react-query";
 import APIUrl from "../../config/APIUrl";
 import ErrorPage from "../../pages/ErrorPage";
 import LoadingAnimation from "../layouts/LoadingAnimation";
-import "./Booking.css";
 
 export function Booking(props: any) {
   const { open, cancel, selectedBooking } = props;
@@ -84,7 +83,7 @@ export function Booking(props: any) {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button className="booking-button" onClick={cancel}>Schließen</Button>
+        <Button onClick={cancel}>Schließen</Button>
       </DialogActions>
     </Dialog>
   );
@@ -115,8 +114,8 @@ export function CancelBooking(props: any) {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button className="booking-button" onClick={deleteBooking}>Ja</Button>
-        <Button className="booking-button" onClick={cancel}>Nein</Button>
+        <Button onClick={deleteBooking}>Ja</Button>
+        <Button onClick={cancel}>Nein</Button>
       </DialogActions>
     </Dialog>
   );
