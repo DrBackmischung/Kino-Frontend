@@ -84,7 +84,7 @@ export function Booking(props: any) {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={cancel}>Schließen</Button>
+        <Button className="booking-button" onClick={cancel}>Schließen</Button>
       </DialogActions>
     </Dialog>
   );
