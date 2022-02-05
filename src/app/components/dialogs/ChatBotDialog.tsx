@@ -14,6 +14,7 @@ import React, { useState } from "react";
 import "./ChatBotDialog.css";
 import ChatMessage from "../ChatMessage";
 import ErrorPage from "../../pages/ErrorPage";
+import LoadingAnimation from "../layouts/LoadingAnimation";
 
 const welcomeMessage = [
   {
@@ -140,6 +141,31 @@ function ChatBotDialog(props: any) {
           <DialogContent dividers={true}>
             <DialogContentText id="scroll-dialog-description">
               <ErrorPage errorCode={error} />
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={onClosePressed}>Schließen</Button>
+          </DialogActions>
+        </Dialog>
+      </ThemeProvider>
+    );
+  }
+  if (loading) {
+    return (
+      <ThemeProvider theme={theme}>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          scroll="paper"
+          aria-labelledby="scroll-dialog-title"
+          aria-describedby="scroll-dialog-description"
+          fullWidth={true}
+          maxWidth="sm"
+        >
+          <DialogTitle id="scroll-dialog-title">Theo Ticket</DialogTitle>
+          <DialogContent dividers={true}>
+            <DialogContentText id="scroll-dialog-description">
+              <LoadingAnimation />
             </DialogContentText>
           </DialogContent>
           <DialogActions>
