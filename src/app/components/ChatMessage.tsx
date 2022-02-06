@@ -50,23 +50,25 @@ function ChatMessage(props: any) {
         );
       }
     });
-
-    const removedShowsOutatedDay = sortedByTime?.filter((item: any) => {
-      var currentDate = new Date().getTime();
-      var movieDate = new Date(item.showDate).getTime();
-      return movieDate >= currentDate;
+    const removedShowsOutadatedDay = sortedByTime?.filter((item: any) => {
+      return new Date(item.showDate) > new Date();
     });
-    const removedShowsOutated = removedShowsOutatedDay?.filter((item: any) => {
-      var currentDate = new Date();
-      var movieStart = new Date();
-      movieStart.setHours(
-        item.startTime.split(":")[0],
-        item.startTime.split(":")[1],
-        0
-      );
-      return movieStart > currentDate;
-    });
-    return removedShowsOutated;
+    const removedShowsOutatedTime = removedShowsOutadatedDay?.filter(
+      (item: any) => {
+        var currentDate = new Date();
+        var movieStart = new Date();
+        if (new Date(item.showDate).getDate() === currentDate.getDate()) {
+          movieStart.setHours(
+            item.startTime.split(":")[0],
+            item.startTime.split(":")[1],
+            0
+          );
+          return movieStart > currentDate;
+        }
+        return true;
+      }
+    );
+    return removedShowsOutatedTime;
   };
   return (
     <div className={messageCss}>
