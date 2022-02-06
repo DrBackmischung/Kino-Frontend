@@ -4,8 +4,6 @@ import IconButton from "@mui/material/IconButton";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import {useNavigate} from "react-router-dom";
 import Box from "@mui/material/Box";
-import { createTheme } from "@mui/material/styles";
-import palette from "../config/Colours";
 import "./Impressum.css";
 
 function Impressum() {

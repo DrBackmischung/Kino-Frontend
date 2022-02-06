@@ -51,17 +51,23 @@ export function ReviewDashboard(props: any) {
       </Grid>
       {dataReviews.map((r: any) => (
         <Grid item xs={12} padding={2}>
-          <Card sx={{ display: "flex" }}>
+          <Card sx={{ display: "flex", backgroundColor: "#424242" }}>
             <Box>
               <CardContent sx={{ flex: "1 0 auto" }}>
-                <Typography align="left" component="h1" variant="h5">
-                  {r.movie.title}
-                </Typography>
-                <p>
-                  <b>{r.header}</b>
-                </p>
-                <p>{r.content}</p>
-                <Ratings ratingValue={r.rating} />
+                <Grid container xs={12}>
+                  <Grid item xs={12}>
+                    <Typography align="left" component="h1" variant="h5"  style={{ color:"#ba8434" }}>
+                      {r.movie.title}
+                    </Typography>
+                    <p style={{ color:"#ba8434" }}>
+                      <b>{r.header}</b>
+                    </p>
+                    <p style={{ color:"#ba8434" }}>{r.content}</p>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Ratings ratingValue={r.rating} />
+                  </Grid>
+                </Grid>
               </CardContent>
             </Box>
           </Card>

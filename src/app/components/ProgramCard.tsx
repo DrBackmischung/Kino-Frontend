@@ -177,9 +177,11 @@ function ProgramCard(props: any) {
                                             }}>
                                                 <CardMedia
                                                     component="img"
-                                                    sx={{width: "15%",}}
+                                                    sx={{width: "15%",
+                                                    border: "1px solid #212121"}}
                                                     image={getFlag(movie.language)}
                                                     alt="Flagge"
+                                                    
                                                 />
                                             </Box>
                                         </Box>

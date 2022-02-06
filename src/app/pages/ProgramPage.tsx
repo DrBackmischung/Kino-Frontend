@@ -7,7 +7,7 @@ import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
 import "./ProgramPage.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import {Container, IconButton, SelectChangeEvent} from "@mui/material";
+import { IconButton } from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import ProgramCard from "../components/ProgramCard";
 

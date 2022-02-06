@@ -2,8 +2,6 @@ import React from "react";
 import Carousel from "react-material-ui-carousel";
 import { Paper } from "@mui/material";
 import { Box, Container } from "@mui/material";
-import APIUrl from "../config/APIUrl";
-import { useQuery } from "react-query";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./HomePage.css";
