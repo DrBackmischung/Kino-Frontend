@@ -481,7 +481,7 @@ function SignUp(props: any) {
               <Grid item xs={12}>
                 <input type="checkbox" id="agree" onChange={checkboxHandler} />
                 <label htmlFor="agree"> Ich stimme den </label>
-                <Link onClick={redirectToTerms}>Allgemeinen Geschäftsbedingungen (AGBs)</Link>
+                <Link sx={{color: "#ba8434"}} onClick={redirectToTerms}>Allgemeinen Geschäftsbedingungen (AGBs)</Link>
                 <label> zu.</label>
               </Grid>
             </Grid>

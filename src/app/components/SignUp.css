@@ -1,9 +1,11 @@
 #signUp-container{
+    background-color: #424242;
+    color: #ba8434;
     margin-top: 4.5rem;
     padding-top: 2rem;
     padding-bottom: 1rem;
 }
 
 #signUp-button{
-    background-color: #865700;
+    background-color: #ba8434;
 }
