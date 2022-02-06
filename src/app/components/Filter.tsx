@@ -17,8 +17,6 @@ import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import "./Filter.css";
 
-
-//Dialog Window Settings
 const BootstrapDialog = styled(Dialog)(({theme}) => ({}));
 
 export interface DialogTitleProps {
