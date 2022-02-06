@@ -1,11 +1,9 @@
 import React from "react";
 import Carousel from "react-material-ui-carousel";
-import { Button, Paper } from "@mui/material";
+import { Paper } from "@mui/material";
 import { Box, Container } from "@mui/material";
 import APIUrl from "../config/APIUrl";
 import { useQuery } from "react-query";
-import palette from "../config/Colours";
-import MovieCard from "../components/MovieCard";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./HomePage.css";
@@ -26,11 +24,6 @@ function Item(props: any) {
 }
 
 function HomePage() {
-  const apiUrlMovies = `${APIUrl.apiUrl}/movie/getAll`;
-
-  const moviesData = useQuery("Moviess", () =>
-    fetch(apiUrlMovies).then((res) => res.json())
-  );
 
   let items = [
     {

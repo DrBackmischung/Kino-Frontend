@@ -5,15 +5,11 @@ import { useQuery } from "react-query";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
-import { createTheme } from "@mui/material/styles";
-import palette from "../config/Colours";
-import { ThemeProvider } from "@mui/styles";
 import "./ProgramPage.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import {Container, IconButton, SelectChangeEvent} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import ProgramCard from "../components/ProgramCard";
-import MovieCard from "../components/MovieCard";
 
 function ProgramPage() {
   let navigate = useNavigate();

@@ -4,8 +4,6 @@ import Grid from "@mui/material/Grid";
 import SearchField from "./SearchField";
 import Filter from "./Filter";
 import Sort from "./Sort";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import palette from "../config/Colours";
 import "./Toolbar.css";
 
 function Toolbar(props: any) {

@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { IllustratedMessage } from "@adobe/react-spectrum";
 import NotFound from "@spectrum-icons/illustrations/NotFound";
 import { Heading, Content } from "@adobe/react-spectrum";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import palette from "../config/Colours";
 import "./ErrorPage.css";
 import { useQuery } from "react-query";
 import APIUrl from "../config/APIUrl";
