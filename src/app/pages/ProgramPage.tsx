@@ -5,9 +5,10 @@ import { useQuery } from "react-query";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import APIUrl from "../config/APIUrl";
+import "./ProgramPage.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { IconButton } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ProgramCard from "../components/ProgramCard";
 
 function ProgramPage() {
@@ -43,10 +44,11 @@ function ProgramPage() {
   if (moviesData.isLoading) return <LoadingAnimation />;
 
   return (
-    <div>
+    <div id="programmPage-div">
       <IconButton
+        id="programPage-iconButton"
         sx={{
-          marginTop: -1,
+          marginTop: 1,
           marginBottom: -12,
           marginLeft: 5,
           position: "fixed",

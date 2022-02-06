@@ -13,6 +13,7 @@ import NewsCard from "../components/NewsCard";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import "./NewsAndEventsPage.css";
 
 const theme = createTheme();
 
@@ -83,6 +84,7 @@ function NewsAndEventsPage() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <IconButton
+        id="newsAndEventsPage-iconButton"
         sx={{
           marginTop: 2,
           marginBottom: -12,
@@ -96,7 +98,9 @@ function NewsAndEventsPage() {
       </IconButton>
       <Container maxWidth="lg" sx={{ marginTop: 2 }}>
         <main>
-          <SearchField handleSearchChange={handleSearchChange} />
+          <div id="news-div">
+            <SearchField handleSearchChange={handleSearchChange} />
+          </div>
           <MainNewsCard data={prepareData(newsData.data)} />
           <NewsCard filter={filter} data={prepareData(newsData.data)} />
         </main>

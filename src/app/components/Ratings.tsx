@@ -6,11 +6,8 @@ function Ratings(props: any){
 
     return(
         <div>
-            <Grid container columns={5}>
-                <Grid item xs={1}>
-                    <h3>Bewertung:</h3>
-                </Grid>
-                <Grid item xs={4} mt={2.5}>
+            <Grid container xs={12}>
+                <Grid item xs={12} mt={2.5}>
                     {ratingValue === "NaN" ? (
                             <div>
                                 <Typography sx={{ fontStyle: "italic" }}>Sorry, für diesen Film gibt es noch keine Bewertungen!</Typography>

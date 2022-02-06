@@ -13,6 +13,7 @@ function UpdateProfileDashboard() {
           key={"addCC"}
           onClick={() => {}}
           variant="contained"
+          sx={{backgroundColor: "#ba8434"}}
         >
           Kreditkarte hinzufügen
         </Button>
@@ -23,6 +24,7 @@ function UpdateProfileDashboard() {
           key={"addCC"}
           onClick={() => {}}
           variant="contained"
+          sx={{backgroundColor: "#ba8434"}}
         >
           Kreditkarte ändern
         </Button>
@@ -33,6 +35,7 @@ function UpdateProfileDashboard() {
           key={"addCC"}
           onClick={() => {}}
           variant="contained"
+          sx={{backgroundColor: "#ba8434"}}
         >
           Accountinformationen bearbeiten
         </Button>
@@ -42,6 +45,7 @@ function UpdateProfileDashboard() {
           key={"addCC"}
           onClick={() => {}}
           variant="contained"
+          sx={{backgroundColor: "#ba8434"}}
         >
           Passwort ändern
         </Button>
