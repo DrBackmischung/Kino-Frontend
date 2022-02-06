@@ -31,7 +31,7 @@ function ProgramCard(props: any) {
     let newReviewsArray: any;
 
     function navigateToDetails(movieId: any) {
-        navigate("/DetailsPage", {state: {movieId}});
+        navigate("/film", {state: {movieId}});
     }
 
     function getFlag(language: string): string {

@@ -23,7 +23,7 @@ function ChatMessage(props: any) {
     e.preventDefault();
     handleDialogClose();
     switch (navigateTo) {
-      case "/DetailsPage":
+      case "/film":
         navigate(`${navigateTo}`, { state: { movieId: stateToPass } });
         break;
     }

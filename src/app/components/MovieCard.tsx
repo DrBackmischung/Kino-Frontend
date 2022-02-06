@@ -21,7 +21,7 @@ function MovieCard(props: any) {
   let navigate = useNavigate();
 
   function navigateToDetails(movieId: any) {
-    navigate("/DetailsPage", { state: { movieId } });
+    navigate("/film", { state: { movieId } });
   }
 
   const theme = createTheme(palette)

@@ -219,12 +219,12 @@ export default function SignIn(props: any) {
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="/PasswortVergessen" variant="body2">
+                                <Link href="/pw" variant="body2">
                                     Passwort vergessen?
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="/SignUpPage" variant="body2">
+                                <Link href="/registrierung" variant="body2">
                                     {"Neuer Benutzer?"}
                                 </Link>
                             </Grid>

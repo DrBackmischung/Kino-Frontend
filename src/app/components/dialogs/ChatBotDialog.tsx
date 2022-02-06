@@ -53,7 +53,7 @@ function ChatBotDialog(props: any) {
             message: `Ich habe folgendes zu "${userMessage}" gefunden: Der gesuchte Film ${data.content.title} vom Regisseur ${data.content.director} handelt von ${data.content.description}, Dauert ${data.content.duration} Minuten und ist ab ${data.content.fsk} Jahren freigegeben.`,
             align: "Left",
             navigateState: `${data.content.id}`,
-            navigateTo: "/DetailsPage",
+            navigateTo: "/film",
           },
         ]);
         break;
@@ -83,7 +83,7 @@ function ChatBotDialog(props: any) {
           {
             message: `Ich habe folgende Filme zu "${userMessage}" gefunden: `,
             align: "Left",
-            navigateTo: "/DetailsPage",
+            navigateTo: "/film",
             movieList: data.content,
           },
         ]);
@@ -94,7 +94,7 @@ function ChatBotDialog(props: any) {
           {
             message: `Das sind alle Shows, die ich gefunden hab: `,
             align: "Left",
-            navigateTo: "/DetailsPage",
+            navigateTo: "/film",
             showList: data.content,
             userData: userData,
           },

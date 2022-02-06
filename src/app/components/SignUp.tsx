@@ -22,7 +22,7 @@ function Copyright(props: any) {
   let navigate = useNavigate();
 
   const redirectToImpressum = () => {
-    navigate("/Impressum");
+    navigate("/impressum");
   };
 
   return (

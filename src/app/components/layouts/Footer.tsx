@@ -13,7 +13,7 @@ const Footer = () =>{
                     <div className="footer-row">
                         <a 
                             className="footer-link"
-                            href="./Impressum">
+                            href="./impressum">
                                 Impressum/Kontakt
                         </a>
                     </div>

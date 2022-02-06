@@ -57,9 +57,9 @@ function MenuBar() {
     setAnchorEl(null);
   };
   const [pages, setPages] = useState([
-    { name: "Programm", link: "/programPage" },
-    { name: "News & Events", link: "/newsAndEventsPage" },
-    { name: "Preisübersicht", link: "/pricesOverviewPage" },
+    { name: "Programm", link: "/programm" },
+    { name: "News & Events", link: "/events" },
+    { name: "Preisübersicht", link: "/preise" },
   ]);
 
   const setUser = () => {
@@ -173,7 +173,7 @@ function MenuBar() {
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                       >
-                        <MenuItem component={Link} to="/profile">
+                        <MenuItem component={Link} to="/profil">
                           Profil
                         </MenuItem>
                         <MenuItem
@@ -219,10 +219,10 @@ function MenuBar() {
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                   >
-                    <MenuItem component={Link} to="/SignUpPage">
+                    <MenuItem component={Link} to="/registrierung">
                       Registrieren
                     </MenuItem>
-                    <MenuItem component={Link} to="/SignInPage">
+                    <MenuItem component={Link} to="/login">
                       Einloggen
                     </MenuItem>
                   </StyledMenu>
@@ -234,27 +234,27 @@ function MenuBar() {
       </AppBar>
     </><Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/programPage" element={<ProgramPage />} />
-        <Route path="/newsAndEventsPage" element={<NewsAndEventsPage />} />
-        <Route path="/pricesOverviewPage" element={<PricesPage />} />
+        <Route path="/programm" element={<ProgramPage />} />
+        <Route path="/events" element={<NewsAndEventsPage />} />
+        <Route path="/preise" element={<PricesPage />} />
         <Route path="/AGBs" element={<TermsAndConditionsPage />} />
         <Route
-          path="/DetailsPage"
+          path="/film"
           // @ts-ignore
           element={<DetailsPage userData={userData?.data} />} />
         <Route
-          path="/SignInPage"
+          path="/login"
           // @ts-ignore
           element={<SignInPage setUser={setUser} />} />
         <Route
-          path="/SignUpPage"
+          path="/registrierung"
           // @ts-ignore
           element={<UserRegistrationPage setUser={setUser} />} />
-        <Route path="/Impressum" element={<Impressum />} />
-        <Route path="/Admin" element={<AdminPage userData={userData} />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/impressum" element={<Impressum />} />
+        <Route path="/admin" element={<AdminPage userData={userData} />} />
+        <Route path="/profil" element={<ProfilePage />} />
         <Route path="/info/:bookingID" element={<InfoPage />} />
-        <Route path="/PasswortVergessen" element={<PasswortVergessenPage />} />
+        <Route path="/pw" element={<PasswortVergessenPage />} />
       </Routes><CookiesNotification /></>
     
   );
