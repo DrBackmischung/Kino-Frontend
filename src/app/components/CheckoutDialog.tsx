@@ -147,7 +147,7 @@ function CheckoutDialog(props: any) {
               <br />
               <Button
                 variant="contained"
-                onClick={(e) => navigate("/SignInPage")}
+                onClick={(e) => navigate("/login")}
               >
                 Einloggen
               </Button>
@@ -155,7 +155,7 @@ function CheckoutDialog(props: any) {
               <Button
                 className="smallButton"
                 variant="contained"
-                onClick={(e) => navigate("/SignUpPage")}
+                onClick={(e) => navigate("/registrierung")}
               >
                 Registrieren
               </Button>

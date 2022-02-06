@@ -8,6 +8,10 @@ import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import { useNavigate } from "react-router-dom";
+import { createTheme } from "@mui/material/styles";
+import palette from "../config/Colours";
+import "./MovieCard.css";
+import { ThemeProvider } from "@mui/styles";
 
 function MovieCard(props: any) {
   const { filter, moviesData, selectedSort } = props;
@@ -17,9 +21,11 @@ function MovieCard(props: any) {
   let navigate = useNavigate();
 
   function navigateToDetails(movieId: any) {
-    navigate("/DetailsPage", { state: { movieId } });
+    navigate("/film", { state: { movieId } });
   }
 
+  const theme = createTheme(palette)
+  
   useEffect(()=>{
       let preparedMovieData = moviesData;
 
@@ -44,60 +50,59 @@ function MovieCard(props: any) {
   },[selectedSort, sortBy, moviesData, moviesToRender]);
 
   return (
-    <Container
-      sx={{
-        bgcolor: "background.paper",
-        pt: 8,
-        pb: 6,
-        position: "relative",
-      }}
-      maxWidth="md"
-    >
-      <Grid container spacing={4}>
-        {moviesData?.map(
-          (movie: any) =>
-            movie.title.toLowerCase().includes(filter) && (
-              <Grid item key={movie.id} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    sx={{
-                      pt: "6%",
-                    }}
-                    image={movie.pictureLink}
-                    alt="poster"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {movie.title}
-                    </Typography>
-                    <Typography>
-                      {movie.duration} Min FSK {movie.fsk}
-                    </Typography>
-                  </CardContent>
+    <ThemeProvider theme={theme}>
+      <Container
+        className="movieCard-container"
+        maxWidth="md"
+      >
+        <Grid container spacing={4}>
+          {moviesData?.map(
+            (movie: any) =>
+              movie.title.toLowerCase().includes(filter) && (
+                <Grid item key={movie.id} xs={12} sm={6} md={4}>
+                  <Card id="movieCard-card">
+                    <CardContent sx={{ flexGrow: 1, height: 90 }}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {movie.title}
+                      </Typography>
+                      <Typography>
+                        {movie.duration} Min FSK {movie.fsk}
+                      </Typography>
+                    </CardContent>
                   <CardActions>
                     <Button
                       fullWidth
                       size="small"
                       onClick={() => {
                         navigateToDetails(`${movie.id}`);
-                      }}
-                    >
-                      Tickets
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            )
-        )}
-      </Grid>
-    </Container>
+                      }}/> 
+                      <Button
+                        size="small"
+                        onClick={() => {
+                          navigateToDetails(`${movie.id}`);
+                        }}
+                        //image={movie.pictureLink}
+                        //alt="poster"
+                      />  
+                    </CardActions>
+                    <CardActions>
+                      <Button
+                        size="small"
+                        onClick={() => {
+                          navigateToDetails(`${movie.id}`);
+                        }}
+                        id="movieCard-button"
+                      >
+                        Tickets
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              )
+          )}
+        </Grid>
+      </Container>
+    </ThemeProvider>
   );
 }
 

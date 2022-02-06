@@ -107,18 +107,19 @@ export function BookingCard(props: any) {
       </Grid>
       {dataBookings.map((b: any) => (
         <Grid item xs={12} padding={2}>
-          <Card sx={{ display: "flex" }}>
+          <Card sx={{ display: "flex", backgroundColor: "#424242" }}>
             <CardContent sx={{ flex: "1 0 auto" }}>
-              <p>
+              <p style={{ color:"#ba8434" }}>
                 <b>{b.show.movie.title}</b>
               </p>
-              <p>
+              <p style={{ color:"#ba8434" }}>
                 am {b.show.showDate.substring(8, 10)}.
                 {b.show.showDate.substring(5, 7)}.
                 {b.show.showDate.substring(0, 4)} um{" "}
                 {b.show.startTime.substring(0, 5)}
               </p>
               <Button
+                sx={{backgroundColor: "#ba8434"}}
                 fullWidth
                 onClick={() => {
                   handleOpenBooking();
@@ -134,7 +135,7 @@ export function BookingCard(props: any) {
                 </p>
               ) : (
                 <Button
-                  sx={{ marginTop: 1 }}
+                  sx={{ marginTop: 1, backgroundColor: "#ba8434" }}
                   fullWidth
                   onClick={() => {
                     handleOpenCancel();

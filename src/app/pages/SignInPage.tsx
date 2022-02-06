@@ -12,8 +12,8 @@ import {
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
-import {makeStyles} from "@mui/styles";
-import {createTheme} from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
+import { createTheme } from "@mui/material/styles";
 import LockIcon from "@mui/icons-material/Lock";
 import colours from "../config/Colours";
 import {setCookie} from "../components/CookieHandler";
@@ -21,6 +21,7 @@ import {useNavigate} from "react-router-dom";
 import APIUrl from "../config/APIUrl";
 import {useForm, Controller} from "react-hook-form";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
+import "./SignInPage.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 const theme = createTheme();
@@ -122,11 +123,14 @@ export default function SignIn(props: any) {
     }
 
     return (
-        <div>
-            <IconButton sx={{mt: -6, marginLeft: 5, position: 'fixed', zIndex: '100'}} onClick={goBack}>
+        <div 
+            min-height="100%"
+        >
+            <IconButton id="signInPage-iconButton" sx={{mt: -6, marginLeft: 5, position: 'fixed', zIndex: '100'}} onClick={goBack}>
                 <ArrowBackIosIcon/>
             </IconButton>
             <Container
+                id ="singInPage-container"
                 component="main"
                 maxWidth="xs"
             >
@@ -215,12 +219,12 @@ export default function SignIn(props: any) {
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="/PasswortVergessen" variant="body2">
+                                <Link href="/pw" variant="body2">
                                     Passwort vergessen?
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="/SignUpPage" variant="body2">
+                                <Link href="/registrierung" variant="body2">
                                     {"Neuer Benutzer?"}
                                 </Link>
                             </Grid>

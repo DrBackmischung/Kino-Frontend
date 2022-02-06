@@ -16,12 +16,13 @@ import {
 } from "@mui/material";
 import LoadingAnimation from "./layouts/LoadingAnimation";
 import { useForm, Controller } from "react-hook-form";
+import "./SignUp.css";
 
 function Copyright(props: any) {
   let navigate = useNavigate();
 
   const redirectToImpressum = () => {
-    navigate("/Impressum");
+    navigate("/impressum");
   };
 
   return (
@@ -161,7 +162,8 @@ function SignUp(props: any) {
   }
 
   return (
-    <Container
+    <Container 
+      id ="signUp-container"
       component="main"
       maxWidth="xs"
       sx={{
@@ -479,11 +481,12 @@ function SignUp(props: any) {
               <Grid item xs={12}>
                 <input type="checkbox" id="agree" onChange={checkboxHandler} />
                 <label htmlFor="agree"> Ich stimme den </label>
-                <Link onClick={redirectToTerms}>Allgemeinen Geschäftsbedingungen (AGBs)</Link>
+                <Link sx={{color: "#ba8434"}} onClick={redirectToTerms}>Allgemeinen Geschäftsbedingungen (AGBs)</Link>
                 <label> zu.</label>
               </Grid>
             </Grid>
             <Button
+              id="signUp-button"
               disabled={!agree}
               type="submit"
               fullWidth

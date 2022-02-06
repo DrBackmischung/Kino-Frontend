@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Grid, Card, CardMedia, Typography, Box, Button, CardActions, Container} from "@mui/material";
+import {Grid, Card, CardMedia, Typography, Box, Button, CardActions, Container } from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import APIUrl from "../config/APIUrl";
 import {useQuery} from "react-query";
+import "./ProgramCard.css";
 
 function ProgramCard(props: any) {
     const {
@@ -30,7 +31,7 @@ function ProgramCard(props: any) {
     let newReviewsArray: any;
 
     function navigateToDetails(movieId: any) {
-        navigate("/DetailsPage", {state: {movieId}});
+        navigate("/film", {state: {movieId}});
     }
 
     function getFlag(language: string): string {
@@ -125,7 +126,6 @@ function ProgramCard(props: any) {
     return (
         <Container
             sx={{
-                bgcolor: "background.paper",
                 marginTop: 7,
                 pb: 4,
                 position: "relative",
@@ -177,15 +177,18 @@ function ProgramCard(props: any) {
                                             }}>
                                                 <CardMedia
                                                     component="img"
-                                                    sx={{width: "15%",}}
+                                                    sx={{width: "15%",
+                                                    border: "1px solid #212121"}}
                                                     image={getFlag(movie.language)}
                                                     alt="Flagge"
+                                                    
                                                 />
                                             </Box>
                                         </Box>
                                         <CardActions
                                             sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', pt: 2}}>
                                             <Button
+                                                id="programCard-button"
                                                 variant="contained"
                                                 onClick={() => {
                                                     navigateToDetails(`${movie.id}`);

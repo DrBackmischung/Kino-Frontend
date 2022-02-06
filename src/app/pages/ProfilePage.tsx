@@ -13,6 +13,7 @@ import CreditCardDetails from "../components/CreditCardDetails";
 import UpdateProfileDashboard from "../components/UpdateProfileDashboard";
 import { BookingCard } from "../components/BookingCard";
 import { ReviewDashboard } from "../components/ReviewDashboard";
+import "./ProfilePage.css";
 
 function ProfilePage() {
   const userID: string = getCookie("userId");
@@ -39,9 +40,8 @@ function ProfilePage() {
   return (
     <ThemeProvider theme={theme}>
       <Container
-        className="wholeContainer"
+        className="profilePage-container"
         sx={{
-          bgcolor: "background.paper",
           pt: 4,
           pb: 6,
           position: "relative",

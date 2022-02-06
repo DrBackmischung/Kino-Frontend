@@ -17,8 +17,6 @@ import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import "./Filter.css";
 
-
-//Dialog Window Settings
 const BootstrapDialog = styled(Dialog)(({theme}) => ({}));
 
 export interface DialogTitleProps {
@@ -120,7 +118,7 @@ function Filter(props: any) {
 
     return (
         <div>
-            <IconButton size="large" color="inherit" onClick={handleClickOpen}>
+            <IconButton id="filter-iconButton" size="large" onClick={handleClickOpen}>
                 <FilterAltIcon/>
             </IconButton>
             <BootstrapDialog

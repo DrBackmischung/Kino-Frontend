@@ -1,0 +1,12 @@
+#programCard-container{
+    background-color: #212121;
+}
+
+#programCard-button{
+    background-color: #ba8434;
+}
+
+#programCard-button:hover{
+    background-color: #865700;
+}
+
