@@ -23,14 +23,15 @@ function NewsCard(props: any) {
     return (
         <Grid container spacing={4} sx={{
             pt: "4%",
+            pb: "4%"
         }} >
             {data?.slice(1).map((item: any) =>
                 (item.header.toLowerCase().includes(filter)|| item.content.toLowerCase().includes(filter)) && (
                  <Grid item key={item.header} xs={12} md={12}>
                     <CardActionArea component="a" href="#">
-                        <Card sx={{ display: 'flex' }}>
+                        <Card sx={{ display: 'flex', backgroundColor: "#ba8434" }}>
                             <CardMedia
-                                component="img"
+                                component="img" 
                                 sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}
                                 image={item.pictureLink}
                                 alt="imageLabel"
