@@ -25,8 +25,6 @@ import CookiesNotification from "../CookiesNotification";
 import TermsAndConditionsPage from "../../pages/TermsAndConditionsPage";
 import InfoPage from "../../pages/InfoPage";
 import PasswortVergessenPage from "../../pages/PasswortVergessenPage";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import palette from "../../config/Colours";
 import "./MenuBar.css";
 import ChatBot from "../ChatBot";
 
@@ -219,13 +217,13 @@ function MenuBar() {
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                   >
-                    <MenuItem component={Link} to="/registrierung">
+                      <MenuItem component={Link} to="/login">
+                          Einloggen
+                      </MenuItem>
+                      <MenuItem component={Link} to="/registrierung">
                       Registrieren
                     </MenuItem>
-                    <MenuItem component={Link} to="/login">
-                      Einloggen
-                    </MenuItem>
-                  </StyledMenu>
+                    </StyledMenu>
                 </>
               )}
             </Box>

@@ -48,7 +48,7 @@ function ProgramPage() {
       <IconButton
         id="programPage-iconButton"
         sx={{
-          marginTop: 1,
+          marginTop: -1.06,
           marginBottom: -12,
           marginLeft: 5,
           position: "fixed",

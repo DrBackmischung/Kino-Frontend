@@ -78,12 +78,12 @@ function DetailsPage(props: any) {
     <div>
       <IconButton
         id="detailsPage-iconButton"
-        sx={{
-          mt: 2,
-          marginBottom: -12,
-          marginLeft: 5,
-          position: "fixed",
-          zIndex: "100",
+           sx={{
+            marginTop: 0,
+            marginBottom: -12,
+            marginLeft: 5,
+            position: "fixed",
+            zIndex: "100",
         }}
         onClick={goBack}
       >
