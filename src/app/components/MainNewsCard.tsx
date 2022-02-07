@@ -20,11 +20,11 @@ export default function MainNewsCard(props: any) {
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center',
-                backgroundImage: `url("https://source.unsplash.com/random")`,
+                backgroundImage: `url("https://fink.hamburg/wp/wp-content/uploads/2017/10/Kino1_4-e1508491309800.jpg")`,
             }}
         >
             {/* Increase the priority of the hero background image */}
-            {<img style={{ display: 'none' }} src="https://source.unsplash.com/random" alt={mainNews.imageText} />}
+            {<img style={{ display: 'none' }} src="https://fink.hamburg/wp/wp-content/uploads/2017/10/Kino1_4-e1508491309800.jpg" alt={mainNews.imageText} />}
             <Box
                 sx={{
                     position: 'absolute',
