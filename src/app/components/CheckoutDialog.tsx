@@ -106,7 +106,7 @@ function CheckoutDialog(props: any) {
   };
 
   function redirectToTerms() {
-    navigate("/TermsAndConditionsPage");
+    navigate("/AGBs");
   }
 
   function checkboxHandler() {
@@ -394,8 +394,8 @@ function CheckoutDialog(props: any) {
                       id="agree"
                       onChange={checkboxHandler}
                     />{" "}
-                    I agree to{" "}
-                    <Link onClick={redirectToTerms}>terms and conditions</Link>.{" "}
+                    Ich akzeptiere die{" "}
+                    <Link onClick={redirectToTerms}>AGBs</Link>.{" "}
                   </label>
                 </FormControl>
               </Grid>
