@@ -126,7 +126,7 @@ export default function SignIn(props: any) {
         <div 
             min-height="100%"
         >
-            <IconButton id="signInPage-iconButton" sx={{mt: -6, marginLeft: 5, position: 'fixed', zIndex: '100'}} onClick={goBack}>
+            <IconButton id="signInPage-iconButton" sx={{mt: -8, marginLeft: 5, position: 'fixed', zIndex: '100'}} onClick={goBack}>
                 <ArrowBackIosIcon/>
             </IconButton>
             <Container

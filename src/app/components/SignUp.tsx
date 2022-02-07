@@ -18,31 +18,6 @@ import LoadingAnimation from "./layouts/LoadingAnimation";
 import { useForm, Controller } from "react-hook-form";
 import "./SignUp.css";
 
-function Copyright(props: any) {
-  let navigate = useNavigate();
-
-  const redirectToImpressum = () => {
-    navigate("/impressum");
-  };
-
-  return (
-    <Box pb={5}>
-      <Typography
-        variant="body2"
-        color="text.secondary"
-        align="center"
-        {...props}
-      >
-        {"Copyright © "}
-        <Link color="inherit" onClick={() => redirectToImpressum()}>
-          SAuE Team 1
-        </Link>{" "}
-        {new Date().getFullYear()}
-        {"."}
-      </Typography>
-    </Box>
-  );
-}
 
 function SignUp(props: any) {
   const { setUser } = props;
@@ -498,7 +473,7 @@ function SignUp(props: any) {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link className="loginText" onClick={() => redirectToLogin()}>
+                <Link className="loginText" sx={{color: "#ba8434"}} onClick={() => redirectToLogin()}>
                   Du hast bereits einen Account? Logge Dich hier ein!
                 </Link>
               </Grid>
@@ -506,7 +481,7 @@ function SignUp(props: any) {
           </Box>
         </form>
       </Box>
-      <Copyright sx={{ mt: 5 }} />
+
     </Container>
   );
 }

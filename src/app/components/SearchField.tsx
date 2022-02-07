@@ -8,7 +8,7 @@ import palette from "../config/Colours";
 const Search = styled("div")(({ theme }: { theme: any }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.secondary.main, 0.35),
+  backgroundColor: alpha(theme.palette.secondary.main, 0.70),
   "&:hover": {
     backgroundColor: alpha(theme.palette.secondary.main, 1),
   },

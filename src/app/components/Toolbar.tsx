@@ -19,10 +19,11 @@ function Toolbar(props: any) {
                 bgcolor: "background.paper",
                 position: "fixed",
                 zIndex: '90',
+                maxWidth:'100%'
             }}
-            maxWidth="xl"
-        >
-            <Grid container spacing={4} xs={12} sx={{ justifyContent: "space-evenly" }}>
+            maxWidth={false}
+>
+            <Grid container spacing={3} xs={12} sx={{ justifyContent: "space-evenly" }}>
                 <Sort setSelectedSort={setSelectedSort}
                       xs={4}
                       sx={{
@@ -30,7 +31,7 @@ function Toolbar(props: any) {
                           flexDirection: "row",
                           padding: 5
                       }}/>
-                <SearchField handleSearchChange={handleSearchChange}  sx={{
+                <SearchField handleSearchChange={handleSearchChange} sx={{
                     height: "98%",
                     display: "flex",
                     flexDirection: "row",

@@ -29,7 +29,13 @@ function PricesPage(){
                 maxWidth="md"
             >
                 <LoadingAnimation />
-                <IconButton onClick={goBack}>
+                <IconButton onClick={goBack}
+                            sx={{
+                                marginBottom: -12,
+                                marginLeft: 5,
+                                position: "fixed",
+                                zIndex: "100",
+                            }}>
                     <ArrowBackIosIcon />
                 </IconButton>
             </Container>

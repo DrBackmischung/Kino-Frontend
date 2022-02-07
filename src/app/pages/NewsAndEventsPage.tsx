@@ -8,7 +8,6 @@ import { useState } from "react";
 import ErrorPage from "./ErrorPage";
 import LoadingAnimation from "../components/layouts/LoadingAnimation";
 import SearchField from "../components/SearchField";
-import MainNewsCard from "../components/MainNewsCard";
 import NewsCard from "../components/NewsCard";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { IconButton } from "@mui/material";
@@ -99,9 +98,9 @@ function NewsAndEventsPage() {
       <Container maxWidth="lg" sx={{ marginTop: 2 }}>
         <main>
           <div id="news-div">
-            <SearchField handleSearchChange={handleSearchChange} />
+            <SearchField handleSearchChange={handleSearchChange}
+            />
           </div>
-          <MainNewsCard data={prepareData(newsData.data)} />
           <NewsCard filter={filter} data={prepareData(newsData.data)} />
         </main>
       </Container>
